@@ -98,8 +98,11 @@ module.exports.findFiveFirstAppointments = function(start, doctor, callback) {
         function(cb) {
           res[counts] = [];
           Reservation.find({
-            weekDay: currentDate.day(),
-            doctor: doctor.id
+            where: {
+              weekDay: currentDate.day(),
+              doctor: doctor.id
+            },
+            sort: 'start'
           }).exec(function(err, reservations){
             if (err) {
               console.log("Error on getting reservations: "+err);
