@@ -1,0 +1,47 @@
+[
+  {
+    "id":"55984c73e2e3ac9127b0f9c0",
+    "firstName":"Leonardo",
+    "lastName":"Uribe",
+    "gender":"Mr.",
+    "speciality":"Generaliste",
+    "consultingTime":15,
+    "languages":"fr, en, de",
+    "description":"NA",
+    "website":"leo.uribe.fr",
+    "degrees":"Master en Barbecues",
+    "paymentMethods":"CB",
+    "secretary":"55984c73e2e3ac9127b0f9b0",
+    "user":"55984c73e2e3ac9127b0f9d9"
+  },
+  {
+    "id":"55984c73e2e3ac9127b0f9c1",
+    "firstName":"Leonardi",
+    "lastName":"Urobe",
+    "gender":"Mr.",
+    "speciality":"Chirurgien",
+    "consultingTime":30,
+    "languages":"fr, en, de",
+    "description":"Arrière gauche de l'oeuil droit",
+    "website":"leo.urobe.fr",
+    "degrees":"Master en Barbecues",
+    "paymentMethods":"CB",
+    "secretary":"55984c73e2e3ac9127b0f9b0",
+    "user":"55984c73e2e3ac9127b0f9da"
+  },
+  {
+    "id":"55984c73e2e3ac9127b0f9c2",
+    "firstName":"Leonarda",
+    "lastName":"Urabe",
+    "gender":"Mr.",
+    "speciality":"Podologue",
+    "consultingTime":5,
+    "languages":"fr, en, de",
+    "description":"Mais droites et pouces gauches",
+    "website":"leo.urabe.fr",
+    "degrees":"Master en Barbecues",
+    "paymentMethods":"CB",
+    "secretary":"55984c73e2e3ac9127b0f9b1",
+    "user":"55984c73e2e3ac9127b0f9db"
+  }
+]

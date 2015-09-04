@@ -1,0 +1,1370 @@
+{
+	"id": "749b897e-a838-bde3-d7d1-160bb61a613c",
+	"name": "Kalendoc",
+	"description": "",
+	"order": [
+		"0926739a-cab0-576d-9699-a3cb0ca88d40",
+		"13c587f5-6eb6-7b9b-9d0f-b873de9f5510",
+		"3eba11ed-9318-c93e-951b-aaf7292787cb",
+		"43012c84-4b27-0101-c91b-cbe01193f741",
+		"4a91f432-adff-c0c0-825e-ed6b69d785b3",
+		"5489e915-fc47-10a1-7096-690729fbc8bf",
+		"5641183a-5ca7-806c-cfe5-15ba6b1e40de",
+		"6afa8e57-10d0-4089-357e-81e57d1dd432",
+		"6f408b25-0681-37b6-b5fe-b6772333441d",
+		"7a4aedd1-7772-c069-83fa-465b4169e479",
+		"7f46079d-567a-8684-fc82-30ddb26eccb5",
+		"9ff06539-407e-45fd-5274-3919756d528b",
+		"c921a42f-9d87-c72d-0eac-8cb4b161e463",
+		"eed36244-12ec-c471-53c2-3f677f4dd287",
+		"f4b5d8dd-e048-4a99-2172-9f821f0f9e54",
+		"f6601da5-1eae-caec-c1d8-92a3c95e62bb",
+		"fe980ae2-bf27-cfc0-f916-449b2121550e",
+		"44d5e2c7-ee71-98f1-df27-b6d50aeaded9",
+		"04bded29-1eeb-cc39-5eff-c3c1fd1052ba",
+		"5014062e-51cc-ef5b-d19a-6e05ddd04da4",
+		"9628a304-4d07-2fdb-874b-b164b630996d",
+		"a756a773-9373-fb7b-d96a-acbb962a3191",
+		"090416cb-4fb5-c40b-54a7-3fb1db586155",
+		"92be41aa-db6b-9c0a-04a9-618c3370d4f6",
+		"ac2949c0-5fdd-b340-9fdf-dd227c970fb8",
+		"fc22c75c-16e5-ab3f-d55e-9180bfb378f1",
+		"b86e81f1-ee4b-09f9-a08d-8d54de43f9ab",
+		"07dc8a88-b899-4dda-4275-a1b1f256d16f",
+		"30d975b1-057e-f085-b8a8-8a5b87e7b552",
+		"ddbcf52a-110c-de9b-0d4a-2f0af5f473c8",
+		"fd1de8b0-6142-1660-f802-23032185cec8",
+		"18247645-b64a-b055-34ac-da6b2a770539",
+		"75e6c8c9-5ccd-2553-d532-51c0db27eb3f",
+		"09081a5b-3796-edb4-6aa2-5f0135c4cc5b",
+		"729fd52a-3394-dc3d-5e66-b06b29f26285",
+		"55355d47-95f3-fa13-cf6a-6058aee07ec1",
+		"fba42e01-4fa9-7d46-0dfe-999b6673a1ac",
+		"a515bbab-92e4-a999-de27-4d6a7caa2258",
+		"9be2e5b3-cfcc-50d9-4c69-a15c928db2fa"
+	],
+	"folders": [],
+	"timestamp": 1434910179237,
+	"owner": 0,
+	"remoteLink": "",
+	"public": false,
+	"requests": [
+		{
+			"id": "04bded29-1eeb-cc39-5eff-c3c1fd1052ba",
+			"headers": "token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6IjU1OTg0YzNkZTJlM2FjOTEyN2IwZjlkMSIsImlhdCI6MTQzNjMwMzc3NiwiZXhwIjoxNDM2MzE0NTc2fQ.iNxsGx3WUgnDpSNclB0w0NGVZDucsQvNOdPPNz7fW3Y\n",
+			"url": "localhost:1337/doctor/559c4228016fbc36406cf08f",
+			"pathVariables": {},
+			"preRequestScript": "",
+			"method": "POST",
+			"collectionId": "749b897e-a838-bde3-d7d1-160bb61a613c",
+			"data": [
+				{
+					"key": "website",
+					"value": "kalendoc.fr",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "consultingTime",
+					"value": "10",
+					"type": "text",
+					"enabled": true
+				}
+			],
+			"dataMode": "params",
+			"name": "Update : Doctor",
+			"description": "",
+			"descriptionFormat": "html",
+			"time": 1436304693433,
+			"version": 2,
+			"responses": [],
+			"tests": "",
+			"currentHelper": "normal",
+			"helperAttributes": {}
+		},
+		{
+			"id": "07dc8a88-b899-4dda-4275-a1b1f256d16f",
+			"headers": "token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6IjU1OTg0YzNkZTJlM2FjOTEyN2IwZjlkMSIsImlhdCI6MTQzNjM5ODE4MiwiZXhwIjoxNDM2NDA4OTgyfQ.lxfzKKrT09iGLsFtzUw3p4DzuxK4V4N8P5nMSZSHto0\n",
+			"url": "http://localhost:1337/reservation/55984cdfe2e3ac9127b0f9d7",
+			"pathVariables": {},
+			"preRequestScript": "",
+			"method": "POST",
+			"collectionId": "749b897e-a838-bde3-d7d1-160bb61a613c",
+			"data": [
+				{
+					"key": "start",
+					"value": "510",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "weekDay",
+					"value": "2",
+					"type": "text",
+					"enabled": true
+				}
+			],
+			"dataMode": "params",
+			"name": "Update : Reservation",
+			"description": "",
+			"descriptionFormat": "html",
+			"time": 1436398483196,
+			"version": 2,
+			"responses": [],
+			"tests": "",
+			"currentHelper": "normal",
+			"helperAttributes": {}
+		},
+		{
+			"id": "090416cb-4fb5-c40b-54a7-3fb1db586155",
+			"headers": "token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6IjU1OTg0YzNkZTJlM2FjOTEyN2IwZjlkMSIsImlhdCI6MTQzNjM4NTA4MCwiZXhwIjoxNDM2Mzk1ODgwfQ.NIdeiT8akYx0tkB9df64KegtQNAdMO8jxK_g1yRYycs\n",
+			"url": "http://localhost:1337/secretary/55984c3de2e3ac9127b0f9d2/doctors",
+			"pathVariables": {},
+			"preRequestScript": "",
+			"method": "GET",
+			"collectionId": "749b897e-a838-bde3-d7d1-160bb61a613c",
+			"data": [
+				{
+					"key": "phone",
+					"value": "+33652486597",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "address",
+					"value": "3b rue des bananes",
+					"type": "text",
+					"enabled": true
+				}
+			],
+			"dataMode": "params",
+			"name": "Get : Secretary's doctors",
+			"description": "",
+			"descriptionFormat": "html",
+			"time": 1436385564651,
+			"version": 2,
+			"responses": [],
+			"tests": "",
+			"currentHelper": "normal",
+			"helperAttributes": {}
+		},
+		{
+			"id": "09081a5b-3796-edb4-6aa2-5f0135c4cc5b",
+			"headers": "",
+			"url": "http://localhost:1337/user",
+			"pathVariables": {},
+			"preRequestScript": "",
+			"method": "POST",
+			"collectionId": "749b897e-a838-bde3-d7d1-160bb61a613c",
+			"data": [
+				{
+					"key": "email",
+					"value": "jonathan@hurter.fr",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "phone",
+					"value": "+33680204297",
+					"type": "text",
+					"enabled": true
+				}
+			],
+			"dataMode": "params",
+			"name": "Create : User",
+			"description": "",
+			"descriptionFormat": "html",
+			"time": 1436883211947,
+			"version": 2,
+			"responses": [],
+			"tests": "",
+			"currentHelper": "normal",
+			"helperAttributes": {}
+		},
+		{
+			"id": "0926739a-cab0-576d-9699-a3cb0ca88d40",
+			"headers": "",
+			"url": "localhost:1337/login",
+			"preRequestScript": "",
+			"pathVariables": {},
+			"method": "POST",
+			"data": [
+				{
+					"key": "email",
+					"value": "doctor1@doc.tld",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "password",
+					"value": "doctor1",
+					"type": "text",
+					"enabled": true
+				}
+			],
+			"dataMode": "params",
+			"version": 2,
+			"tests": "",
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1438032564468,
+			"name": "Login : Doctor",
+			"description": "",
+			"collectionId": "749b897e-a838-bde3-d7d1-160bb61a613c"
+		},
+		{
+			"id": "13c587f5-6eb6-7b9b-9d0f-b873de9f5510",
+			"headers": "",
+			"url": "localhost:1337/patient",
+			"preRequestScript": "",
+			"pathVariables": {},
+			"method": "POST",
+			"data": [
+				{
+					"key": "token",
+					"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6IjU1OTg0YzczZTJlM2FjOTEyN2IwZjlkOSIsImlhdCI6MTQzNjg4MTQwMSwiZXhwIjoxNDM2OTUzNDAxfQ.QDzO2fQ1Hm6vXYvufY0fe5e4Y0FdjGm4PTxJjw3MVis",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "email",
+					"value": "jonathan.hurter@gmail.com",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "phone",
+					"value": "+33680204297",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "lastName",
+					"value": "Jonathan",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "firstName",
+					"value": "HURTER",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "dateOfBirth",
+					"value": "09-30-1994",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "phoneNumber",
+					"value": "+33680204297",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "address",
+					"value": "3a rue des alouettes 67150 HINDISHEIM",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "gender",
+					"value": "Mr.",
+					"type": "text",
+					"enabled": true
+				}
+			],
+			"dataMode": "params",
+			"version": 2,
+			"tests": "",
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1436881905914,
+			"name": "Create : Patient (From medicalPro)",
+			"description": "",
+			"collectionId": "749b897e-a838-bde3-d7d1-160bb61a613c",
+			"responses": []
+		},
+		{
+			"id": "18247645-b64a-b055-34ac-da6b2a770539",
+			"headers": "token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6IjU1OTg0YzNkZTJlM2FjOTEyN2IwZjlkMSIsImlhdCI6MTQzNjQ2OTIzMiwiZXhwIjoxNDM2NTU1NjMyfQ.tCyj24ECRwSd1AAHtCPAHgyl3VGyIfveQAElm1ZT1Jc\n",
+			"url": "http://localhost:1337/secretary/doctors",
+			"pathVariables": {},
+			"preRequestScript": "",
+			"method": "GET",
+			"collectionId": "749b897e-a838-bde3-d7d1-160bb61a613c",
+			"data": [
+				{
+					"key": "email",
+					"value": "jonathan@hurter.fr",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "password",
+					"value": "test",
+					"type": "text",
+					"enabled": true
+				}
+			],
+			"dataMode": "params",
+			"name": "Get : Secretary's doctors (from token)",
+			"description": "",
+			"descriptionFormat": "html",
+			"time": 1436472623679,
+			"version": 2,
+			"responses": [],
+			"tests": "",
+			"currentHelper": "normal",
+			"helperAttributes": {}
+		},
+		{
+			"id": "30d975b1-057e-f085-b8a8-8a5b87e7b552",
+			"headers": "token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6IjU1OTg0YzNkZTJlM2FjOTEyN2IwZjlkMSIsImlhdCI6MTQzNjM5ODU0NywiZXhwIjoxNDM2NDA5MzQ3fQ.oAh5M5L37vc0OFwZXED_XO-wOnnY6vdPDDcjLz9TRWA\n",
+			"url": "http://localhost:1337/reservation/559db3fe84d68fb97ff5f735",
+			"pathVariables": {},
+			"preRequestScript": "",
+			"method": "DELETE",
+			"collectionId": "749b897e-a838-bde3-d7d1-160bb61a613c",
+			"data": [],
+			"dataMode": "params",
+			"name": "Delete : Reservation",
+			"description": "",
+			"descriptionFormat": "html",
+			"time": 1436398654621,
+			"version": 2,
+			"responses": [],
+			"tests": "",
+			"currentHelper": "normal",
+			"helperAttributes": {}
+		},
+		{
+			"collectionId": "749b897e-a838-bde3-d7d1-160bb61a613c",
+			"id": "3eba11ed-9318-c93e-951b-aaf7292787cb",
+			"name": "Create Reservation",
+			"description": "",
+			"url": "localhost:1337/reservation",
+			"method": "POST",
+			"headers": "",
+			"data": [
+				{
+					"key": "token",
+					"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6IjU1OTA0ODM2ODJiYTRkZmQ0OTIxMjQwZSIsImlhdCI6MTQzNTUxOTA0MiwiZXhwIjoxNDM1NTI5ODQyfQ.aIkNYWD4Az-gxwTYBDHBFsaTNretVUkj15DuE2UQUbc",
+					"type": "text"
+				},
+				{
+					"key": "doctor",
+					"value": "5590483682ba4dfd4921240f",
+					"type": "text"
+				},
+				{
+					"key": "category",
+					"value": "559049a982ba4dfd49212411",
+					"type": "text"
+				},
+				{
+					"key": "weekDay",
+					"value": "0",
+					"type": "text"
+				},
+				{
+					"key": "start",
+					"value": "600",
+					"type": "text"
+				},
+				{
+					"key": "end",
+					"value": "720",
+					"type": "text"
+				}
+			],
+			"dataMode": "params",
+			"timestamp": 0,
+			"responses": [],
+			"version": 2,
+			"preRequestScript": "",
+			"tests": ""
+		},
+		{
+			"id": "43012c84-4b27-0101-c91b-cbe01193f741",
+			"headers": "",
+			"url": "localhost:1337/doctor/search?name=e&date=2015/07/19",
+			"preRequestScript": "",
+			"pathVariables": {},
+			"method": "GET",
+			"data": [
+				{
+					"key": "lastName",
+					"value": "Nicki",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "firstName",
+					"value": "Nick",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "phoneNumber",
+					"value": "+33654789632",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "dateOfBirth",
+					"value": "1974-10-12T13:48:15.000Z",
+					"type": "text",
+					"enabled": true
+				}
+			],
+			"dataMode": "params",
+			"version": 2,
+			"tests": "",
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1438473821070,
+			"name": "Update : Patient",
+			"description": "",
+			"collectionId": "749b897e-a838-bde3-d7d1-160bb61a613c",
+			"responses": []
+		},
+		{
+			"id": "44d5e2c7-ee71-98f1-df27-b6d50aeaded9",
+			"headers": "token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6IjU1OTg0YzNkZTJlM2FjOTEyN2IwZjlkMSIsImlhdCI6MTQzNjMwMzc3NiwiZXhwIjoxNDM2MzE0NTc2fQ.iNxsGx3WUgnDpSNclB0w0NGVZDucsQvNOdPPNz7fW3Y\n",
+			"url": "localhost:1337/doctor/559c4228016fbc36406cf08f",
+			"pathVariables": {},
+			"preRequestScript": "",
+			"method": "GET",
+			"collectionId": "749b897e-a838-bde3-d7d1-160bb61a613c",
+			"data": [],
+			"dataMode": "params",
+			"name": "Get : Doctor (one)",
+			"description": "",
+			"descriptionFormat": "html",
+			"time": 1436304072622,
+			"version": 2,
+			"responses": [],
+			"tests": "",
+			"currentHelper": "normal",
+			"helperAttributes": {}
+		},
+		{
+			"collectionId": "749b897e-a838-bde3-d7d1-160bb61a613c",
+			"id": "4a91f432-adff-c0c0-825e-ed6b69d785b3",
+			"name": "Create Category",
+			"description": "",
+			"url": "localhost:1337/category",
+			"method": "POST",
+			"headers": "",
+			"data": [
+				{
+					"key": "token",
+					"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6IjU1OTA0ODM2ODJiYTRkZmQ0OTIxMjQwZSIsImlhdCI6MTQzNTUxOTA0MiwiZXhwIjoxNDM1NTI5ODQyfQ.aIkNYWD4Az-gxwTYBDHBFsaTNretVUkj15DuE2UQUbc",
+					"type": "text"
+				},
+				{
+					"key": "doctor",
+					"value": "5590483682ba4dfd4921240f",
+					"type": "text"
+				},
+				{
+					"key": "name",
+					"value": "Test",
+					"type": "text"
+				},
+				{
+					"key": "color",
+					"value": "FFFFFF",
+					"type": "text"
+				},
+				{
+					"key": "blocked",
+					"value": "false",
+					"type": "text"
+				}
+			],
+			"dataMode": "params",
+			"timestamp": 0,
+			"responses": [],
+			"version": 2,
+			"preRequestScript": "",
+			"tests": ""
+		},
+		{
+			"id": "5014062e-51cc-ef5b-d19a-6e05ddd04da4",
+			"headers": "token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6IjU1OTg0YzNkZTJlM2FjOTEyN2IwZjlkMSIsImlhdCI6MTQzNjM4NTA4MCwiZXhwIjoxNDM2Mzk1ODgwfQ.NIdeiT8akYx0tkB9df64KegtQNAdMO8jxK_g1yRYycs\n",
+			"url": "http://localhost:1337/secretary",
+			"pathVariables": {},
+			"preRequestScript": "",
+			"method": "GET",
+			"collectionId": "749b897e-a838-bde3-d7d1-160bb61a613c",
+			"data": [
+				{
+					"key": "email",
+					"value": "jonathan@hurter.fr",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "password",
+					"value": "test",
+					"type": "text",
+					"enabled": true
+				}
+			],
+			"dataMode": "params",
+			"name": "Get : Secretaries",
+			"description": "",
+			"descriptionFormat": "html",
+			"time": 1436385137429,
+			"version": 2,
+			"responses": [],
+			"tests": "",
+			"currentHelper": "normal",
+			"helperAttributes": {}
+		},
+		{
+			"collectionId": "749b897e-a838-bde3-d7d1-160bb61a613c",
+			"id": "5489e915-fc47-10a1-7096-690729fbc8bf",
+			"name": "Create : Appointment",
+			"description": "",
+			"url": "localhost:1337/appointment",
+			"method": "POST",
+			"headers": "",
+			"data": [
+				{
+					"key": "token",
+					"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6IjU1OTg0YzczZTJlM2FjOTEyN2IwZjlkNCIsImlhdCI6MTQzNjEyNTk1MCwiZXhwIjoxNDM2MTM2NzUwfQ.q9bWk1YUQ25IUrrBdRzcu-XJ9J9Ek1ZhzmeTJfQReKg",
+					"type": "text"
+				},
+				{
+					"key": "start",
+					"value": "07-06-2015 10:00",
+					"type": "text"
+				},
+				{
+					"key": "end",
+					"value": "07-06-2015 11:15",
+					"type": "text"
+				},
+				{
+					"key": "patient",
+					"value": "55984d29e2e3ac9127b0f9d8",
+					"type": "text"
+				},
+				{
+					"key": "category",
+					"value": "55984c73e2e3ac9127b0f9d6",
+					"type": "text"
+				}
+			],
+			"dataMode": "params",
+			"timestamp": 0,
+			"responses": [],
+			"version": 2,
+			"preRequestScript": "",
+			"tests": ""
+		},
+		{
+			"id": "55355d47-95f3-fa13-cf6a-6058aee07ec1",
+			"headers": "",
+			"url": "http://localhost:1337/reset",
+			"pathVariables": {},
+			"preRequestScript": "",
+			"method": "POST",
+			"collectionId": "749b897e-a838-bde3-d7d1-160bb61a613c",
+			"data": [
+				{
+					"key": "token",
+					"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJyZXNldF91c2VyIjoiNTVhNTE2MGFmNjIzNGFmMDVkMDBmMTUyIiwiaWF0IjoxNDM2ODgzMTU3LCJleHAiOjE0MzY5NTUxNTd9.YRe6OBAsq8R1ko8aXm80wUdDJ5rJh4_y6HUFhHs5evI",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "password",
+					"value": "123456",
+					"type": "text",
+					"enabled": true
+				}
+			],
+			"dataMode": "params",
+			"name": "Update : Reset password",
+			"description": "",
+			"descriptionFormat": "html",
+			"time": 1436883550915,
+			"version": 2,
+			"responses": [],
+			"tests": "",
+			"currentHelper": "normal",
+			"helperAttributes": {}
+		},
+		{
+			"collectionId": "749b897e-a838-bde3-d7d1-160bb61a613c",
+			"id": "5641183a-5ca7-806c-cfe5-15ba6b1e40de",
+			"name": "Get appointments",
+			"description": "",
+			"url": "localhost:1337/appointment/doctor?start=06-21-2015&end=06-29-2015&state=waitingForUserAcceptation,accepted",
+			"method": "GET",
+			"headers": "token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6IjU1OTg0YzczZTJlM2FjOTEyN2IwZjlkNCIsImlhdCI6MTQzNjEzMTE5NywiZXhwIjoxNDM2MTQxOTk3fQ.nRIOT8mGEUh8QaETv0AvvKqRPVhH2VGLS69u34ItiVs\n",
+			"data": [
+				{
+					"key": "email",
+					"value": "doctor.schmitt@doctors.fr",
+					"type": "text"
+				},
+				{
+					"key": "password",
+					"value": "myPassword",
+					"type": "text"
+				}
+			],
+			"dataMode": "params",
+			"timestamp": 0,
+			"version": 2,
+			"time": 1436131221640,
+			"preRequestScript": "",
+			"tests": ""
+		},
+		{
+			"collectionId": "749b897e-a838-bde3-d7d1-160bb61a613c",
+			"id": "6afa8e57-10d0-4089-357e-81e57d1dd432",
+			"name": "Create : Patient (From user)",
+			"description": "",
+			"url": "localhost:1337/patient",
+			"method": "POST",
+			"headers": "",
+			"data": [
+				{
+					"key": "token",
+					"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6IjU1OTA0N2VhODJiYTRkZmQ0OTIxMjQwYSIsImlhdCI6MTQzNTYxOTM0MywiZXhwIjoxNDM1NjMwMTQzfQ.gHB_Ew3NN2MHRMgBJlKGakLdSg_3T8NKYghJT7ElMFs",
+					"type": "text"
+				},
+				{
+					"key": "lastName",
+					"value": "Hurter",
+					"type": "text"
+				},
+				{
+					"key": "firstName",
+					"value": "Jonathan",
+					"type": "text"
+				},
+				{
+					"key": "phoneNumber",
+					"value": "0680204297",
+					"type": "text"
+				},
+				{
+					"key": "dateOfBirth",
+					"value": "09-28-1994",
+					"type": "text"
+				},
+				{
+					"key": "address",
+					"value": "3a rue des alouettes 67150 HINDISHEIM",
+					"type": "text"
+				},
+				{
+					"key": "gender",
+					"value": "Mr.",
+					"type": "text"
+				}
+			],
+			"dataMode": "params",
+			"timestamp": 0,
+			"responses": [],
+			"version": 2,
+			"preRequestScript": "",
+			"tests": ""
+		},
+		{
+			"collectionId": "749b897e-a838-bde3-d7d1-160bb61a613c",
+			"id": "6f408b25-0681-37b6-b5fe-b6772333441d",
+			"name": "Login : Secretary",
+			"description": "",
+			"url": "localhost:1337/login",
+			"method": "POST",
+			"headers": "",
+			"data": [
+				{
+					"key": "email",
+					"value": "jonathan@hurter.fr",
+					"type": "text"
+				},
+				{
+					"key": "password",
+					"value": "test",
+					"type": "text"
+				}
+			],
+			"dataMode": "params",
+			"timestamp": 0,
+			"responses": [],
+			"version": 2,
+			"preRequestScript": "",
+			"tests": ""
+		},
+		{
+			"id": "729fd52a-3394-dc3d-5e66-b06b29f26285",
+			"headers": "",
+			"url": "http://localhost:1337/reset?email=jonathan@hurter.fr",
+			"pathVariables": {},
+			"preRequestScript": "",
+			"method": "GET",
+			"collectionId": "749b897e-a838-bde3-d7d1-160bb61a613c",
+			"data": [
+				{
+					"key": "email",
+					"value": "jonathan@hurter.fr",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "phone",
+					"value": "+33680204297",
+					"type": "text",
+					"enabled": true
+				}
+			],
+			"dataMode": "params",
+			"name": "Get : Reset password",
+			"description": "",
+			"descriptionFormat": "html",
+			"time": 1436883222656,
+			"version": 2,
+			"responses": [],
+			"tests": "",
+			"currentHelper": "normal",
+			"helperAttributes": {}
+		},
+		{
+			"id": "75e6c8c9-5ccd-2553-d532-51c0db27eb3f",
+			"headers": "Content-Type: application/json\n",
+			"url": "localhost:1337/appointment/search",
+			"pathVariables": {},
+			"preRequestScript": "",
+			"method": "POST",
+			"collectionId": "749b897e-a838-bde3-d7d1-160bb61a613c",
+			"data": [],
+			"dataMode": "raw",
+			"name": "Search Appointments",
+			"description": "",
+			"descriptionFormat": "html",
+			"time": 1436840526887,
+			"version": 2,
+			"responses": [],
+			"tests": "",
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"rawModeData": "{\n    \"dates\":[{\n        \"start\":\"2015-07-21T11:00Z\",\n        \"end\":\"2015-07-21T12:00Z\"\n    },\n    {\n        \"start\":\"2015-07-20T10:00Z\",\n        \"end\":\"2015-07-20T12:00Z\"\n    }\n    ],\n    \"categories\":[\"55984c73e2e3ac9127b0fc00\",\"55984c73e2e3ac9127b0fc02\"],\n    \"doctors\": [\"55984c73e2e3ac9127b0f9c0\",\"55984c73e2e3ac9127b0f9c1\"]\n}"
+		},
+		{
+			"collectionId": "749b897e-a838-bde3-d7d1-160bb61a613c",
+			"id": "7a4aedd1-7772-c069-83fa-465b4169e479",
+			"name": "Get : Patient (one)",
+			"description": "",
+			"url": "localhost:1337/patient/55984d29e2e3ac9127b0f9d8",
+			"method": "GET",
+			"headers": "token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6IjU1OTg0YzczZTJlM2FjOTEyN2IwZjlkNCIsImlhdCI6MTQzNjEzMTE5NywiZXhwIjoxNDM2MTQxOTk3fQ.nRIOT8mGEUh8QaETv0AvvKqRPVhH2VGLS69u34ItiVs\n",
+			"data": [],
+			"dataMode": "params",
+			"timestamp": 0,
+			"responses": [],
+			"version": 2,
+			"preRequestScript": "",
+			"tests": ""
+		},
+		{
+			"collectionId": "749b897e-a838-bde3-d7d1-160bb61a613c",
+			"id": "7f46079d-567a-8684-fc82-30ddb26eccb5",
+			"name": "Update : Doctor appointments",
+			"description": "",
+			"url": "localhost:1337/appointment/55994c6b842d29ca7b4731a7",
+			"method": "PUT",
+			"headers": "token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6IjU1OTg0YzczZTJlM2FjOTEyN2IwZjlkNCIsImlhdCI6MTQzNjEzMTE5NywiZXhwIjoxNDM2MTQxOTk3fQ.nRIOT8mGEUh8QaETv0AvvKqRPVhH2VGLS69u34ItiVs\n",
+			"data": [
+				{
+					"key": "state",
+					"value": "accepted",
+					"type": "text"
+				},
+				{
+					"key": "start",
+					"value": "07-06-2015 11:30",
+					"type": "text"
+				},
+				{
+					"key": "end",
+					"value": "07-06-2015 11:45",
+					"type": "text"
+				},
+				{
+					"key": "note",
+					"value": "TestTest",
+					"type": "text"
+				}
+			],
+			"dataMode": "params",
+			"timestamp": 0,
+			"responses": [],
+			"version": 2,
+			"preRequestScript": "",
+			"tests": ""
+		},
+		{
+			"id": "92be41aa-db6b-9c0a-04a9-618c3370d4f6",
+			"headers": "",
+			"url": "http://localhost:1337/category/label/?text=Te",
+			"pathVariables": {},
+			"preRequestScript": "",
+			"method": "GET",
+			"collectionId": "749b897e-a838-bde3-d7d1-160bb61a613c",
+			"data": [],
+			"dataMode": "params",
+			"name": "Get : Labels",
+			"description": "",
+			"descriptionFormat": "html",
+			"time": 1436392776410,
+			"version": 2,
+			"responses": [],
+			"tests": "",
+			"currentHelper": "normal",
+			"helperAttributes": {}
+		},
+		{
+			"id": "9628a304-4d07-2fdb-874b-b164b630996d",
+			"headers": "token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6IjU1OTg0YzNkZTJlM2FjOTEyN2IwZjlkMSIsImlhdCI6MTQzNjM4NTA4MCwiZXhwIjoxNDM2Mzk1ODgwfQ.NIdeiT8akYx0tkB9df64KegtQNAdMO8jxK_g1yRYycs\n",
+			"url": "http://localhost:1337/secretary/55984c3de2e3ac9127b0f9d2",
+			"pathVariables": {},
+			"preRequestScript": "",
+			"method": "GET",
+			"collectionId": "749b897e-a838-bde3-d7d1-160bb61a613c",
+			"data": [
+				{
+					"key": "email",
+					"value": "jonathan@hurter.fr",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "password",
+					"value": "test",
+					"type": "text",
+					"enabled": true
+				}
+			],
+			"dataMode": "params",
+			"name": "Get : Secretary",
+			"description": "",
+			"descriptionFormat": "html",
+			"time": 1436385160430,
+			"version": 2,
+			"responses": [],
+			"tests": "",
+			"currentHelper": "normal",
+			"helperAttributes": {}
+		},
+		{
+			"id": "9be2e5b3-cfcc-50d9-4c69-a15c928db2fa",
+			"headers": "",
+			"url": "localhost:1337/doctor/search?speciality=Generaliste&name=Leonardo",
+			"pathVariables": {},
+			"preRequestScript": "",
+			"method": "GET",
+			"collectionId": "749b897e-a838-bde3-d7d1-160bb61a613c",
+			"data": [
+				{
+					"key": "token",
+					"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6IjU1OTg0YzczZTJlM2FjOTEyN2IwZjlkOSIsImlhdCI6MTQzODQ0ODc5OCwiZXhwIjoxNDM4NTIwNzk4fQ.cqxXSzoFdq873BjGZAnR4HubMxHuouLHRO3lFdV7iis",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "email",
+					"value": "jonathan.hurter@gmail.com",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "phone",
+					"value": "+33680204297",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "lastName",
+					"value": "Jonathan",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "firstName",
+					"value": "HURTER",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "dateOfBirth",
+					"value": "09-30-1994",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "address",
+					"value": "3a rue des alouettes 67150 HINDISHEIM",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "gender",
+					"value": "Mr.",
+					"type": "text",
+					"enabled": true
+				}
+			],
+			"dataMode": "params",
+			"name": "Search Doctors",
+			"description": "",
+			"descriptionFormat": "html",
+			"time": 1438449941789,
+			"version": 2,
+			"responses": [],
+			"tests": "",
+			"currentHelper": "normal",
+			"helperAttributes": {}
+		},
+		{
+			"collectionId": "749b897e-a838-bde3-d7d1-160bb61a613c",
+			"id": "9ff06539-407e-45fd-5274-3919756d528b",
+			"name": "Get : Doctor categories",
+			"description": "",
+			"url": "localhost:1337/category?doctor=55984c73e2e3ac9127b0f9d5",
+			"method": "GET",
+			"headers": "token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6IjU1OTg0YzNkZTJlM2FjOTEyN2IwZjlkMSIsImlhdCI6MTQzNjEyNjMyOCwiZXhwIjoxNDM2MTM3MTI4fQ.Ra8wFmcQK8V-W5nzuMZPUUcq0V9cZiPRruv8Yr08iec\n",
+			"data": [
+				{
+					"key": "email",
+					"value": "jonathan@hurter.fr",
+					"type": "text"
+				},
+				{
+					"key": "password",
+					"value": "test",
+					"type": "text"
+				}
+			],
+			"dataMode": "params",
+			"timestamp": 0,
+			"responses": [],
+			"version": 2,
+			"preRequestScript": "",
+			"tests": ""
+		},
+		{
+			"id": "a515bbab-92e4-a999-de27-4d6a7caa2258",
+			"headers": "token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6IjU1OTg0YzczZTJlM2FjOTEyN2IwZjlkOSIsImlhdCI6MTQzODAzMjU2NywiZXhwIjoxNDM4MTA0NTY3fQ._IZbEf7bLsxSPtgJFhPIWOXJBzz_5LLopfLSP3c_AFY\n",
+			"url": "http://localhost:1337/patient/55984c73e2e3ac9127b0f9a1/appointments?start=2015-07-19",
+			"preRequestScript": "",
+			"pathVariables": {},
+			"method": "GET",
+			"data": [],
+			"dataMode": "params",
+			"version": 2,
+			"tests": "",
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1438032985286,
+			"name": "Get : Patient appointments",
+			"description": "",
+			"collectionId": "749b897e-a838-bde3-d7d1-160bb61a613c",
+			"responses": []
+		},
+		{
+			"id": "a756a773-9373-fb7b-d96a-acbb962a3191",
+			"headers": "token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6IjU1OTg0YzNkZTJlM2FjOTEyN2IwZjlkMSIsImlhdCI6MTQzNjM4NTA4MCwiZXhwIjoxNDM2Mzk1ODgwfQ.NIdeiT8akYx0tkB9df64KegtQNAdMO8jxK_g1yRYycs\n",
+			"url": "http://localhost:1337/secretary/55984c3de2e3ac9127b0f9d2",
+			"pathVariables": {},
+			"preRequestScript": "",
+			"method": "POST",
+			"collectionId": "749b897e-a838-bde3-d7d1-160bb61a613c",
+			"data": [
+				{
+					"key": "phone",
+					"value": "+33652486597",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "address",
+					"value": "3b rue des bananes",
+					"type": "text",
+					"enabled": true
+				}
+			],
+			"dataMode": "params",
+			"name": "Update : Secretary",
+			"description": "",
+			"descriptionFormat": "html",
+			"time": 1436385240316,
+			"version": 2,
+			"responses": [],
+			"tests": "",
+			"currentHelper": "normal",
+			"helperAttributes": {}
+		},
+		{
+			"id": "ac2949c0-5fdd-b340-9fdf-dd227c970fb8",
+			"headers": "token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6IjU1OTg0YzNkZTJlM2FjOTEyN2IwZjlkMSIsImlhdCI6MTQzNjM4NTA4MCwiZXhwIjoxNDM2Mzk1ODgwfQ.NIdeiT8akYx0tkB9df64KegtQNAdMO8jxK_g1yRYycs\n",
+			"url": "http://localhost:1337/category/55984c73e2e3ac9127b0f9d6",
+			"pathVariables": {},
+			"preRequestScript": "",
+			"method": "POST",
+			"collectionId": "749b897e-a838-bde3-d7d1-160bb61a613c",
+			"data": [
+				{
+					"key": "name",
+					"value": "Test",
+					"type": "text",
+					"enabled": true
+				}
+			],
+			"dataMode": "params",
+			"name": "Update : Category",
+			"description": "",
+			"descriptionFormat": "html",
+			"time": 1436395282122,
+			"version": 2,
+			"responses": [],
+			"tests": "",
+			"currentHelper": "normal",
+			"helperAttributes": {}
+		},
+		{
+			"id": "b86e81f1-ee4b-09f9-a08d-8d54de43f9ab",
+			"headers": "token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6IjU1OTg0YmVlZTJlM2FjOTEyN2IwZjljZiIsImlhdCI6MTQzNjM5ODA2NSwiZXhwIjoxNDM2NDA4ODY1fQ.bfDo-n8Xu_TZbtECLlTaSc4uURamPHdJxrD_lwanSwg\n",
+			"url": "http://localhost:1337/reservation/55984cdfe2e3ac9127b0f9d7",
+			"pathVariables": {},
+			"preRequestScript": "",
+			"method": "GET",
+			"collectionId": "749b897e-a838-bde3-d7d1-160bb61a613c",
+			"data": [],
+			"dataMode": "params",
+			"name": "Get : Reservation (One)",
+			"description": "",
+			"descriptionFormat": "html",
+			"time": 1436398160203,
+			"version": 2,
+			"responses": [],
+			"tests": "",
+			"currentHelper": "normal",
+			"helperAttributes": {}
+		},
+		{
+			"id": "c921a42f-9d87-c72d-0eac-8cb4b161e463",
+			"headers": "token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6IjU1OTg0YzNkZTJlM2FjOTEyN2IwZjlkMSIsImlhdCI6MTQzNjMwMzc3NiwiZXhwIjoxNDM2MzE0NTc2fQ.iNxsGx3WUgnDpSNclB0w0NGVZDucsQvNOdPPNz7fW3Y\n",
+			"url": "localhost:1337/doctor",
+			"preRequestScript": "",
+			"pathVariables": {},
+			"method": "POST",
+			"data": [
+				{
+					"key": "email",
+					"value": "doctor.schmitt2@doctors.fr",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "phone",
+					"value": "+33652489752",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "password",
+					"value": "myPassword",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "firstName",
+					"value": "MyDoctor",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "lastName",
+					"value": "TMTC",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "gender",
+					"value": "Mr.",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "speciality",
+					"value": "Generaliste",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "languages",
+					"value": "Fr,En",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "activities",
+					"value": "Test",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "website",
+					"value": "hurter.fr",
+					"type": "text",
+					"enabled": true
+				}
+			],
+			"dataMode": "params",
+			"version": 2,
+			"tests": "",
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1436303916576,
+			"name": "Create : Doctor",
+			"description": "",
+			"collectionId": "749b897e-a838-bde3-d7d1-160bb61a613c",
+			"responses": []
+		},
+		{
+			"id": "ddbcf52a-110c-de9b-0d4a-2f0af5f473c8",
+			"headers": "token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6IjU1OTg0YmVlZTJlM2FjOTEyN2IwZjlkMCIsImlhdCI6MTQzNjM5OTU3NiwiZXhwIjoxNDM2NDEwMzc2fQ.2w9umeCbBzAcA_oihwsiIo0o6zVQBbG3wUiJKh_Juc0\n",
+			"url": "http://localhost:1337/user/55984beee2e3ac9127b0f9d0",
+			"pathVariables": {},
+			"preRequestScript": "",
+			"method": "POST",
+			"collectionId": "749b897e-a838-bde3-d7d1-160bb61a613c",
+			"data": [
+				{
+					"key": "firstName",
+					"value": "Test",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "password",
+					"value": "123",
+					"type": "text",
+					"enabled": true
+				}
+			],
+			"dataMode": "params",
+			"name": "Update : User",
+			"description": "",
+			"descriptionFormat": "html",
+			"time": 1436399735594,
+			"version": 2,
+			"responses": [],
+			"tests": "",
+			"currentHelper": "normal",
+			"helperAttributes": {}
+		},
+		{
+			"collectionId": "749b897e-a838-bde3-d7d1-160bb61a613c",
+			"id": "eed36244-12ec-c471-53c2-3f677f4dd287",
+			"name": "Get : Patient (search)",
+			"description": "",
+			"url": "localhost:1337/patient?lastName=HURTER&firstName=Jonathan&gender=MR.",
+			"method": "GET",
+			"headers": "token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6IjU1OTg0YzczZTJlM2FjOTEyN2IwZjlkNCIsImlhdCI6MTQzNjEzMTE5NywiZXhwIjoxNDM2MTQxOTk3fQ.nRIOT8mGEUh8QaETv0AvvKqRPVhH2VGLS69u34ItiVs\n",
+			"data": [],
+			"dataMode": "params",
+			"timestamp": 0,
+			"responses": [],
+			"version": 2,
+			"preRequestScript": "",
+			"tests": ""
+		},
+		{
+			"collectionId": "749b897e-a838-bde3-d7d1-160bb61a613c",
+			"id": "f4b5d8dd-e048-4a99-2172-9f821f0f9e54",
+			"name": "Create : Secretary",
+			"description": "",
+			"url": "localhost:1337/secretary",
+			"method": "POST",
+			"headers": "",
+			"data": [
+				{
+					"key": "email",
+					"value": "jonathan@hurter.fr",
+					"type": "text"
+				},
+				{
+					"key": "phone",
+					"value": "1234",
+					"type": "text"
+				},
+				{
+					"key": "password",
+					"value": "test",
+					"type": "text"
+				},
+				{
+					"key": "secr_phone",
+					"value": "1234",
+					"type": "text"
+				},
+				{
+					"key": "address",
+					"value": "3a rue des bananes",
+					"type": "text"
+				},
+				{
+					"key": "token",
+					"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6IjU1ODZmZDVmMzQ5NDBmY2E1ZjE0Yjg5MyIsImlhdCI6MTQzNDkxMDI3NCwiZXhwIjoxNDM0OTIxMDc0fQ.eu9pCNGjvxhmv6vbZGIT2jnIUWApXqGgXZqZWE6KfGA",
+					"type": "text"
+				}
+			],
+			"dataMode": "params",
+			"timestamp": 0,
+			"responses": [],
+			"version": 2,
+			"preRequestScript": "",
+			"tests": ""
+		},
+		{
+			"collectionId": "749b897e-a838-bde3-d7d1-160bb61a613c",
+			"id": "f6601da5-1eae-caec-c1d8-92a3c95e62bb",
+			"name": "Delete : Appointment",
+			"description": "",
+			"url": "localhost:1337/appointment/5594766b0991cfd21aeb0fac",
+			"method": "DELETE",
+			"headers": "token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6IjU1OTA0ODM2ODJiYTRkZmQ0OTIxMjQwZSIsImlhdCI6MTQzNTc5Mjg2MywiZXhwIjoxNDM1ODAzNjYzfQ.4EjPrx9S7uJqDFZ7SECHhrwN9fqVwMWNHDcJpP6e4ts\n",
+			"data": [],
+			"dataMode": "params",
+			"timestamp": 0,
+			"responses": [],
+			"version": 2,
+			"preRequestScript": "",
+			"tests": ""
+		},
+		{
+			"id": "fba42e01-4fa9-7d46-0dfe-999b6673a1ac",
+			"headers": "token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6IjU1OTg0YzczZTJlM2FjOTEyN2IwZjlkOSIsImlhdCI6MTQzNzMxMzE4MywiZXhwIjoxNDM3Mzg1MTgzfQ.qhTA6KFE9CAi55ll7re0Bk_TyUmnaSfpo5UmERdoXqY\n",
+			"url": "localhost:1337/patient/name/?name=hu",
+			"pathVariables": {},
+			"preRequestScript": "",
+			"method": "GET",
+			"collectionId": "749b897e-a838-bde3-d7d1-160bb61a613c",
+			"data": [
+				{
+					"key": "email",
+					"value": "doctor1@doc.tld",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "password",
+					"value": "doctor1",
+					"type": "text",
+					"enabled": true
+				}
+			],
+			"dataMode": "params",
+			"name": "Get : Patient (search by name)",
+			"description": "",
+			"descriptionFormat": "html",
+			"time": 1437325556391,
+			"version": 2,
+			"responses": [],
+			"tests": "",
+			"currentHelper": "normal",
+			"helperAttributes": {}
+		},
+		{
+			"id": "fc22c75c-16e5-ab3f-d55e-9180bfb378f1",
+			"headers": "token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6IjU1OTg0YmVlZTJlM2FjOTEyN2IwZjljZiIsImlhdCI6MTQzNjM5ODA2NSwiZXhwIjoxNDM2NDA4ODY1fQ.bfDo-n8Xu_TZbtECLlTaSc4uURamPHdJxrD_lwanSwg\n",
+			"url": "http://localhost:1337/reservation/",
+			"pathVariables": {},
+			"preRequestScript": "",
+			"method": "GET",
+			"collectionId": "749b897e-a838-bde3-d7d1-160bb61a613c",
+			"data": [],
+			"dataMode": "params",
+			"name": "Get : Reservations",
+			"description": "",
+			"descriptionFormat": "html",
+			"time": 1436398097593,
+			"version": 2,
+			"responses": [],
+			"tests": "",
+			"currentHelper": "normal",
+			"helperAttributes": {}
+		},
+		{
+			"id": "fd1de8b0-6142-1660-f802-23032185cec8",
+			"headers": "token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6IjU1OTg0YmVlZTJlM2FjOTEyN2IwZjlkMCIsImlhdCI6MTQzNjM5OTU3NiwiZXhwIjoxNDM2NDEwMzc2fQ.2w9umeCbBzAcA_oihwsiIo0o6zVQBbG3wUiJKh_Juc0\n",
+			"url": "localhost:1337/user/55984beee2e3ac9127b0f9d0",
+			"pathVariables": {},
+			"preRequestScript": "",
+			"method": "GET",
+			"collectionId": "749b897e-a838-bde3-d7d1-160bb61a613c",
+			"data": [
+				{
+					"key": "email",
+					"value": "demo@some.domain",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "password",
+					"value": "123",
+					"type": "text",
+					"enabled": true
+				}
+			],
+			"dataMode": "params",
+			"name": "Get : User",
+			"description": "",
+			"descriptionFormat": "html",
+			"time": 1436400267154,
+			"version": 2,
+			"responses": [],
+			"tests": "",
+			"currentHelper": "normal",
+			"helperAttributes": {}
+		},
+		{
+			"collectionId": "749b897e-a838-bde3-d7d1-160bb61a613c",
+			"id": "fe980ae2-bf27-cfc0-f916-449b2121550e",
+			"name": "Login : User",
+			"description": "",
+			"url": "localhost:1337/login",
+			"method": "POST",
+			"headers": "",
+			"data": [
+				{
+					"key": "email",
+					"value": "admin@some.domain",
+					"type": "text"
+				},
+				{
+					"key": "password",
+					"value": "adminadmin",
+					"type": "text"
+				}
+			],
+			"dataMode": "params",
+			"timestamp": 0,
+			"responses": [],
+			"version": 2,
+			"preRequestScript": "",
+			"tests": ""
+		}
+	]
+}

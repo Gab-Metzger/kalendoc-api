@@ -1,0 +1,34 @@
+[
+  {
+    "id":"55984c73e2e3ac9127b0fc00",
+    "name":"55984c73e2e3ac9127b0f9e0",
+    "color":"#FF0000",
+    "internal":false,
+    "consultingTime":60,
+    "doctor":"55984c73e2e3ac9127b0f9c1"
+  },
+  {
+    "id":"55984c73e2e3ac9127b0fc01",
+    "name":"55984c73e2e3ac9127b0f9e0",
+    "color":"#FF0000",
+    "internal":true,
+    "consultingTime":60,
+    "doctor":"55984c73e2e3ac9127b0f9c0"
+  },
+  {
+    "id":"55984c73e2e3ac9127b0fc02",
+    "name":"55984c73e2e3ac9127b0f9e3",
+    "color":"#00FF00",
+    "internal":false,
+    "consultingTime":15,
+    "doctor":"55984c73e2e3ac9127b0f9c0"
+  },
+  {
+    "id":"55984c73e2e3ac9127b0fc03",
+    "name":"55984c73e2e3ac9127b0f9e3",
+    "color":"#00FF00",
+    "internal":false,
+    "consultingTime":15,
+    "doctor":"55984c73e2e3ac9127b0f9c1"
+  }
+]

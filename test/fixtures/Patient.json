@@ -1,0 +1,42 @@
+[
+  {
+    "id":"55984c73e2e3ac9127b0f9a0",
+    "lastName":"Furry",
+    "firstName":"Nick",
+    "phoneNumber":"+33654789632",
+    "dateOfBirth":"1974-10-12T13:48:15.000Z",
+    "address":"9 Stark street NYC",
+    "gender":"Mr.",
+    "user":"55984c73e2e3ac9127b0f9d5"
+  },
+  {
+    "id":"55984c73e2e3ac9127b0f9a1",
+    "lastName":"Tony",
+    "firstName":"Stark",
+    "phoneNumber":"+33654789633",
+    "dateOfBirth":"1982-04-13T13:48:15.000Z",
+    "address":"10 Stark street NYC",
+    "gender":"Mr.",
+    "user":"55984c73e2e3ac9127b0f9d5"
+  },
+  {
+    "id":"55984c73e2e3ac9127b0f9a2",
+    "lastName":"Tony",
+    "firstName":"Parker",
+    "phoneNumber":"+33654789634",
+    "dateOfBirth":"1994-09-28T13:48:15.000Z",
+    "address":"11 Stark street NYC",
+    "gender":"Mr.",
+    "user":"55984c73e2e3ac9127b0f9d6"
+  },
+  {
+    "id":"55984c73e2e3ac9127b0f9a3",
+    "lastName":"Aymeric",
+    "firstName":"Pierre",
+    "phoneNumber":"+33654789635",
+    "dateOfBirth":"1999-02-02T13:48:15.000Z",
+    "address":"12 Stark street NYC",
+    "gender":"Mr.",
+    "user":"55984c73e2e3ac9127b0f9d6"
+  }
+]
