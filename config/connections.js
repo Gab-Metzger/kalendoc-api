@@ -29,6 +29,12 @@ module.exports.connections = {
    * Run:
    * npm install sails-mongo
    */
+  mongoDevServer: {
+    adapter: 'sails-mongo',
+    host: 'localhost',
+    port: 27017,
+    database: 'kalendoc'
+  },
 
   mongoProdServer: {
     adapter: 'sails-mongo',

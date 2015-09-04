@@ -24,40 +24,41 @@
  * http://links.sailsjs.org/docs/config/local
  */
 module.exports = {
-  // connections: {
-  //   // Add your connections here, remember install that adapter also
-  //   // MySQL is the world's most popular relational database.
-  //   // Learn more: http://en.wikipedia.org/wiki/MySQL
-  //   // mysql: {
-  //   //   adapter: 'sails-mysql',
-  //   //   host: 'localhost',
-  //   //   user: '',
-  //   //   password: '',
-  //   //   database: '',
-  //   //   charset: 'utf8',
-  //   //   collation: 'utf8_swedish_ci'
-  //   // },
-  //   //
-  //   // mongo: {
-  //   //   adapter:  'sails-mongo',
-  //   //   host: 'localhost',
-  //   //   port: 27017,
-  //   //   database: 'kalendoc'
-  //   // }
-  // },
-  // models: {
-  //   // connection: 'mongo', // Change this to be one of your connections key
-  //   // migration: 'alter'
-  // },
-  // session: {
-  //   secret: '' // Add your own SECRET string here
-  // },
-  // jwt:{
-  //   secret:'Our Biggest Secret',
-  // },
-  // port: 1337,
-  environment: 'production'
-  // log: {
-  //   level: 'verbose'
-  // }
+  connections: {
+    // Add your connections here, remember install that adapter also
+ 
+    // MySQL is the world's most popular relational database.
+    // Learn more: http://en.wikipedia.org/wiki/MySQL
+    // mysql: {
+    //   adapter: 'sails-mysql',
+    //   host: 'localhost',
+    //   user: '',
+    //   password: '',
+    //   database: '',
+    //   charset: 'utf8',
+    //   collation: 'utf8_swedish_ci'
+    // },
+    //
+    // mongo: {
+    //   adapter:  'sails-mongo',
+    //   host: 'localhost',
+    //   port: 27017,
+    //   database: 'kalendoc'
+    // }
+  },
+  models: {
+    // connection: 'mongo', // Change this to be one of your connections key
+    // migration: 'alter'
+  },
+  session: {
+    secret: '' // Add your own SECRET string here
+  },
+  jwt:{
+    secret:'fkzjehf96#UYZ567hhgtdgfdz',
+  },
+  port: 1337,
+  environment: 'development',
+  log: {
+    level: 'verbose'
+  }
 };
