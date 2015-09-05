@@ -63,6 +63,7 @@ module.exports.policies = {
   },
 
   AppointmentController: {
+    'subscribe': true,
     'create': true,
     'findDoctor' : ['loggedIn','medicalPro'],
     'destroy': ['loggedIn'],

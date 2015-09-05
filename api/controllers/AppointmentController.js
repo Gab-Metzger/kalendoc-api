@@ -14,101 +14,60 @@ var uuid = require('uuid');
 
  module.exports = _.merge(_.cloneDeep(require('../base/Controller')), {
 
+  subscribe: function(req, res) {
+    if (req.isSocket) {
+      Appointment.watch(req.socket);
+      console.log("Doctor or Secretary subscribe to " + req.socket.id);
+    }
+  },
+
   create: function(req,res){
     var params = req.allParams();
-    if (!params.patient || !params.category){
+    if (!(params.patient && params.category) && (params.state != 'blockedByDoctor')){
       res.json(400, {err: req.__('Error.Fields.Missing')});
     } else {
-      if ( req.user && (req.user.secretary || req.user.doctor)){
+      if (params.token) {
         params.source = 'doctor';
         params.acceptToken = uuid.v1(); // Using time based token
-        Doctor.findOne(params.doctor, function(err, doctor) {
-          if (err) {
-            return res.json(400, {err: err});
-          } else {
-            AppointmentServices.validateAppointmentDate(req, params, doctor,function(err,params){
-              if (err) {
-                console.log("Erreur 4");
-                res.json(err.status, {err:err.err});
-              } else {
-                Appointment.create(params).exec(function(err,app){
-                  if (err) {
-                    console.log("Erreur 5");
-                    res.json(err.status, {err:err});
-                  } else {
-                    Appointment.findOne(app.id).populate('patient').populate('category').exec(function(err,app){
-                      res.json(200,{appointment:app});
-                      if (app.state === "waitingForUserAcceptation") {
-                        // Send mail
-                      } else if (app.patient) {
-                        // Send confirmation mail
-                        Patient.findOne(app.patient).exec(function(err,patient){
-                          if (!patient) {
-                            Slack.sendAPIMessage("[Mailer] Create appointment : patient not found : "+err);
-                          } else {
-                            Secretary.findOne(doctor.secretary).exec(function(err,secretary){
-                              if (!Secretary) {
-                                Slack.sendAPIMessage("[MAILER] Create appointment : secretary not found : "+err);
-                              } else {
-                                Mailer.sendMail('email-confirmation-rdv-kalendoc',patient.email,[
-                                  {name:"0_FNAME",content:patient.fullName()},
-                                  {name:"1_DNAME",content:doctor.getFullName()},
-                                  {name:"2_DATERDV", content: moment(app.start).utcOffset(0).format("DD/MM/YYYY")},
-                                  {name:"3_HOURRDV", content: moment(app.start).utcOffset(0).format("h:mm")},
-                                  {name:"4_ADDRESS", content: secretary.address}
-                                ], function() {});
-                              }
-                            })
-                          }
-                        });
-                      }
-                    });
-                  }
-                });
-              }
-            });
-          }
-        });
       } else {
         params.source = 'internet';
         params.state   = 'accepted';
-        console.log(params);
-        Appointment.create(params).exec(function(err,app){
-          if (err) {
-            console.log("Erreur 5");
-            res.json(err.status, {err:err});
-          } else {
-            Appointment.findOne(app.id).populate('patient').populate('doctor').populate('category').exec(function(err,app){
-              res.json(200,{appointment:app});
-              var doctor = app.doctor;
-              if (app.state === "waitingForUserAcceptation") {
-                // Send mail
-              } else if (app.patient) {
-                // Send confirmation mail
-                Patient.findOne(app.patient).exec(function(err,patient){
-                  if (!patient) {
-                    Slack.sendAPIMessage("[Mailer] Create appointment : patient not found : "+err);
-                  } else {
-                    Secretary.findOne(doctor.secretary).exec(function(err,secretary){
-                      if (!Secretary) {
-                        Slack.sendAPIMessage("[MAILER] Create appointment : secretary not found : "+err);
-                      } else {
-                        Mailer.sendMail('email-confirmation-rdv-kalendoc',patient.email,[
-                          {name:"0_FNAME",content:patient.fullName()},
-                          {name:"1_DNAME",content:doctor.getFullName()},
-                          {name:"2_DATERDV", content: moment(app.start).utcOffset(0).format("DD/MM/YYYY")},
-                          {name:"3_HOURRDV", content: moment(app.start).utcOffset(0).format("h:mm")},
-                          {name:"4_ADDRESS", content: secretary.address}
-                        ], function() {});
-                      }
-                    })
-                  }
-                });
-              }
-            });
-          }
-        });
       }
+      Appointment.create(params).exec(function(err,app){
+        if (err) {
+          res.json(err.status, {err:err});
+        } else {
+          Appointment.findOne(app.id).populate('patient').populate('doctor').populate('category').exec(function(err,app){
+            res.json(200,{appointment:app});
+            Appointment.publishCreate(app);
+            var doctor = app.doctor;
+            if (app.state === "waitingForUserAcceptation") {
+              // Send mail
+            } else if (app.patient) {
+              // Send confirmation mail
+              Patient.findOne(app.patient).exec(function(err,patient){
+                if (!patient) {
+                  Slack.sendAPIMessage("[Mailer] Create appointment : patient not found : "+err);
+                } else {
+                  Secretary.findOne(doctor.secretary).exec(function(err,secretary){
+                    if (!secretary) {
+                      Slack.sendAPIMessage("[MAILER] Create appointment : secretary not found : "+err);
+                    } else if (patient.email) {
+                      Mailer.sendMail('email-confirmation-rdv-kalendoc',patient.email,[
+                        {name:"0_FNAME",content:patient.fullName()},
+                        {name:"1_DNAME",content:doctor.getFullName()},
+                        {name:"2_DATERDV", content: moment(app.start).format("DD/MM/YYYY")},
+                        {name:"3_HOURRDV", content: moment(app.start).format("h:mm")},
+                        {name:"4_ADDRESS", content: secretary.address}
+                      ], function() {});
+                    }
+                  })
+                }
+              });
+            }
+          });
+        }
+      });
     }
   },
   findDoctor: function(req,res){
