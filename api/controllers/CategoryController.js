@@ -97,7 +97,8 @@ module.exports = _.merge(_.cloneDeep(require('../base/Controller')), {
 
   find: function(req,res){
     var params = req.allParams();
-    Category.find({doctor: params.doctor}).populate('name').exec(function(err,cat){
+    delete params.token;
+    Category.find(params).populate('name').exec(function(err,cat){
       if (err) {
         return res.json(500,{err:err});
       } else {
