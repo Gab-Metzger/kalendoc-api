@@ -1,49 +1,30 @@
 [
     {
-        "id":"55984c73e2e3ac9127b0f9d5",
-        "email": "admin@some.domain",
-        "password":"adminadmin",
-        "phone":"+33680204297"
-    },
-    {
-        "id":"55984c73e2e3ac9127b0f9d6",
-        "email": "demo@some.domain",
-        "password":"johnjohnjohn",
-        "phone":"+33680204297"
-    },
-    {
-        "id":"55984c73e2e3ac9127b0f9d7",
-        "email":"secretary1@secr.tld",
-        "password":"secretary1",
-        "phone":"+33652123456",
-        "secretary":"55984c73e2e3ac9127b0f9b0"
-    },
-    {
-        "id":"55984c73e2e3ac9127b0f9d8",
-        "email":"secretary2@secr.tld",
-        "password":"secretary2",
-        "phone":"+33652123456",
-        "secretary":"55984c73e2e3ac9127b0f9b1"
-    },
-    {
         "id":"55984c73e2e3ac9127b0f9d9",
-        "email":"doctor1@doc.tld",
-        "password":"doctor1",
-        "phone":"+33652123456",
+        "email":"leonardo.uribe@doc.tld",
+        "password":"leonardo",
+        "phone":"+33612345678",
         "doctor":"55984c73e2e3ac9127b0f9c0"
     },
     {
         "id":"55984c73e2e3ac9127b0f9da",
-        "email":"doctor2@doc.tld",
-        "password":"doctor2",
-        "phone":"+33652123456",
+        "email":"christine.muller@doc.tld",
+        "password":"christine",
+        "phone":"+33612345678",
         "doctor":"55984c73e2e3ac9127b0f9c1"
     },
     {
-        "id":"55984c73e2e3ac9127b0f9db",
-        "email":"doctor3@doc.tld",
-        "password":"doctor3",
-        "phone":"+33652123456",
-        "doctor":"55984c73e2e3ac9127b0f9c2"
+        "id":"55984c73e2e3ac9127b0f9d7",
+        "email":"leonardo.uribe@secr.tld",
+        "password":"leonardo",
+        "phone":"+33612345678",
+        "secretary":"55984c73e2e3ac9127b0f9b0"
+    },
+    {
+        "id":"55984c73e2e3ac9127b0f9d8",
+        "email":"christine.muller@secr.tld",
+        "password":"christine",
+        "phone":"+33612345678",
+        "secretary":"55984c73e2e3ac9127b0f9b1"
     }
 ]

@@ -1,34 +1,10 @@
 [
-{
-  "id":"55984c73e2e3ac9127b0ec00",
-  "weekDay":1,
-  "start":600,
-  "end":720,
-  "doctor":"55984c73e2e3ac9127b0f9c0",
-  "category":"55984c73e2e3ac9127b0fc02"
-},
-{
-  "id":"55984c73e2e3ac9127b0ec01",
-  "weekDay":1,
-  "start":720,
-  "end":840,
-  "doctor":"55984c73e2e3ac9127b0f9c0",
-  "category":"55984c73e2e3ac9127b0fc01"
-},
-{
-  "id":"55984c73e2e3ac9127b0ec02",
-  "weekDay":2,
-  "start":600,
-  "end":720,
-  "doctor":"55984c73e2e3ac9127b0f9c1",
-  "category":"55984c73e2e3ac9127b0fc03"
-},
-{
-  "id":"55984c73e2e3ac9127b0ec03",
-  "weekDay":1,
-  "start":600,
-  "end":720,
-  "doctor":"55984c73e2e3ac9127b0f9c1",
-  "category":"55984c73e2e3ac9127b0fc00"
-}
+  {
+    "id":"55984c73e2e3ac9127b0ec00",
+    "weekDay":1,
+    "start":600,
+    "end":720,
+    "doctor":"55984c73e2e3ac9127b0f9c0",
+    "category":"55984c73e2e3ac9127b0fc02"
+  }
 ]
