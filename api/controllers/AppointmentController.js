@@ -56,8 +56,8 @@ var uuid = require('uuid');
                       Mailer.sendMail('email-confirmation-rdv-kalendoc',patient.email,[
                         {name:"0_FNAME",content:patient.fullName()},
                         {name:"1_DNAME",content:doctor.getFullName()},
-                        {name:"2_DATERDV", content: moment(app.start).format("DD/MM/YYYY")},
-                        {name:"3_HOURRDV", content: moment(app.start).format("h:mm")},
+                        {name:"2_DATERDV", content: DateFormat.convertDateObjectToLocal(app.start).format("DD/MM/YYYY")},
+                        {name:"3_HOURRDV", content: DateFormat.convertDateObjectToLocal(app.start).format("h:mm")},
                         {name:"4_ADDRESS", content: secretary.address}
                       ], function() {});
                     }
@@ -151,7 +151,7 @@ var uuid = require('uuid');
                         if (user && app.state != "cancelledByUser") {
                           Mailer.sendMail("email-annulation-rdv",user.email,[
                             {name:"1_DNAME", content:app.doctor.getFullName()},
-                            {name:"2_RDVDATE", content:moment(app.start).format("DD/MM/YYYY")}
+                            {name:"2_RDVDATE", content:DateFormat.convertDateObjectToLocal(app.start).format("DD/MM/YYYY")}
                             ],function(){});
                         }
                       });
@@ -175,7 +175,7 @@ var uuid = require('uuid');
                         if (user) {
                           Mailer.sendMail("email-annulation-rdv",user.email,[
                             {name:"1_DNAME", content:app.doctor.getFullName()},
-                            {name:"2_RDVDATE", content:moment(app.start).format("DD/MM/YYYY")}
+                            {name:"2_RDVDATE", content:DateFormat.convertDateObjectToLocal(app.start).format("DD/MM/YYYY")}
                             ],function(){});
                         }
                       });

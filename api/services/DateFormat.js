@@ -24,6 +24,10 @@ module.exports = {
     return moment(date).tz('Etc/Universal');
   },
 
+  convertDateObjectToLocal: function convertDateObjectToLocal(date) {
+    return moment(date).tz('Europe/Paris');
+  },
+
   /**
    * Helper method to return current time as an UTC time.
    *

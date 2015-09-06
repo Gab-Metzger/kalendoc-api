@@ -28,8 +28,8 @@ module.exports.reminders = function(onlySms){
               if (user.receiveSMS){
                 var message = sails.__({phrase: 'SMS.Reminder.Appointment', locale:'fr'});
                 message = message.replace(/{DOCTOR}/g, app.doctor.firstName+" "+app.doctor.lastName);
-                message = message.replace(/{DATE}/g, moment(app.start).format("D/M/YYYY"));
-                message = message.replace(/{TIME}/g, moment(app.start).format("hh:mm"));
+                message = message.replace(/{DATE}/g, DateFormat.convertDateObjectToLocal(app.start).format("D/M/YYYY"));
+                message = message.replace(/{TIME}/g, DateFormat.convertDateObjectToLocal(app.start).format("hh:mm"));
                 SmsService.sendSMS(message,user.phone, app.doctor.id);
               }
             } else {
@@ -40,9 +40,9 @@ module.exports.reminders = function(onlySms){
                   Mailer.sendMail('email-rappel-rdv-kalendoc', user.email,[
                     {name: "0_FNAME", content: app.patient.firstName+" "+app.patient.lastName},
                     {name: "1_DNAME", content: app.doctor.firstName+" "+app.doctor.lastName},
-                    {name: "2_DATERDV", content:moment(app.start).format("D/M/YYYY")},
-                    {name: "3_HOURRDV", content:moment(app.start).format("hh:mm")},
-                    {name: "4_ADDRESS", content:secr.address},
+                    {name: "2_DATERDV", content: DateFormat.convertDateObjectToLocal(app.start).format("D/M/YYYY")},
+                    {name: "3_HOURRDV", content: DateFormat.convertDateObjectToLocal(app.start).format("hh:mm")},
+                    {name: "4_ADDRESS", content: secr.address},
                     {name: "5_CANCELRDV_URL", content: sails.config.appURL+"auth/login"}
                   ],function(){});
                 }
@@ -178,8 +178,8 @@ module.exports.sendConfirmations = function(){
               locale: 'fr'
             });
             sms_mess = sms_mess.replace(/{DOCTOR}/g, 'Dr.' + app.app.doctor.lastName + ' ' + app.app.doctor.firstName);
-            sms_mess = sms_mess.replace(/{DATE}/g, moment(app.app.start).format("D/M/YYYY"));
-            sms_mess = sms_mess.replace(/{TIME}/g, moment(app.app.start).format("hh:mm"));
+            sms_mess = sms_mess.replace(/{DATE}/g, DateFormat.convertDateObjectToLocal(app.app.start).format("D/M/YYYY"));
+            sms_mess = sms_mess.replace(/{TIME}/g, DateFormat.convertDateObjectToLocal(app.app.start).format("hh:mm"));
 
             SmsService.sendSMS(sms_mess, user.phone);
             User.update(user.id, {
