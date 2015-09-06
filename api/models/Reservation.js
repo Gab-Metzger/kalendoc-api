@@ -43,8 +43,8 @@ module.exports = {
     },
     toJSON: function(){
       var obj = this.toObject();
-      obj.start = DateFormat.convertDateObjectToLocal(new Date()).startOf('day').add(obj.start,'minutes').format();
-      obj.end = DateFormat.convertDateObjectToLocal(new Date()).startOf('day').add(obj.end,'minutes').format();
+      obj.start = moment().startOf('day').add(obj.start,'minutes').toDate();
+      obj.end = moment().startOf('day').add(obj.end,'minutes').toDate();
       return obj;
     }
   },
