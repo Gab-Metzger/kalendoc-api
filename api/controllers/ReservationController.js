@@ -2,6 +2,7 @@
 
 var _ = require('lodash');
 var async = require('async');
+var moment = require('moment');
 
 /**
  * ReservationController
@@ -18,6 +19,8 @@ module.exports = _.merge(_.cloneDeep(require('../base/Controller')),{
       } else {
         if (RightsManager.canAdminDoctor(req.user, doctor)) {
           var params = req.allParams();
+          params.start = moment(params.start).hours() * 60 + moment(params.start).minutes();
+          params.end = moment(params.end).hours() * 60 + moment(params.end).minutes();
           params.doctor = doctor;
           Reservation.create(params,function(err, reserv){
             if (err) {
@@ -45,6 +48,8 @@ module.exports = _.merge(_.cloneDeep(require('../base/Controller')),{
             params.doctor = reserv.doctor.id;
             params.start = params.start || reserv.start;
             params.end = params.end || reserv.end;
+            params.start = moment(params.start).hours() * 60 + moment(params.start).minutes();
+            params.end = moment(params.end).hours() * 60 + moment(params.end).minutes();
             Reservation.update(params.id, params).exec(function(err, reserv){
               if (err) {
                 res.json(400, {err:err});
