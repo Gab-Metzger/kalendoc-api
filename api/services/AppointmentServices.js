@@ -119,18 +119,20 @@ module.exports.findFiveFirstAppointments = function(start, doctor, callback) {
                     return currentTry.isBefore(end);
                   },
                   function(cb){
+                    var startApp = currentTry.toISOString();
+                    var endApp = currentTry.add(increment, 'minutes').toISOString();
                     Appointment.findOne({
                       doctor: doctor.id,
-                      start: {'<=': currentTry.toISOString()},
-                      end: {'>=':currentTry.toISOString()}
+                      start: {'<=': startApp},
+                      end: {'>=': endApp}
                     }).exec(function(err,app){
                       if (err) {
                         console.log("Error on getting reservations (1): "+err);
                       }
                       if (!app) {
-                        res[counts].push(currentTry.toISOString());
+                        res[counts].push(startApp);
                       }
-                      currentTry = currentTry.add(increment,'minutes');
+                      // currentTry = currentTry.add(increment,'minutes');
                       cb();
                     });
                   },

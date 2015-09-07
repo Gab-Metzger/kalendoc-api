@@ -37,7 +37,7 @@ module.exports = _.merge(_.cloneDeep(require('../base/Controller')), {
         req.push({lastName: {contains: name}});
       }
 
-      Patient.find({or: req}).populate('user').exec(function(err,patients){
+      Patient.find({or: req}).exec(function(err,patients){
         if (err) {
           res.json(500, {err:err});
         } else {
@@ -84,42 +84,15 @@ module.exports = _.merge(_.cloneDeep(require('../base/Controller')), {
     var params = req.allParams();
     delete params.user;
     if (params.id){
-      var email = params.email;
-      var phone = params.phone;
-      delete params.email;
-      delete params.phone;
       RightsManager.canAdminPatient(req.user, params.id, function(auth){
         if (!auth) {
           res.json(401, req.__('Error.Rights.Insufficient'))
         } else {
-          console.log(params);
           Patient.update(params.id, params).exec(function(err, patient){
             if (err) {
               res.json(400, {err:err});
             } else if (patient[0]){
-              if (!email && !phone) {
-                User.findOne(patient[0].user).exec(function(err,user){
-                  patient[0].user = user;
-                  res.json(patient[0]);
-                });
-              } else {
-                var user_params={};
-                if (email) {
-                  user_params.email = email;
-                }
-                if (phone) {
-                  user_params.phone = phone;
-                }
-
-                User.update(patient[0].user,user_params).exec(function(err,user){
-                  if (err) {
-                    res.json(400, {err:err});
-                  } else {
-                    patient[0].user = user;
-                    res.json(patient[0]);
-                  }
-                });
-              }
+              res.json(patient[0]);
             } else {
               res.json(404, {err: req.__('Collection.Patient')+" "+req.__('Error.NotFound')});
             }

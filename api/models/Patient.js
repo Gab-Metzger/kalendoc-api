@@ -31,6 +31,9 @@ module.exports = {
     phoneNumber: {
       type: 'string'
     },
+    mobilePhone: {
+      type: 'string'
+    },
     // Patient date of birth
     dateOfBirth: {
       type: 'date'
@@ -46,19 +49,19 @@ module.exports = {
     },
 
     // A patient can be owend by a user.
-    user: {
-      model:'User',
-    },
+    // user: {
+    //   model:'User',
+    // },
 
     fullName: function(){
       return `${this.lastName} ${this.firstName}`
     }
   },
   beforeCreate: function(values,next){
-    if (values.phoneNumber) {
-      var p = phone(values.phoneNumber);
+    if (values.mobilePhone) {
+      var p = phone(values.mobilePhone);
       if (!p[0]) {
-        next('Invalid phone number'+values.phoneNumber);
+        next('Invalid phone number'+values.mobilePhone);
       } else {
         next();
       }
@@ -67,26 +70,12 @@ module.exports = {
     }
   },
   beforeUpdate: function(values, next){
-    if (values.phoneNumber) {
-      var p = phone(values.phoneNumber);
+    if (values.mobilePhone) {
+      var p = phone(values.mobilePhone);
       if (!p[0]) {
-        next('Invalid phone number');
+        next('Invalid phone number'+values.mobilePhone);
       } else {
-        values.phoneNumber = p[0];
-        Patient.findOne({
-          lastName: values.lastName,
-          firstName: values.firstName
-        }).exec(function(err,patient){
-          if (err || !patient ){
-            next();
-          } else {
-            if (patient.id != values.id) {
-              next('This user is already present in database.');
-            } else {
-              next();
-            }
-          }
-        });
+        next();
       }
     } else {
       next();

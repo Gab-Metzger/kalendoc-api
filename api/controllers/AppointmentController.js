@@ -147,14 +147,12 @@ var uuid = require('uuid');
                   } else {
                     res.json(200, apps);
                     if (app.state !== 'blockedByDoctor') {
-                      User.findOne(app.patient.user).exec(function(err,user){
-                        if (user && app.state != "cancelledByUser") {
-                          Mailer.sendMail("email-annulation-rdv",user.email,[
-                            {name:"1_DNAME", content:app.doctor.getFullName()},
-                            {name:"2_RDVDATE", content:DateFormat.convertDateObjectToLocal(app.start).format("DD/MM/YYYY")}
-                            ],function(){});
-                        }
-                      });
+                      if (app.patient.email && app.state != "cancelledByUser") {
+                        Mailer.sendMail("email-annulation-rdv",app.patient.email,[
+                          {name:"1_DNAME", content:app.doctor.getFullName()},
+                          {name:"2_RDVDATE", content:DateFormat.convertDateObjectToLocal(app.start).format("DD/MM/YYYY")}
+                          ],function(){});
+                      }
                     }
                   }
                 });
@@ -171,14 +169,12 @@ var uuid = require('uuid');
                       res.json(500, {err: err})
                     } else {
                       res.json(200, apps);
-                      User.findOne(app.patient.user).exec(function(err,user){
-                        if (user) {
-                          Mailer.sendMail("email-annulation-rdv",user.email,[
-                            {name:"1_DNAME", content:app.doctor.getFullName()},
-                            {name:"2_RDVDATE", content:DateFormat.convertDateObjectToLocal(app.start).format("DD/MM/YYYY")}
-                            ],function(){});
-                        }
-                      });
+                      if (app.patient.email) {
+                        Mailer.sendMail("email-annulation-rdv",app.patient.email,[
+                          {name:"1_DNAME", content:app.doctor.getFullName()},
+                          {name:"2_RDVDATE", content:DateFormat.convertDateObjectToLocal(app.start).format("DD/MM/YYYY")}
+                          ],function(){});
+                      }
                     }
                   });
                 } else {
