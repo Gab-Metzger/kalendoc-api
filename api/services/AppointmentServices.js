@@ -130,7 +130,9 @@ module.exports.findFiveFirstAppointments = function(start, doctor, callback) {
                         console.log("Error on getting reservations (1): "+err);
                       }
                       if (!app) {
-                        res[counts].push(startApp);
+                        if (moment(startApp) >= moment()) {
+                          res[counts].push(startApp);
+                        }
                       }
                       // currentTry = currentTry.add(increment,'minutes');
                       cb();
