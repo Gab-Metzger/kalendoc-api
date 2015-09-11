@@ -42,7 +42,7 @@ module.exports = {
     picture:{
       type:'string'
     },
-    smsSent:{
+    smsAvailable: {
       type: 'integer',
       defaultsTo: 0,
       required: true

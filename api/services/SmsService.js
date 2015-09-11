@@ -21,41 +21,40 @@ module.exports.reminders = function(onlySms){
     if (err) {
       Slack.sendAPIMessage("Error while sending reminders (1): "+err)
     } else {
-      _.forEach(apps,function(app){
-        User.findOne(app.patient.user).exec(function(err,user){
-          if (user) {
-            if (onlySms){
-              if (user.receiveSMS){
-                var message = sails.__({phrase: 'SMS.Reminder.Appointment', locale:'fr'});
-                message = message.replace(/{DOCTOR}/g, app.doctor.firstName+" "+app.doctor.lastName);
-                message = message.replace(/{DATE}/g, DateFormat.convertDateObjectToLocal(app.start).format("D/M/YYYY"));
-                message = message.replace(/{TIME}/g, DateFormat.convertDateObjectToLocal(app.start).format("HH:mm"));
-                SmsService.sendSMS(message,user.phone, app.doctor.id);
-              }
+      _.forEach(apps, function(app) {
+        if (app.patient.mobilePhone && app.sendSMS && SmsService.doctorCanSendSMS(app.doctor)) {
+          var message = sails.__({phrase: 'SMS.Reminder.Appointment', locale:'fr'});
+          message = message.replace(/{DOCTOR}/g, app.doctor.firstName + " " + app.doctor.lastName);
+          message = message.replace(/{DATE}/g, DateFormat.convertDateObjectToLocal(app.start).format("D/M/YYYY"));
+          message = message.replace(/{TIME}/g, DateFormat.convertDateObjectToLocal(app.start).format("HH:mm"));
+          SmsService.sendSMS(message, app.patient.mobilePhone, app.doctor.id);
+        }
+        if (!onlySms && app.patient.email){
+          Secretary.findOne(app.doctor.secretary).exec(function(err,secr){
+            if (!secr) {
+              Slack.sendAPIMessage("Error while sending reminders (3): "+err);
             } else {
-              Secretary.findOne(app.doctor.secretary).exec(function(err,secr){
-                if (!secr) {
-                  Slack.sendAPIMessage("Error while sending reminders (3): "+err);
-                }else {
-                  Mailer.sendMail('email-rappel-rdv-kalendoc', user.email,[
-                    {name: "0_FNAME", content: app.patient.firstName+" "+app.patient.lastName},
-                    {name: "1_DNAME", content: app.doctor.firstName+" "+app.doctor.lastName},
-                    {name: "2_DATERDV", content: DateFormat.convertDateObjectToLocal(app.start).format("D/M/YYYY")},
-                    {name: "3_HOURRDV", content: DateFormat.convertDateObjectToLocal(app.start).format("HH:mm")},
-                    {name: "4_ADDRESS", content: secr.address},
-                    {name: "5_CANCELRDV_URL", content: sails.config.appURL+"auth/login"}
-                  ],function(){});
-                }
-              })
+              Mailer.sendMail('email-rappel-rdv-kalendoc', app.patient.email, [
+                {name: "0_FNAME", content: app.patient.firstName+" "+app.patient.lastName},
+                {name: "1_DNAME", content: app.doctor.firstName+" "+app.doctor.lastName},
+                {name: "2_DATERDV", content: DateFormat.convertDateObjectToLocal(app.start).format("D/M/YYYY")},
+                {name: "3_HOURRDV", content: DateFormat.convertDateObjectToLocal(app.start).format("HH:mm")},
+                {name: "4_ADDRESS", content: secr.address},
+                {name: "5_CANCELRDV_URL", content: sails.config.appURL+"auth/login"}
+              ], function(){});
             }
-
-          } else {
-            Slack.sendAPIMessage("Error while sending reminders (2): Cannot find user for appointment"+app.id+"("+err+")");
-          }
-        })
+          })
+        }
       });
     }
   });
+}
+
+module.exports.doctorCanSendSMS = function(doctor) {
+  if (doctor.smsAvailable === 10) {
+    Slack.sendAPIMessage("Only 10 SMS remaining for Doctor " + doctor.lastName);
+  }
+  return doctor.smsAvailable > 0;
 }
 
 module.exports.analyzeSMS = function(message, sender){
@@ -120,17 +119,17 @@ module.exports.sendSMS = function(user, accepted){
   }
 }*/
 
-module.exports.sendSMS = function(message,receiver, doctor){
+module.exports.sendSMS = function(message, receiver, doctor){
   if(doctor) {
-    Doctor.findOne(doctor).exec(function(err,doct){
+    Doctor.findOne(doctor).exec(function(err, doc){
       if (err) {
-        Slack.sendAPIMessage("[SMS] Error while sending sms : "+err);
-      } else if (!doct) {
-        Slack.sendAPIMessage("[SMS] Unable to find doctor when sending sms : "+doctor);
+        Slack.sendAPIMessage("[SMS] Error while sending sms : " + err);
+      } else if (!doc) {
+        Slack.sendAPIMessage("[SMS] Unable to find doctor when sending sms : " + doctor);
       } else {
-        Doctor.update(doctor,{
-          smsSent: doct.smsSent+1
-        }).exec(function(err,doct){
+        Doctor.update(doctor, {
+          smsAvailable: doc.smsAvailable - 1
+        }).exec(function(err, doc) {
           if (err) {
             Slack.sendAPIMessage("[SMS] Unable to update doctor sms "+doctor+": "+err);
           }
@@ -142,12 +141,12 @@ module.exports.sendSMS = function(message,receiver, doctor){
     var api = new callr.api(sails.config.connections.callr.user, sails.config.connections.callr.pass);
     var optionSMS = {
       push_mo_enabled: true,
-      push_mo_url: sails.config.connections.callr.callback,
+      push_mo_url: sails.config.connections.callr.callback
     };
     api.call('sms.send', '', receiver, message, null).success(function(response) {
         // success callback
-    }).error(function(err){
-      Slack.sendStatusMessage("[API] Cannot send sms : "+err);
+    }).error(function(err) {
+      Slack.sendStatusMessage("[API] Cannot send sms : " + err);
     });
   } else {
     console.log("[FAKE] Sending SMS to " + receiver + " : " + message)

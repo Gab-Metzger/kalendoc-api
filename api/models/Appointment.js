@@ -51,7 +51,10 @@ module.exports = {
       type:'boolean',
       defaultsTo:false
     },
-
+    sendSMS: {
+      type:'boolean',
+      defaultsTo: true
+    },
     patient: {
       model:'Patient'
     },
