@@ -23,5 +23,5 @@
   "Collection.User": "Utilisateur",
   "Collection.Patient": "Patient",
   "SMS.Validate.Appointment":"Vous avez rdv avec le {DOCTOR} le {DATE} à {TIME}. Veuillez confirmer votre rdv en répondant 'oui' pour confirmer ou 'non' pour annuler.",
-  "SMS.Reminder.Appointment":"[RAPPEL] Vous avez un rendez vous avec {DOCTOR} le {DATE} à {TIME}."
+  "SMS.Reminder.Appointment":"Rappel : Vous avez rendez vous avec le Docteur {DOCTOR} le {DATE} à {TIME}."
 }
