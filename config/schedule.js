@@ -8,9 +8,6 @@ module.exports.schedule = {
    // },
 
    "0 0 8 * * *" : function(){
-      SmsService.reminders(true);
-   },
-   "0 0 9 * * *" : function(){
       SmsService.reminders(false);
    }
 };
