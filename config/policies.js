@@ -76,5 +76,8 @@ module.exports.policies = {
     'findName' : ['loggedIn','medicalPro'],
     'findAppointments': ['loggedIn'],
     'update' : ['loggedIn']
+  },
+  SpecialityController: {
+    'findByName': true
   }
 };
