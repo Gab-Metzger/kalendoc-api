@@ -43,7 +43,7 @@ module.exports.connections = {
   callr: {
     user: 'kalendoc',
     pass: process.env.CALLR_PASS,
-    sendSMS: false,
+    sendSMS: true,
     callback: 'http://kalendoc-api.scalingo.io/sms/receive'
   },
 
