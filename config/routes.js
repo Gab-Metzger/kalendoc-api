@@ -38,5 +38,8 @@ module.exports.routes = {
   'GET /category/label/' : 'CategoryController.findLabel',
   'GET /patient/name/' : 'PatientController.findName',
   'GET /patient/:id/appointments' : 'PatientController.findAppointments',
-  'GET /doctor/search':'DoctorController.search'
+  'GET /doctor/search':'DoctorController.search',
+  'GET /message':'MessageController.index',
+  'POST /message':'MessageController.create',
+  'GET /message/count':'MessageController.count'
 };

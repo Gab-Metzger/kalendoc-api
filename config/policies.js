@@ -79,5 +79,8 @@ module.exports.policies = {
   },
   SpecialityController: {
     'findByName': true
+  },
+  MessageController: {
+    '*': ['loggedIn', 'medicalPro']
   }
 };
