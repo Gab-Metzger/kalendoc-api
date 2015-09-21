@@ -66,6 +66,10 @@ var phone = require('phone');
       model:'Doctor'
     },
 
+    delegatedSecretary: {
+      model: 'DelegatedSecretary'
+    },
+
     smsAppointment: {
       model: 'appointment'
     },

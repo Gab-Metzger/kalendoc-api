@@ -20,7 +20,7 @@ module.exports.login = function(email,password,req,callback){
     return callback(req.__('Error.Password.Missing'),400);
   }
 
-  User.findOne({email: email}).populate("doctor").populate("secretary").exec(function(err,user){
+  User.findOne({ email: email }).populateAll().exec(function(err, user) {
     if (err) {
       return callback(err,500);
     }
@@ -36,6 +36,6 @@ module.exports.login = function(email,password,req,callback){
       } else {
         return callback(null,200,user);
       }
-    }); // User : ComparePassword
-  }); // User : findOne
+    });
+  });
 }
