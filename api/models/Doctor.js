@@ -65,6 +65,12 @@ module.exports = {
     degrees:{
       type: 'string'
     },
+    directives: {
+      type: 'string'
+    },
+    openingHours: {
+      type: 'string'
+    },
 
     // List of all doctor appointements.
     appointements: {
