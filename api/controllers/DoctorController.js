@@ -101,6 +101,7 @@ module.exports = _.merge(_.cloneDeep(require('../base/Controller')), {
   },
 
   search: function(req,res) {
+    var startTimer = new Date().getTime();
     var params = req.allParams();
     if (!params.name && !params.speciality && !params.city){
       res.json(400, {err: req.__('Error.Fields.Missing')});
@@ -153,7 +154,9 @@ module.exports = _.merge(_.cloneDeep(require('../base/Controller')), {
               })
             },
             function(done){
+              var endTimer = new Date().getTime();
               res.json(results);
+              console.log("It took " + (endTimer - startTimer) + " milliseconds to search for free appointments");
             }
           )
         }
