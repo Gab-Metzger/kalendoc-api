@@ -20,8 +20,7 @@ var phone = require('phone');
     },
     // User phone number
     phone: {
-      type: 'string',
-      required:true
+      type: 'string'
     },
     password: {
       type: 'string',
@@ -99,24 +98,18 @@ var phone = require('phone');
       values.receiveSMS = false;
       values.receiveBroadcast = false;
     }
-    var p = phone(values.phone)
-    if (! p[0]){
-      callback('Invalid phone number')
-    } else {
-      values.phone = p[0]
-      bcrypt.genSalt(14, function(err,salt){
+    bcrypt.genSalt(14, function(err,salt){
+      if (err) {
+        return callback(err);
+      }
+      bcrypt.hash(values.password, salt, function(err,hash){
         if (err) {
           return callback(err);
         }
-        bcrypt.hash(values.password, salt, function(err,hash){
-          if (err) {
-            return callback(err);
-          }
-          values.password = hash;
-          callback();
-        })
-      });
-    }
+        values.password = hash;
+        callback();
+      })
+    });
   },
   beforeUpdate: function(values, callback) {
     if (values.secretary || values.doctor){
