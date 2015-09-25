@@ -153,9 +153,98 @@ module.exports.findFiveFirstAppointments = function(start, doctor, callback) {
           })
         },
         function(err){
+          var emptyResponse = _.every(res, function(item) {
+            return item.length === 0
+          });
+          if (emptyResponse) {
+            findFirstFreeAppointment(doctor, function (res) {
+              callback(res);
+            });
+          } else {
+            callback(res);
+          }
+        }
+      );
+    }
+  });
+}
+
+function findFirstFreeAppointment(doctor, callback) {
+  var stop = false;
+  var currentDate = moment().startOf('day');
+  var res = null;
+
+  Reservation.findOne({doctor: doctor.id}).exec(function (err, doctorReservations) {
+    if (!doctorReservations) {
+      return res;
+    } else {
+      async.whilst(
+        function() {
+          return !stop
+        },
+        function(cb) {
+          Reservation.find({
+            where: {
+              weekDay: currentDate.day(),
+              doctor: doctor.id
+            },
+            sort: 'start'
+          }).exec(function(err, reservations){
+            if (err) {
+              console.log("Error on getting reservations: "+err);
+            }
+            async.forEachSeries(reservations,
+              function(reservation, cb){
+                var currentTry = moment(currentDate).startOf('day').add(reservation.start,'minutes');
+                var end = moment(currentDate).startOf('day').add(reservation.end,'minutes');
+                var increment =  doctor.consultingTime;
+                var currentTryFormatted = currentTry.format('DD/MM/YYYY');
+
+                async.whilst(
+                  function(){
+                    return currentTry.isBefore(end);
+                  },
+                  function(cb){
+                    var startApp = currentTry.toISOString();
+                    var endApp = currentTry.add(increment, 'minutes').toISOString();
+                    Appointment.findOne({
+                      doctor: doctor.id,
+                      start: {'<=': startApp},
+                      end: {'>=': endApp}
+                    }).exec(function(err,app){
+                      if (err) {
+                        console.log("Error on getting reservations (1): "+err);
+                      }
+                      if (!app) {
+                        if (moment(startApp) >= moment()) {
+                          res = startApp;
+                          stop = true;
+                          callback(res);
+                          return;
+                        }
+                      }
+                      // currentTry = currentTry.add(increment,'minutes');
+                      cb();
+                    });
+                  },
+                  function(err){
+                    cb();
+                  }
+                );
+              },
+              // When it's done !
+              function(err) {
+                currentDate = currentDate.add(1,'day');
+                cb();
+              }
+            );
+          })
+        },
+        function(err){
           callback(res);
         }
       );
+      return res;
     }
   });
 }
