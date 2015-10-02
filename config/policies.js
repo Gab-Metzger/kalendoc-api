@@ -80,6 +80,9 @@ module.exports.policies = {
   SpecialityController: {
     'findByName': true
   },
+  CityController: {
+    'findByName': true
+  },
   MessageController: {
     '*': ['loggedIn', 'medicalPro']
   }
