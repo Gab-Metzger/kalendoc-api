@@ -158,9 +158,13 @@ module.exports.findFiveFirstAppointments = function(start, doctor, callback) {
           });
           if (emptyResponse) {
             findFirstFreeAppointment(doctor, function (res) {
+              console.log("First free appointments");
+              console.log(res);
               callback(res);
             });
           } else {
+              console.log("Weekly free appointments");
+              console.log(res);
             callback(res);
           }
         }
