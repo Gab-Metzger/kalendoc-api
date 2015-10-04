@@ -60,7 +60,8 @@ module.exports = {
     },
     doctor: {
       model:'Doctor',
-      required:true
+      required:true,
+      index: true
     },
     category:{
       model:'Category'
