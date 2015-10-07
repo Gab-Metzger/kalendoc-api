@@ -210,6 +210,7 @@ function findFirstFreeAppointment(doctor, callback) {
                   },
                   function(cb){
                     var startApp = currentTry.toISOString();
+                    console.log(startApp);
                     var endApp = currentTry.add(increment, 'minutes').toISOString();
                     Appointment.findOne({
                       doctor: doctor.id,
