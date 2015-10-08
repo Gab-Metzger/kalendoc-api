@@ -3,7 +3,7 @@
  * Help the appointment controller
  **/
 
-var moment = require('moment');
+var moment = require('moment-timezone');
 var async = require("async");
 var _ = require('lodash');
 
@@ -131,6 +131,9 @@ module.exports.findFiveFirstAppointments = function(start, doctor, callback) {
                       }
                       if (!app) {
                         if (moment(startApp) >= moment()) {
+                          if (moment(startApp).tz('Europe/Paris').utcOffset() == 60) {
+                            startApp = moment(startApp).add(1, 'hour').toISOString();
+                          }
                           res[counts].push(startApp);
                         }
                       }
@@ -210,7 +213,6 @@ function findFirstFreeAppointment(doctor, callback) {
                   },
                   function(cb){
                     var startApp = currentTry.toISOString();
-                    console.log(startApp);
                     var endApp = currentTry.add(increment, 'minutes').toISOString();
                     Appointment.findOne({
                       doctor: doctor.id,
