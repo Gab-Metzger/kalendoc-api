@@ -131,9 +131,6 @@ module.exports.findFiveFirstAppointments = function(start, doctor, callback) {
                       }
                       if (!app) {
                         if (moment(startApp) >= moment()) {
-                          if (moment(startApp).tz('Europe/Paris').utcOffset() == 60) {
-                            startApp = moment(startApp).add(1, 'hour').toISOString();
-                          }
                           res[counts].push(startApp);
                         }
                       }
@@ -214,6 +211,10 @@ function findFirstFreeAppointment(doctor, callback) {
                   function(cb){
                     var startApp = currentTry.toISOString();
                     var endApp = currentTry.add(increment, 'minutes').toISOString();
+                    if (moment(startApp).tz('Europe/Paris').utcOffset() == 60) {
+                      startApp = moment(startApp).add(1, 'hour').toISOString();
+                      endApp = moment(endApp).add(1, 'hour').toISOString();
+                    }
                     Appointment.findOne({
                       doctor: doctor.id,
                       start: {'<=': startApp},
