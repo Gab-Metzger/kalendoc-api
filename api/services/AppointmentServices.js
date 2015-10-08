@@ -121,6 +121,11 @@ module.exports.findFiveFirstAppointments = function(start, doctor, callback) {
                   function(cb){
                     var startApp = currentTry.toISOString();
                     var endApp = currentTry.add(increment, 'minutes').toISOString();
+                    if (moment(startApp).tz('Europe/Paris').utcOffset() == 60) {
+                      startApp = moment(startApp).add(1, 'hours').toISOString();
+                      endApp = moment(endApp).add(1, 'hours').toISOString();
+                    }
+                    console.log(startApp);
                     Appointment.findOne({
                       doctor: doctor.id,
                       start: {'<=': startApp},
@@ -211,10 +216,6 @@ function findFirstFreeAppointment(doctor, callback) {
                   function(cb){
                     var startApp = currentTry.toISOString();
                     var endApp = currentTry.add(increment, 'minutes').toISOString();
-                    if (moment(startApp).tz('Europe/Paris').utcOffset() == 60) {
-                      startApp = moment(startApp).add(1, 'hour').toISOString();
-                      endApp = moment(endApp).add(1, 'hour').toISOString();
-                    }
                     Appointment.findOne({
                       doctor: doctor.id,
                       start: {'<=': startApp},
