@@ -37,6 +37,8 @@ var uuid = require('uuid');
         if (err) {
           res.json(err.status, {err:err});
         } else {
+          console.log("Created Appointment");
+          console.log(app);
           Appointment.findOne(app.id).populate('patient').populate('doctor').populate('category').exec(function(err,app){
             res.json(200,{appointment:app});
             Appointment.publishCreate(app);
