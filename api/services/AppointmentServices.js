@@ -81,6 +81,71 @@ module.exports.validateAppointmentDate = function(req, params, doctor, callback)
   }
 }
 
+module.exports.findWeeklyAppointment = findWeeklyAppointment;
+
+function findWeeklyAppointment(start, doctor, callback) {
+  var counts = 0;
+  var currentDate = moment(start).startOf('day');
+  var endOfWeek = moment(start).add(6, 'days');
+  var res = [];
+
+  Reservation.find({doctor: doctor.id}).exec(function (err, reservations) {
+    if (err) {
+      console.log(err);
+      return callback(err);
+    } else if (reservations.length == 0) {
+      console.log("No reservations");
+       return callback(res);
+    } else {
+      Appointment.find({
+        doctor: doctor.id,
+        start: {
+          '>=': currentDate.toISOString(),
+          '<=': endOfWeek.toISOString()
+        }
+      })
+      .exec(function (err, appointments) {
+        if (err) {
+          return callback(err);
+        } else {
+          var week = _.map(_.fill(Array(7), start), function(n, key) {
+            return moment(n).add(key, 'days').toISOString();
+          });
+          _.each(week, function (day) {
+            var currentDayReservations = _.where(reservations, { weekDay: moment(day).day() });
+            _.each(currentDayReservations, function(reservation) {
+              var currentTry = moment(day).startOf('day').add(reservation.start,'minutes');
+              var end = moment(day).startOf('day').add(reservation.end,'minutes');
+              if (moment(currentTry).tz('Europe/Paris').utcOffset() == 60) {
+                currentTry = moment(currentTry).add(1, 'hours');
+                end = moment(end).add(1, 'hours');
+              }
+              var increment = doctor.consultingTime;
+              var currentTryFormatted = currentTry.format('DD/MM/YYYY');
+              while (currentTry.isBefore(end)) {
+                var beginning = currentTry.toISOString();
+                var ending = currentTry.add(increment, 'minutes').toISOString();
+                var appointment = _.find(appointments, function (app) {
+                  return (app.start.toISOString() <= beginning && app.end.toISOString() >= ending);
+                });
+                if (!appointment) {
+                  res.push(beginning);
+                }
+              }
+            });
+          });
+          if (res.length == 0) {
+            findWeeklyAppointment(currentDate.add(7, 'days').toISOString(), doctor, callback);
+          } else {
+            res = organizeAppointmentsByWeek(res, start);
+            return callback(res);
+          }
+        }
+      })
+    }
+  })
+}
+
 module.exports.findFiveFirstAppointments = function(start, doctor, callback) {
   var counts = 0;
   var currentDate = moment(start).startOf('day');
@@ -256,4 +321,15 @@ function findFirstFreeAppointment(doctor, callback) {
       return res;
     }
   });
+}
+
+function organizeAppointmentsByWeek(appointments, start) {
+  var beginning = moment(start).startOf('day');
+  var result = [[],[],[],[],[],[],[]];
+  _.each(appointments, function(appointment) {
+    var currentDate = moment(appointment);
+    var index = Math.abs(currentDate.diff(beginning, 'days'));
+    result[index].push(appointment);
+  });
+  return result;
 }

@@ -147,7 +147,7 @@ module.exports = _.merge(_.cloneDeep(require('../base/Controller')), {
           const results = [];
           async.each(doctors,
             function(doctor,cb){
-              AppointmentServices.findFiveFirstAppointments(params.start, doctor, function(res){
+              AppointmentServices.findWeeklyAppointment(params.start, doctor, function(res){
                 doctor.appointments = res;
                 results.push(doctor);
                 cb();
