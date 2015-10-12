@@ -17,5 +17,6 @@ module.exports.models = {
    * connections (see `config/connections.js`)                                *
    *                                                                          *
    ***************************************************************************/
-  migrate: 'alter'
+  migrate: 'alter',
+  connection: 'mongoServer'
 };

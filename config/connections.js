@@ -29,9 +29,9 @@ module.exports.connections = {
    * Run:
    * npm install sails-mongo
    */
-  mongoProdServer: {
+  mongoServer: {
     adapter: 'sails-mongo',
-    url: process.env.MONGO_URL
+    url: process.env.MONGO_URL || 'mongodb://localhost:27017/kalendoc'
   },
 
   mandrillAdapter: {
