@@ -86,7 +86,7 @@ module.exports.findWeeklyAppointment = findWeeklyAppointment;
 function findWeeklyAppointment(start, doctor, callback) {
   var counts = 0;
   var currentDate = moment(start).startOf('day');
-  var endOfWeek = moment(start).add(6, 'days');
+  var endOfWeek = moment(start).add(7, 'days');
   var res = [];
 
   Reservation.find({doctor: doctor.id}).exec(function (err, reservations) {
