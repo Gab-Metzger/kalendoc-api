@@ -129,7 +129,9 @@ function findWeeklyAppointment(start, doctor, callback) {
                   return (app.start.toISOString() <= beginning && app.end.toISOString() >= ending);
                 });
                 if (!appointment) {
-                  res.push(beginning);
+                  if (moment(beginning) > moment()) {
+                    res.push(beginning);
+                  }
                 }
               }
             });
