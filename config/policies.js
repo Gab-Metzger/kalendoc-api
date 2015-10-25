@@ -38,6 +38,10 @@ module.exports.policies = {
     'findDoctors' : ['loggedIn', 'medicalPro']
   },
 
+  DelegatedSecretaryController: {
+    'rate': true
+  },
+
   DoctorController: {
     'findByName': true,
     'create': ['loggedIn', 'secretary'],

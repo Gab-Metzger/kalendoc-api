@@ -27,8 +27,12 @@ var uuid = require('uuid');
       res.json(400, {err: req.__('Error.Fields.Missing')});
     } else {
       if (params.token) {
-        params.source = 'doctor';
-        params.acceptToken = uuid.v1(); // Using time based token
+        if (params.source === 'phone') {
+          params.state = 'accepted';
+        } else {
+          params.source = 'doctor';
+          params.acceptToken = uuid.v1(); // Using time based token
+        }
       } else {
         params.source = 'internet';
         params.state   = 'accepted';
@@ -55,13 +59,17 @@ var uuid = require('uuid');
                     if (!secretary) {
                       Slack.sendAPIMessage("[MAILER] Create appointment : secretary not found : "+err);
                     } else if (patient.email) {
-                      Mailer.sendMail('email-confirmation-rdv-kalendoc',patient.email,[
+                      var emailContent = [
                         {name:"0_FNAME",content:patient.fullName()},
                         {name:"1_DNAME",content:doctor.getFullName()},
                         {name:"2_DATERDV", content: DateFormat.convertDateObjectToLocal(app.start).format("DD/MM/YYYY")},
                         {name:"3_HOURRDV", content: DateFormat.convertDateObjectToLocal(app.start).format("HH:mm")},
                         {name:"4_ADDRESS", content: secretary.address}
-                      ], function() {});
+                      ];
+                      if (app.source === 'phone') {
+                        emailContent.push({name:"5_RATINGURL", content: params.delegatedSecretary.id});
+                      }
+                      Mailer.sendMail('email-confirmation-rdv-kalendoc',patient.email,emailContent, function() {});
                     }
                   })
                 }

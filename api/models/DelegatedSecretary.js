@@ -25,15 +25,9 @@ module.exports = {
       type:'string',
       required:true
     },
-    like: {
-      type: 'integer',
-      defaultsTo: 0,
-      required: true
-    },
-    dislike: {
-      type: 'integer',
-      defaultsTo: 0,
-      required: true
+    ratings: {
+      type:'array',
+      defaultsTo: []
     },
     user: {
       model:'User',

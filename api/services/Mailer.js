@@ -13,6 +13,7 @@ module.exports.sendMail = function(template, to, mergeVars,callback){
   })).exec({
     error: function(err){
       console.log("[MAILER] Error while sending "+template+" :" +err);
+      console.log(mergeVars);
       Slack.sendAPIMessage("[MAILER] Error while sending "+template+" :" +err);
       callback(err);
     },

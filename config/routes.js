@@ -40,5 +40,6 @@ module.exports.routes = {
   'GET /doctor/search':'DoctorController.search',
   'GET /message':'MessageController.index',
   'POST /message':'MessageController.create',
-  'GET /message/count':'MessageController.count'
+  'GET /message/count':'MessageController.count',
+  'POST /delegatedSecretary/rate':'DelegatedSecretaryController.rate'
 };
