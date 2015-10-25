@@ -47,6 +47,9 @@ module.exports = {
       defaultsTo: 0,
       required: true
     },
+    bookingCode: {
+      type: 'string',
+    },
     access: {
       type: 'string'
     },
