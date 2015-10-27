@@ -13,13 +13,33 @@ var passgen = require('pass-gen');
 module.exports = _.merge(_.cloneDeep(require('../base/Controller')), {
   create: function(req,res){
     var params = req.allParams();
-    Patient.create(params).exec(function(err, patient){
-      if (err) {
-        res.json(400,{err:err});
-      } else {
-        res.json({patient: patient});
-      }
-    });
+    if (params.createUser === true) {
+      User.create({email: params.email, password: params.password})
+      .exec(function(err, newUser) {
+        if (err) {
+          return res.json(400,{err:err});
+        } else {
+          params.user = newUser.id;
+          delete params.password;
+          delete params.createUser;
+          Patient.create(params).exec(function(err, patient){
+            if (err) {
+              return res.json(400,{err:err});
+            } else {
+              return res.json(200, {user: newUser, patient: patient});
+            }
+          });
+        }
+      });
+    } else {
+      Patient.create(params).exec(function(err, patient){
+        if (err) {
+          return res.json(400,{err:err});
+        } else {
+          return res.json({patient: patient});
+        }
+      });
+    }
   },
 
   findName: function(req,res) {

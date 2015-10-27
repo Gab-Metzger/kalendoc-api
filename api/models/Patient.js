@@ -48,10 +48,10 @@ module.exports = {
       enum: ['Mr.','Mme.']
     },
 
-    // A patient can be owend by a user.
-    // user: {
-    //   model:'User',
-    // },
+    //A patient can be owend by a user.
+    user: {
+      model:'User',
+    },
 
     fullName: function(){
       return `${this.lastName} ${this.firstName}`
@@ -65,6 +65,13 @@ module.exports = {
       } else {
         next();
       }
+    } else {
+      next();
+    }
+  },
+  afterCreate: function (values, next) {
+    if (values.user) {
+      User.update({id: values.user}, {patient: values.id}).exec(next);
     } else {
       next();
     }

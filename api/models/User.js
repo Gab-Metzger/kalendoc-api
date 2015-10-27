@@ -65,6 +65,10 @@ var phone = require('phone');
       model:'Doctor'
     },
 
+    patient: {
+      model:'Patient'
+    },
+
     delegatedSecretary: {
       model: 'DelegatedSecretary'
     },

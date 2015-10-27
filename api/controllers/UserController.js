@@ -11,12 +11,14 @@ var passgen = require('pass-gen');
 module.exports = _.merge(_.cloneDeep(require('../base/Controller')), {
   create: function(req,res){
     var params = req.allParams();
-    params.password = passgen({
-      ascii:true,
-      ASCII:true,
-      length:10,
-      ambiguous:true
-    });
+    if (!params.password) {
+      params.password = passgen({
+        ascii:true,
+        ASCII:true,
+        length:10,
+        ambiguous:true
+      });
+    }
     User.create(params).exec(function(err, user){
       if (err) {
         return res.json(err.status, {err:err});
