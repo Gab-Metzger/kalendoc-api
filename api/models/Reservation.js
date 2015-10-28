@@ -45,6 +45,10 @@ module.exports = {
       var obj = this.toObject();
       obj.start = moment().startOf('day').add(obj.start,'minutes').toDate();
       obj.end = moment().startOf('day').add(obj.end,'minutes').toDate();
+      if (moment(obj.start).tz('Europe/Paris').utcOffset() == 60) {
+        obj.start = moment(obj.start).add(1, 'hours').toDate();
+        obj.end = moment(obj.end).add(1, 'hours').toDate();
+      }
       return obj;
     }
   },
