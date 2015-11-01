@@ -71,9 +71,16 @@ module.exports = _.merge(_.cloneDeep(require('../base/Controller')), {
 
   findAppointments: function(req,res){
     var params = req.allParams();
-    var query = {
-      patient: params.patient,
-      doctor: params.doctor
+    var query;
+    if (params.doctor) {
+      query = {
+        patient: params.patient,
+        doctor: params.doctor
+      };
+    } else {
+      query = {
+        patient: params.patient
+      };
     }
     if (params.start) {
       query.start = {

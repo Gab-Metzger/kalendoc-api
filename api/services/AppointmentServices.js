@@ -140,7 +140,6 @@ function findWeeklyAppointment(start, doctor, callback) {
             findWeeklyAppointment(currentDate.add(7, 'days').toISOString(), doctor, callback);
           } else {
             res = organizeAppointmentsByWeek(res, start);
-            console.log(res);
             return callback(res);
           }
         }
