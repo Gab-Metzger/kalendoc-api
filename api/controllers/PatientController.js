@@ -97,7 +97,7 @@ module.exports = _.merge(_.cloneDeep(require('../base/Controller')), {
       if (!auth) {
         res.json(401, {err: req.__('Error.Rights.Insufficient')});
       } else {
-        Appointment.find(query).exec(function(err,results){
+        Appointment.find(query).populate('doctor').exec(function(err,results){
           if (err) {
             res.json(400,{err:err});
           } else {
