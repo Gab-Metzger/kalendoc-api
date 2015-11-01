@@ -142,47 +142,13 @@ var uuid = require('uuid');
     },
 
   destroy: function(req,res){
-    Appointment.findOne(req.param("id")).populate('doctor').populate('patient').exec(function(err,app){
-        if (req.param("id")) { // Should not be necessary but ...
-          if (err) {
-            res.json(500, {err: err});
-          } else if (!app) {
-            res.json(404, {err: req.__('Collection.Appointment')+" "+req.__('Error.NotFoud')});
-          } else {
-            if (req.user.doctor || req.user.secretary) {
-              if (RightsManager.canAdminDoctor(req.user, app.doctor)){
-                Appointment.destroy(app.id).exec(function(err,apps){
-                  if (err) {
-                    res.json(500, {err: err});
-                  } else {
-                    res.json(200, apps);
-                  }
-                });
-              } else {
-                res.json(401,{err: req.__('Error.Rights.Insufficient')});
-              }
-            } else {
-              RightsManager.canAdminPatient(req.user, app.patient,function(auth){
-                if (auth) {
-                  Appointment.update(app.id, {
-                    state: "cancelledByUser",
-                  }).exec(function(err,apps){
-                    if (err) {
-                      res.json(500, {err: err})
-                    } else {
-                      res.json(200, apps);
-                    }
-                  });
-                } else {
-                  res.json(401, {err: req.__('Error.Rights.Insufficient')});
-                }
-              });
-            }
-          }
-        } else {
-          req.json(500, {err: req.__('Error.Intern')});
-        }
-      });
+    Appointment.destroy(req.param('id')).exec(function(err, apps){
+      if (err) {
+        res.json(500, {err: err});
+      } else {
+        res.json(200, apps);
+      }
+    });
   },
 
   update: function(req,res) {

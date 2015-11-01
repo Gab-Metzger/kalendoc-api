@@ -8,7 +8,13 @@
  **/
 
 module.exports = function(req,res,callback){
-  var token = req.headers.token || req.param('token');
+  var token;
+  if (req.headers.authorization) {
+    token = req.headers.authorization.split(' ')[1];
+  } else {
+    token = req.param('token');
+  }
+
   if (!token) {
     return res.json(401, {err: req.__('Error.Token.Missing')});
   }
