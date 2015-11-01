@@ -1,6 +1,6 @@
 'use strict';
 
-var bcrypt = require('bcryptjs');
+var bcrypt = require('bcrypt');
 
 /**
  * Passport Model
