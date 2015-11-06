@@ -26,17 +26,14 @@ var uuid = require('uuid');
     if (!(params.patient && params.category) && (params.state != 'blockedByDoctor')){
       res.json(400, {err: req.__('Error.Fields.Missing')});
     } else {
-      if (params.token) {
-        if (params.source === 'phone') {
-          params.state = 'accepted';
-        } else {
-          params.source = 'doctor';
-          params.acceptToken = uuid.v1(); // Using time based token
-        }
+
+      if (!params.source) {
+        params.source = 'doctor';
+        params.acceptToken = uuid.v1(); // Using time based token
       } else {
-        params.source = 'internet';
-        params.state   = 'accepted';
+        params.state = 'accepted';
       }
+
       Appointment.create(params).exec(function(err,app){
         if (err) {
           res.json(err.status, {err:err});
