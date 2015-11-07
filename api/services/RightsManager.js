@@ -32,7 +32,7 @@ module.exports.canAdminPatient = function(user, patient, callback){
     callback(true);
   } else if (!user || !patient ) {
     callback(false);
-  } else if (user.doctor || user.secretary) {
+  } else if (user.doctor || user.secretary || user.delegatedSecretary) {
     callback(true);
   }else {
     Patient.findOne(patient).exec(function(err,patient){
