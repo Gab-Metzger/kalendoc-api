@@ -1,7 +1,7 @@
 'use strict';
 
 var _ = require('lodash');
-var bcrypt = require('bcryptjs');
+var bcrypt = require('bcrypt');
 var phone = require('phone');
 
 /**
@@ -63,6 +63,10 @@ var phone = require('phone');
 
     doctor: {
       model:'Doctor'
+    },
+
+    patient: {
+      model:'Patient'
     },
 
     delegatedSecretary: {

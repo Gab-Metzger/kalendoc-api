@@ -33,6 +33,7 @@ module.exports.routes = {
   'GET /reset': 'AuthController.sendReset',
   'POST /reset' : 'AuthController.resetPassword',
   'GET /appointment/doctor' : 'AppointmentController.findDoctor',
+  'DELETE /appointment/:id' : 'AppointmentController.destroy',
   'GET /secretary/:id/doctors' : 'SecretaryController.findDoctors',
   'GET /secretary/doctors' : 'SecretaryController.findDoctors',
   'GET /category/label/' : 'CategoryController.findLabel',

@@ -13,13 +13,33 @@ var passgen = require('pass-gen');
 module.exports = _.merge(_.cloneDeep(require('../base/Controller')), {
   create: function(req,res){
     var params = req.allParams();
-    Patient.create(params).exec(function(err, patient){
-      if (err) {
-        res.json(400,{err:err});
-      } else {
-        res.json({patient: patient});
-      }
-    });
+    if (params.createUser === true) {
+      User.create({email: params.email, password: params.password})
+      .exec(function(err, newUser) {
+        if (err) {
+          return res.json(400,{err:err});
+        } else {
+          params.user = newUser.id;
+          delete params.password;
+          delete params.createUser;
+          Patient.create(params).exec(function(err, patient){
+            if (err) {
+              return res.json(400,{err:err});
+            } else {
+              return res.json(200, {user: newUser, patient: patient});
+            }
+          });
+        }
+      });
+    } else {
+      Patient.create(params).exec(function(err, patient){
+        if (err) {
+          return res.json(400,{err:err});
+        } else {
+          return res.json({patient: patient});
+        }
+      });
+    }
   },
 
   findName: function(req,res) {
@@ -51,9 +71,16 @@ module.exports = _.merge(_.cloneDeep(require('../base/Controller')), {
 
   findAppointments: function(req,res){
     var params = req.allParams();
-    var query = {
-      patient: params.patient,
-      doctor: params.doctor
+    var query;
+    if (params.doctor) {
+      query = {
+        patient: params.patient,
+        doctor: params.doctor
+      };
+    } else {
+      query = {
+        patient: params.patient
+      };
     }
     if (params.start) {
       query.start = {
@@ -70,7 +97,7 @@ module.exports = _.merge(_.cloneDeep(require('../base/Controller')), {
       if (!auth) {
         res.json(401, {err: req.__('Error.Rights.Insufficient')});
       } else {
-        Appointment.find(query).exec(function(err,results){
+        Appointment.find(query).populate('doctor').exec(function(err,results){
           if (err) {
             res.json(400,{err:err});
           } else {

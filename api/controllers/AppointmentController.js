@@ -26,17 +26,14 @@ var uuid = require('uuid');
     if (!(params.patient && params.category) && (params.state != 'blockedByDoctor')){
       res.json(400, {err: req.__('Error.Fields.Missing')});
     } else {
-      if (params.token) {
-        if (params.source === 'phone') {
-          params.state = 'accepted';
-        } else {
-          params.source = 'doctor';
-          params.acceptToken = uuid.v1(); // Using time based token
-        }
+
+      if (!params.source) {
+        params.source = 'doctor';
+        params.acceptToken = uuid.v1(); // Using time based token
       } else {
-        params.source = 'internet';
-        params.state   = 'accepted';
+        params.state = 'accepted';
       }
+
       Appointment.create(params).exec(function(err,app){
         if (err) {
           res.json(err.status, {err:err});
@@ -142,47 +139,13 @@ var uuid = require('uuid');
     },
 
   destroy: function(req,res){
-    Appointment.findOne(req.param("id")).populate('doctor').populate('patient').exec(function(err,app){
-        if (req.param("id")) { // Should not be necessary but ...
-          if (err) {
-            res.json(500, {err: err});
-          } else if (!app) {
-            res.json(404, {err: req.__('Collection.Appointment')+" "+req.__('Error.NotFoud')});
-          } else {
-            if (req.user.doctor || req.user.secretary) {
-              if (RightsManager.canAdminDoctor(req.user, app.doctor)){
-                Appointment.destroy(app.id).exec(function(err,apps){
-                  if (err) {
-                    res.json(500, {err: err});
-                  } else {
-                    res.json(200, apps);
-                  }
-                });
-              } else {
-                res.json(401,{err: req.__('Error.Rights.Insufficient')});
-              }
-            } else {
-              RightsManager.canAdminPatient(req.user, app.patient,function(auth){
-                if (auth) {
-                  Appointment.update(app.id, {
-                    state: "cancelledByUser",
-                  }).exec(function(err,apps){
-                    if (err) {
-                      res.json(500, {err: err})
-                    } else {
-                      res.json(200, apps);
-                    }
-                  });
-                } else {
-                  res.json(401, {err: req.__('Error.Rights.Insufficient')});
-                }
-              });
-            }
-          }
-        } else {
-          req.json(500, {err: req.__('Error.Intern')});
-        }
-      });
+    Appointment.destroy(req.param('id')).exec(function(err, apps){
+      if (err) {
+        res.json(500, {err: err});
+      } else {
+        res.json(200, apps);
+      }
+    });
   },
 
   update: function(req,res) {

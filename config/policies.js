@@ -71,7 +71,7 @@ module.exports.policies = {
     'create': true,
     'findDoctor' : ['loggedIn','medicalPro'],
     'destroy': ['loggedIn'],
-    'update' : ['loggedIn'],
+    'update' : ['loggedIn']
   },
   PatientController: {
     'create': true,

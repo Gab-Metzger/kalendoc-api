@@ -68,7 +68,6 @@ module.exports = {
     },
     toJSON: function(){
       var obj = this.toObject();
-      console.log(obj.start);
       if (obj.patient && obj.patient.lastName && obj.patient.firstName) {
         if (obj.source === 'internet') {
           obj.title = "@ " + obj.patient.lastName + " " + obj.patient.firstName;
