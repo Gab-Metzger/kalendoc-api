@@ -28,6 +28,8 @@ module.exports.policies = {
     'create': true,
     'update': ['loggedIn'],
     'findOne': ['loggedIn'],
+    'forgot': true,
+    'reset': true
   },
 
   SecretaryController: {

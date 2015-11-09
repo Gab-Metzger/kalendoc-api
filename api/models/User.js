@@ -33,12 +33,12 @@ var phone = require('phone');
       required: true
     },
     // User reset token : Used for password recovery
-    resetPassToken:{
-      type:'string',
+    resetPasswordToken: {
+      type: 'string'
     },
     // User reset time : Used for password recovery
-    resetPassExpire:{
-      type:'date'
+    resetPasswordExpires: {
+      type: 'datetime'
     },
     // Should the user receive appointements notifications
     receiveBroadcast:{
