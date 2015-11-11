@@ -1,7 +1,9 @@
 'use strict';
 
 var _ = require('lodash');
+var async = require('async');
 var passgen = require('pass-gen');
+var crypto = require('crypto');
 /**
  * UserController
  *
@@ -55,5 +57,61 @@ module.exports = _.merge(_.cloneDeep(require('../base/Controller')), {
     } else {
       res.json(400, {err: req.__('Collection.User')+" "+req.__('Error.NotFound')});
     }
+  },
+  forgot: function (req, res) {
+    async.waterfall([
+      function (next) {
+        crypto.randomBytes(20, function(err, buf) {
+          var token = buf.toString('hex');
+          next(err, token);
+        });
+      },
+      function (token, next) {
+        User.findOne({email: req.param('email')}).populate('patient').exec(function(err, user) {
+          if (err) {
+            return res.json(401, {err: req.__('Error.Rights.Insufficient')});
+          } else if (!user) {
+            return res.json(400, {err: req.__('Collection.User')+" "+req.__('Error.NotFound')});
+          } else {
+            user.resetPasswordToken = token;
+            user.resetPasswordExpires = new Date(); // 1 hour
+            user.resetPasswordExpires.addHour();
+
+            user.save(function(err) {
+              next(err, token, user);
+            });
+          }
+        });
+      },
+      function (token, user, next) {
+        Mailer.sendMail('email-forgot-password-kalendoc', user.email, [
+            {name:"0_FNAME",content:user.patient.firstName},
+            {name:"1_TOKEN",content:token}
+        ], function(){
+          return res.json(200, {message: 'Mail envoyé !'})
+        });
+      }
+    ], function (err) {
+      if (err) return res.json(500, err);
+    });
+  },
+  reset: function (req, res) {
+    User.findOne({ resetPasswordToken: req.param('tokenPassword'), resetPasswordExpires: { '>=': new Date() } }, function(err, user) {
+      if (!user) {
+        return res.json(400, {err: 'Password reset token is invalid or has expired.'});
+      }
+
+      user.password = req.param('password');
+      user.resetPasswordToken = undefined;
+      user.resetPasswordExpires = undefined;
+
+      user.save(function(err) {
+        if (err) {
+          return res.json(401, {err: req.__('Error.Rights.Insufficient')});
+        } else {
+          return res.json({message: 'Password Updated'});
+        }
+      });
+    });
   }
 });
