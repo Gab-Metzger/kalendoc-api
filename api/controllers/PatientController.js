@@ -2,6 +2,9 @@
 
 var _ = require('lodash');
 var passgen = require('pass-gen');
+var algoliasearch = require('algoliasearch');
+var client = algoliasearch(process.env.ALGOLIA_APP, process.env.ALGOLIA_KEY);
+var index = client.initIndex(process.env.ALGOLIA_INDEX);
 
 /**
  * PatientController
@@ -26,6 +29,7 @@ module.exports = _.merge(_.cloneDeep(require('../base/Controller')), {
             if (err) {
               return res.json(400,{err:err});
             } else {
+              savePatientToAlgolia(patient);
               return res.json(200, {user: newUser, patient: patient});
             }
           });
@@ -36,6 +40,7 @@ module.exports = _.merge(_.cloneDeep(require('../base/Controller')), {
         if (err) {
           return res.json(400,{err:err});
         } else {
+          savePatientToAlgolia(patient);
           return res.json({patient: patient});
         }
       });
@@ -120,6 +125,7 @@ module.exports = _.merge(_.cloneDeep(require('../base/Controller')), {
             if (err) {
               res.json(400, {err:err});
             } else if (patient[0]){
+              savePatientToAlgolia(patient[0]);
               res.json(patient[0]);
             } else {
               res.json(404, {err: req.__('Collection.Patient')+" "+req.__('Error.NotFound')});
@@ -132,3 +138,16 @@ module.exports = _.merge(_.cloneDeep(require('../base/Controller')), {
     }
   }
 });
+
+function savePatientToAlgolia(patient) {
+  if (!patient.objectID) {
+    patient.objectID = patient.id;
+  }
+  index.saveObject(patient, function(err, content) {
+    if (err) {
+      console.log(err);
+      return err;
+    }
+    console.log(content);
+  });
+}
