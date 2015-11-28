@@ -31,7 +31,7 @@ module.exports = _.merge(_.cloneDeep(require('../base/Controller')), {
           var doctors = _.map(response, function(doctor) {
             return {
               id: doctor.id,
-              name: doctor.getFullName()
+              fullName: doctor.getFullName()
             };
           });
           return res.json(200, doctors);
@@ -110,21 +110,16 @@ module.exports = _.merge(_.cloneDeep(require('../base/Controller')), {
     } else {
       var query = {};
       if (params.name) {
-        const names = params.name.split(' ');
+        var names = params.name.split(' ');
+        console.log(names);
         const req = [
-          {firstName: {contains: names[0]}},
-          {lastName: {contains: names[0]}}
+          {firstName: names[1]},
+          {lastName: names[0]}
         ];
-        if ( names[1] ){
-          names.shift();
-          const name = names.join(" ");
-          req.push({firstName: {contains: name}});
-          req.push({lastName: {contains: name}});
-        }
         query.or = req;
       }
 
-      Doctor.find(query).populate("secretary").exec(function(err,doctors){
+      Doctor.find({lastName: names[0], firstName: names[1]}).populate("secretary").exec(function(err,doctors){
         if (err) {
           res.json(400, {err:err});
         } else {

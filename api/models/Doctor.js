@@ -106,7 +106,7 @@ module.exports = {
     },
 
     getFullName: function(){
-      return `Docteur ${this.lastName} ${this.firstName}`
+      return `${this.lastName} ${this.firstName}`
     }
   },
 
