@@ -124,6 +124,7 @@ var uuid = require('uuid');
               .populate("doctor")
               .populate("patient")
               .populate("category")
+              .sort({start: 1})
               .exec(function(err,doctors){
                 if (err) {
                   res.json(400,{err:err});

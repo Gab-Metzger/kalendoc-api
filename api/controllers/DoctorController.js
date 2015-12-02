@@ -110,16 +110,10 @@ module.exports = _.merge(_.cloneDeep(require('../base/Controller')), {
     } else {
       var query = {};
       if (params.name) {
-        var names = params.name.split(' ');
-        console.log(names);
-        const req = [
-          {firstName: names[1]},
-          {lastName: names[0]}
-        ];
-        query.or = req;
+        query = {lastName: names[0], firstName: names[1]};
       }
 
-      Doctor.find({lastName: names[0], firstName: names[1]}).populate("secretary").exec(function(err,doctors){
+      Doctor.find(query).populate("secretary").exec(function(err,doctors){
         if (err) {
           res.json(400, {err:err});
         } else {
