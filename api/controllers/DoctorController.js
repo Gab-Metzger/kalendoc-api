@@ -110,6 +110,7 @@ module.exports = _.merge(_.cloneDeep(require('../base/Controller')), {
     } else {
       var query = {};
       if (params.name) {
+        var names = params.name.split(' ');
         query = {lastName: names[0], firstName: names[1]};
       }
 
