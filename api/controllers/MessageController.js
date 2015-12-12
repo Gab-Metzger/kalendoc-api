@@ -23,7 +23,7 @@ module.exports = {
       if (err) {
         return res.json(500, err);
       }
-      Message.publishCreate(newMessage);
+      sails.sockets.broadcast('doctor' + newMessage.receiver, 'message', {verb: 'created', data: newMessage});
       return res.json(200, newMessage);
     })
   },
