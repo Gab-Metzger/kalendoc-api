@@ -4,6 +4,7 @@
  * @description :: Server-side logic for managing auths
  * @help        :: See http://sailsjs.org/#!/documentation/concepts/Controllers
  */
+var _ = require('lodash');
 
 module.exports = {
   login: function(req,res){
@@ -17,6 +18,14 @@ module.exports = {
         });
       }
     });
+  },
+  logout: function(req, res) {
+    if(req.isSocket) {
+      _.forEach(req.param('data'), function(item) {
+        sails.sockets.leave(req.socket, 'doctor' + item);
+      });
+    }
+    return res.json(200, {message: "Successfully leave room"});
   },
   sendReset: function(req,res){
     var params = req.allParams();
