@@ -27,27 +27,47 @@ module.exports = {
         if (newMessage.receiver.allowCopyEmail) {
           Doctor.findOne(newMessage.receiver.id).populate('user').exec(function (err, doctor) {
             if (newMessage.patient) {
-              var emailContent = [
-                {
-                  name:"0_DNAME",
-                  content: newMessage.receiver.lastName
-                },
-                {
-                  name:"1_ONAME",
-                  content: String(newMessage.sender.lastName + " " + newMessage.sender.firstName)
-                },
-                {
-                  name:"2_PNAME",
-                  content: String(newMessage.patient.lastName + " " + newMessage.patient.firstName)
-                },
-                {
-                  name:"3_PPHONE",
-                  content: newMessage.patient.mobilePhone || newMessage.patient.phoneNumber
-                },
-                {
-                  name:"4_CONTENT", content: newMessage.content
-                }
-              ];
+              if (newMessage.patient.mobilePhone || newMessage.patient.phoneNumber) {
+                var emailContent = [
+                  {
+                    name:"0_DNAME",
+                    content: newMessage.receiver.lastName
+                  },
+                  {
+                    name:"1_ONAME",
+                    content: String(newMessage.sender.lastName + " " + newMessage.sender.firstName)
+                  },
+                  {
+                    name:"2_PNAME",
+                    content: String(newMessage.patient.lastName + " " + newMessage.patient.firstName)
+                  },
+                  {
+                    name:"3_PPHONE",
+                    content: newMessage.patient.mobilePhone || newMessage.patient.phoneNumber
+                  },
+                  {
+                    name:"4_CONTENT", content: newMessage.content
+                  }
+                ];
+              } else {
+                var emailContent = [
+                  {
+                    name:"0_DNAME",
+                    content: newMessage.receiver.lastName
+                  },
+                  {
+                    name:"1_ONAME",
+                    content: String(newMessage.sender.lastName + " " + newMessage.sender.firstName)
+                  },
+                  {
+                    name:"2_PNAME",
+                    content: String(newMessage.patient.lastName + " " + newMessage.patient.firstName)
+                  },
+                  {
+                    name:"4_CONTENT", content: newMessage.content
+                  }
+                ];
+              }
             } else {
               var emailContent = [
                 {
