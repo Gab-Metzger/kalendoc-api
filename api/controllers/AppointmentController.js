@@ -16,7 +16,9 @@ var uuid = require('uuid');
 
   subscribe: function(req, res) {
     if (req.isSocket) {
-      Appointment.watch(req.socket);
+      _.forEach(req.param('data'), function(item) {
+        sails.sockets.join(req.socket, 'doctor' + item);
+      })
       console.log("Doctor or Secretary subscribe to " + req.socket.id);
     }
   },
@@ -39,11 +41,10 @@ var uuid = require('uuid');
           res.json(err.status, {err:err});
         } else {
           console.log("Created Appointment");
-          console.log(app);
-          Appointment.findOne(app.id).populate('patient').populate('doctor').populate('category').exec(function(err,app){
-            res.json(200,{appointment:app});
-            Appointment.publishCreate(app);
+          Appointment.findOne(app.id).populateAll().exec(function(err,app){
             var doctor = app.doctor;
+            sails.sockets.broadcast('doctor'+doctor.id, 'appointment', app);
+            res.json(200,{appointment:app});
             if (app.state === "waitingForUserAcceptation") {
               // Send mail
             } else if (app.patient) {

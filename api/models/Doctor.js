@@ -75,6 +75,11 @@ module.exports = {
       type: 'string'
     },
 
+    allowCopyEmail: {
+      type: 'boolean',
+      defaultsTo: false
+    },
+
     // List of all doctor appointements.
     appointements: {
       collection: 'Appointment',

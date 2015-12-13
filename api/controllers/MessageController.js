@@ -18,13 +18,76 @@ module.exports = {
   create: function(req, res) {
     var params = req.allParams();
     Message.create(params)
-    .populateAll()
-    .exec(function (err, newMessage) {
+    .exec(function (err, message) {
       if (err) {
         return res.json(500, err);
       }
-      Message.publishCreate(newMessage);
-      return res.json(200, newMessage);
+      sails.sockets.broadcast('doctor' + message.receiver, 'message', {verb: 'created', data: message});
+      Message.findOne(message.id).populateAll().exec(function (err, newMessage) {
+        if (newMessage.receiver.allowCopyEmail) {
+          Doctor.findOne(newMessage.receiver.id).populate('user').exec(function (err, doctor) {
+            if (newMessage.patient) {
+              if (newMessage.patient.mobilePhone || newMessage.patient.phoneNumber) {
+                var emailContent = [
+                  {
+                    name:"0_DNAME",
+                    content: newMessage.receiver.lastName
+                  },
+                  {
+                    name:"1_ONAME",
+                    content: String(newMessage.sender.lastName + " " + newMessage.sender.firstName)
+                  },
+                  {
+                    name:"2_PNAME",
+                    content: String(newMessage.patient.lastName + " " + newMessage.patient.firstName)
+                  },
+                  {
+                    name:"3_PPHONE",
+                    content: newMessage.patient.mobilePhone || newMessage.patient.phoneNumber
+                  },
+                  {
+                    name:"4_CONTENT", content: newMessage.content
+                  }
+                ];
+              } else {
+                var emailContent = [
+                  {
+                    name:"0_DNAME",
+                    content: newMessage.receiver.lastName
+                  },
+                  {
+                    name:"1_ONAME",
+                    content: String(newMessage.sender.lastName + " " + newMessage.sender.firstName)
+                  },
+                  {
+                    name:"2_PNAME",
+                    content: String(newMessage.patient.lastName + " " + newMessage.patient.firstName)
+                  },
+                  {
+                    name:"4_CONTENT", content: newMessage.content
+                  }
+                ];
+              }
+            } else {
+              var emailContent = [
+                {
+                  name:"0_DNAME",
+                  content: newMessage.receiver.lastName
+                },
+                {
+                  name:"1_ONAME",
+                  content: String(newMessage.sender.lastName + " " + newMessage.sender.firstName)
+                },
+                {
+                  name:"4_CONTENT", content: newMessage.content
+                }
+              ];
+            }
+            Mailer.sendMail('email-message-kalendoc',doctor.user.email,emailContent, function() {});
+          });
+        }
+      });
+      return res.json(200, message);
     })
   },
 
@@ -57,6 +120,14 @@ module.exports = {
           return res.json(messages);
         });
       })
+    } else if (req.user && req.user.delegatedSecretary) {
+      Message.find(params)
+      .exec(function (err, messages) {
+        if(err) {
+          return res.json(404, { err: err });
+        }
+        return res.json(messages);
+      });
     } else {
       return res.json(400, { err: req.__('Error.Fields.Missing')});
     }
