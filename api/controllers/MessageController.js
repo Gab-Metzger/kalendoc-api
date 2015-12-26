@@ -10,8 +10,8 @@ var _ = require('lodash');
 module.exports = {
   subscribe: function(req, res) {
     if (req.isSocket) {
-      Message.watch(req.socket);
-      console.log("Doctor or Secretary subscribe to " + req.socket.id);
+      sails.sockets.join(req.socket, 'delegatedSecretary' + req.param('data'));
+      console.log("DelegatedSecretary subscribe to " + req.socket.id);
     }
   },
 
@@ -22,20 +22,21 @@ module.exports = {
       if (err) {
         return res.json(500, err);
       }
-      sails.sockets.broadcast('doctor' + message.receiver, 'message', {verb: 'created', data: message});
+      sails.sockets.broadcast('doctor' + message.receiverID, 'message', {verb: 'created', data: message});
+      sails.sockets.broadcast('delegatedSecretary' + message.receiverID, 'message', {verb: 'created', data: message});
       Message.findOne(message.id).populateAll().exec(function (err, newMessage) {
-        if (newMessage.receiver.allowCopyEmail) {
-          Doctor.findOne(newMessage.receiver.id).populate('user').exec(function (err, doctor) {
+        Doctor.findOne(message.receiverID).populate('user').exec(function(err, doctor) {
+          if (doctor && doctor.allowCopyEmail) {
             if (newMessage.patient) {
               if (newMessage.patient.mobilePhone || newMessage.patient.phoneNumber) {
                 var emailContent = [
                   {
                     name:"0_DNAME",
-                    content: newMessage.receiver.lastName
+                    content: newMessage.receiverName
                   },
                   {
                     name:"1_ONAME",
-                    content: String(newMessage.sender.lastName + " " + newMessage.sender.firstName)
+                    content: newMessage.senderName
                   },
                   {
                     name:"2_PNAME",
@@ -53,11 +54,11 @@ module.exports = {
                 var emailContent = [
                   {
                     name:"0_DNAME",
-                    content: newMessage.receiver.lastName
+                    content: newMessage.receiverName
                   },
                   {
                     name:"1_ONAME",
-                    content: String(newMessage.sender.lastName + " " + newMessage.sender.firstName)
+                    content: newMessage.senderName
                   },
                   {
                     name:"2_PNAME",
@@ -72,11 +73,11 @@ module.exports = {
               var emailContent = [
                 {
                   name:"0_DNAME",
-                  content: newMessage.receiver.lastName
+                  content: newMessage.receiverName
                 },
                 {
                   name:"1_ONAME",
-                  content: String(newMessage.sender.lastName + " " + newMessage.sender.firstName)
+                  content: newMessage.senderName
                 },
                 {
                   name:"4_CONTENT", content: newMessage.content
@@ -84,8 +85,8 @@ module.exports = {
               ];
             }
             Mailer.sendMail('email-message-kalendoc',doctor.user.email,emailContent, function() {});
-          });
-        }
+          }
+        });
       });
       return res.json(200, message);
     })
@@ -94,7 +95,7 @@ module.exports = {
   index: function(req, res) {
     var params = req.allParams();
     if(req.user && req.user.doctor) {
-      params.receiver = req.user.doctor;
+      params.receiverID = req.user.doctor;
       Message.find(params)
       .populateAll()
       .exec(function (err, messages) {
@@ -110,7 +111,7 @@ module.exports = {
         var doctorIds = _.map(secretary.doctors, function(item) {
           return item.id
         });
-        params.receiver = doctorIds;
+        params.receiverID = doctorIds;
         Message.find(params)
         .populateAll()
         .exec(function (err, messages) {
@@ -121,7 +122,9 @@ module.exports = {
         });
       })
     } else if (req.user && req.user.delegatedSecretary) {
+      params.receiverID = req.user.delegatedSecretary;
       Message.find(params)
+      .populateAll()
       .exec(function (err, messages) {
         if(err) {
           return res.json(404, { err: err });
@@ -135,7 +138,7 @@ module.exports = {
 
   count: function (req, res) {
     if(req.user && req.user.doctor) {
-      Message.count({receiver: req.user.doctor, read: false, trashed: false})
+      Message.count({receiverID: req.user.doctor, read: false, trashed: false})
       .exec(function (err, count) {
         if(err) {
           return res.json(404, { err: err });
@@ -149,7 +152,7 @@ module.exports = {
         var doctorIds = _.map(secretary.doctors, function(item) {
           return item.id
         });
-        Message.count({receiver: doctorIds, read: false, trashed: false})
+        Message.count({receiverID: doctorIds, read: false, trashed: false})
         .exec(function (err, count) {
           if(err) {
             return res.json(404, { err: err });
@@ -157,6 +160,14 @@ module.exports = {
           return res.json(200, { count: count });
         });
       })
+    } else if (req.user && req.user.delegatedSecretary) {
+      Message.count({receiverID: req.user.delegatedSecretary, read: false, trashed: false})
+      .exec(function (err, count) {
+        if(err) {
+          return res.json(404, { err: err });
+        }
+        return res.json(200, { count: count });
+      });
     } else {
       return res.json(400, { err: req.__('Error.Fields.Missing')});
     }
@@ -164,7 +175,7 @@ module.exports = {
 
   emptyTrash: function (req, res) {
     if(req.user && req.user.doctor) {
-      Message.destroy({receiver: req.user.doctor, trashed: true})
+      Message.destroy({receiverID: req.user.doctor, trashed: true})
       .exec(function (err, deletedMails) {
         if(err) {
           return res.json(404, { err: err });
@@ -178,7 +189,7 @@ module.exports = {
         var doctorIds = _.map(secretary.doctors, function(item) {
           return item.id
         });
-        Message.destroy({receiver: doctorIds, trashed: true})
+        Message.destroy({receiverID: doctorIds, trashed: true})
         .exec(function (err, deletedMails) {
           if(err) {
             return res.json(404, { err: err });
@@ -186,6 +197,14 @@ module.exports = {
           return res.json(200, deletedMails);
         });
       })
+    } else if (req.user && req.user.delegatedSecretary) {
+        Message.destroy({receiverID: req.user.delegatedSecretary, trashed: true})
+        .exec(function (err, deletedMails) {
+          if(err) {
+            return res.json(404, { err: err });
+          }
+          return res.json(200, deletedMails);
+        });
     } else {
       return res.json(400, { err: req.__('Error.Fields.Missing')});
     }

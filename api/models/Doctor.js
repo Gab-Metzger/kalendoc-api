@@ -75,6 +75,7 @@ module.exports = {
       type: 'string'
     },
 
+    // allow Message content to be sent by email
     allowCopyEmail: {
       type: 'boolean',
       defaultsTo: false
