@@ -40,6 +40,9 @@ module.exports = {
       type: 'boolean',
       defaultsTo: false,
       required: true
+    },
+    previousMessage: {
+      model: 'message'
     }
   }
 };
