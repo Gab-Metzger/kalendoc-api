@@ -8,12 +8,20 @@
 module.exports = {
 
   attributes: {
-    sender: {
-      model: 'delegatedSecretary',
+    senderID: {
+      type: 'string',
       required: true
     },
-    receiver: {
-      model: 'doctor',
+    senderName: {
+      type: 'string',
+      required: true
+    },
+    receiverID: {
+      type: 'string',
+      required: true
+    },
+    receiverName: {
+      type: 'string',
       required: true
     },
     patient: {
@@ -32,6 +40,9 @@ module.exports = {
       type: 'boolean',
       defaultsTo: false,
       required: true
+    },
+    previousMessage: {
+      model: 'message'
     }
   }
 };
