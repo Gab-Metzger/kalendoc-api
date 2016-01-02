@@ -62,10 +62,11 @@ var uuid = require('uuid');
                         {name:"1_DNAME",content:doctor.getFullName()},
                         {name:"2_DATERDV", content: DateFormat.convertDateObjectToLocal(app.start).format("DD/MM/YYYY")},
                         {name:"3_HOURRDV", content: DateFormat.convertDateObjectToLocal(app.start).format("HH:mm")},
-                        {name:"4_ADDRESS", content: secretary.address}
+                        {name:"4_ADDRESS", content: secretary.address},
+                        //TODO: Display url doctor profile
                       ];
                       if (app.source === 'phone') {
-                        emailContent.push({name:"5_RATINGURL", content: params.delegatedSecretary.id});
+                        emailContent.push({name:"5_FNAMEOPERATOR", content: params.delegatedSecretary.firstName});
                       }
                       Mailer.sendMail('email-confirmation-rdv-kalendoc',patient.email,emailContent, function() {});
                     }
