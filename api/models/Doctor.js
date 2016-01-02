@@ -81,6 +81,11 @@ module.exports = {
       defaultsTo: false
     },
 
+    online: {
+      type: 'boolean',
+      defaultsTo: false
+    },
+
     // List of all doctor appointements.
     appointements: {
       collection: 'Appointment',
