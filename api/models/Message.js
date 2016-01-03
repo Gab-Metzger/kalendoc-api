@@ -27,6 +27,10 @@ module.exports = {
     patient: {
       model: 'patient'
     },
+    action: {
+      type: 'string',
+      required: true
+    },
     content: {
       type: 'string',
       required: true
