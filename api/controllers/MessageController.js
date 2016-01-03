@@ -48,6 +48,9 @@ module.exports = {
                   },
                   {
                     name:"4_CONTENT", content: newMessage.content
+                  },
+                  {
+                    name:"5_ACTION", content: newMessage.action
                   }
                 ];
               } else {
@@ -66,6 +69,9 @@ module.exports = {
                   },
                   {
                     name:"4_CONTENT", content: newMessage.content
+                  },
+                  {
+                    name:"5_ACTION", content: newMessage.action
                   }
                 ];
               }
@@ -81,6 +87,9 @@ module.exports = {
                 },
                 {
                   name:"4_CONTENT", content: newMessage.content
+                },
+                {
+                  name:"5_ACTION", content: newMessage.action
                 }
               ];
             }
