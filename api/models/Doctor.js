@@ -74,6 +74,9 @@ module.exports = {
     openingHours: {
       type: 'string'
     },
+    orders: {
+      type: 'string'
+    },
 
     // allow Message content to be sent by email
     allowCopyEmail: {
