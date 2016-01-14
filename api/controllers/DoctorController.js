@@ -128,8 +128,13 @@ module.exports = _.merge(_.cloneDeep(require('../base/Controller')), {
           if (params.city){
             doctors = _.filter(doctors,
               function(doctor) {
-                const foundPosition = doctor.secretary.address.toUpperCase().lastIndexOf(params.city.toUpperCase());
-                const expectedPosition = doctor.secretary.address.length - params.city.length;
+                if (doctor.secretary) {
+                  var address = doctor.secretary.address;
+                } else {
+                  var address = doctor.address;
+                }
+                const foundPosition = address.toUpperCase().lastIndexOf(params.city.toUpperCase());
+                const expectedPosition = address.length - params.city.length;
                 return foundPosition ==  expectedPosition;
               }
             );
