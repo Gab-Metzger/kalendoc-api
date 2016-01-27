@@ -91,5 +91,8 @@ module.exports.policies = {
   },
   MessageController: {
     '*': ['loggedIn', 'medicalPro']
+  },
+  VoicemailController: {
+    'create': true
   }
 };
