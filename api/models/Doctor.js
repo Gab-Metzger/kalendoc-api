@@ -88,6 +88,9 @@ module.exports = {
       type: 'boolean',
       defaultsTo: false
     },
+    aircallNumber: {
+      type: 'string'
+    },
 
     // List of all doctor appointements.
     appointements: {
