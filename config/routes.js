@@ -44,6 +44,7 @@ module.exports.routes = {
   'POST /message':'MessageController.create',
   'GET /message/count':'MessageController.count',
   'POST /delegatedSecretary/rate':'DelegatedSecretaryController.rate',
+  'GET /voicemail':'Voicemail.index',
   'POST /voicemail':'Voicemail.create',
   'POST /prospect':'Prospect.create'
 };

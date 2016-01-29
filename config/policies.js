@@ -93,6 +93,7 @@ module.exports.policies = {
     '*': ['loggedIn', 'medicalPro']
   },
   VoicemailController: {
+    'index': ['loggedIn', 'medicalPro'],
     'create': true
   }
 };
