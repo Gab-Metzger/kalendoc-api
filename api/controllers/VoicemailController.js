@@ -26,6 +26,7 @@ module.exports = {
           .get(params.data.voicemail)
           .pipe(speech(opts, function (err, results) {
             if (err) {
+              console.log(err);
               Voicemail.create({doctor: doctor.id, url: params.data.voicemail}).exec(function (err, voicemail) {
                 if (err) {
                   console.log(err);
@@ -36,6 +37,7 @@ module.exports = {
               });
             } else if (results[0]) {
               var text = results[0].result[0].alternative[0].transcript;
+              console.log(text);
               Voicemail.create({doctor: doctor.id, url: params.data.voicemail, text: text}).exec(function (err, voicemail) {
                 if (err) {
                   console.log(err);
@@ -45,6 +47,7 @@ module.exports = {
                 }
               });
             } else {
+              console.log("No transcription result")
               Voicemail.create({doctor: doctor.id, url: params.data.voicemail}).exec(function (err, voicemail) {
                 if (err) {
                   console.log(err);
