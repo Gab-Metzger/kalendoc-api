@@ -13,9 +13,11 @@ module.exports = {
       type: 'string',
       required: true
     },
+    text: {
+      type: 'string'
+    },
     doctor: {
-      model: 'doctor',
-      required: true
+      model: 'doctor'
     }
 
   }
