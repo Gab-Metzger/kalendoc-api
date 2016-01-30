@@ -143,7 +143,7 @@ module.exports.sendSMS = function(message, receiver, doctor){
       push_mo_enabled: true,
       push_mo_url: sails.config.connections.callr.callback
     };
-    api.call('sms.send', '', receiver, message, null).success(function(response) {
+    api.call('sms.send', '', formatNumber(receiver), message, null).success(function(response) {
         // success callback
     }).error(function(err) {
       Slack.sendStatusMessage("[API] Cannot send sms : " + err);
@@ -193,4 +193,12 @@ module.exports.sendConfirmations = function(){
       });
     }
   });
+}
+
+function formatNumber(number) {
+  if (!number.startsWith("+33")) {
+    return String("+33" + number.substr(1));
+  } else {
+    return number;
+  }
 }
