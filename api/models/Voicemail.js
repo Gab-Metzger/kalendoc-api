@@ -18,6 +18,10 @@ module.exports = {
     },
     doctor: {
       model: 'doctor'
+    },
+    isRequest: {
+      type: 'boolean',
+      defaultsTo: false
     }
 
   }
