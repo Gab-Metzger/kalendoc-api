@@ -67,26 +67,39 @@ module.exports = _.merge(_.cloneDeep(require('../base/Controller')), {
         });
       },
       function (token, next) {
-        User.findOne({email: req.param('email')}).populate('patient').exec(function(err, user) {
+        User.findOne({email: req.param('email')}).populateAll().exec(function(err, user) {
           if (err) {
             return res.json(401, {err: req.__('Error.Rights.Insufficient')});
           } else if (!user) {
             return res.json(400, {err: req.__('Collection.User')+" "+req.__('Error.NotFound')});
           } else {
             user.resetPasswordToken = token;
-            user.resetPasswordExpires = new Date(); // 1 hour
-            user.resetPasswordExpires.addHour();
+            var resetPasswordExpires = new Date(); // 1 hour
+            resetPasswordExpires.addHour();
 
-            user.save(function(err) {
+            User.update({id: user.id}, {
+              resetPasswordToken: token,
+              resetPasswordExpires: resetPasswordExpires
+            })
+            .exec(function(err) {
               next(err, token, user);
             });
           }
         });
       },
       function (token, user, next) {
+        if (user.doctor) {
+          var name = user.doctor.firstName;
+        } else if (user.secretary) {
+          var name = user.secretary.firstName;
+        } else if (user.delegatedSecretary) {
+          var name = user.delegatedSecretary.name;
+        } else {
+          var name = user.patient.firstName
+        }
         Mailer.sendMail('email-forgot-password-kalendoc', user.email, [
-            {name:"0_FNAME",content:user.patient.firstName},
-            {name:"1_TOKEN",content:token}
+            {name:"0_FNAME", content: name},
+            {name:"1_TOKEN", content: token}
         ], function(){
           return res.json(200, {message: 'Mail envoyé !'})
         });
