@@ -32,6 +32,10 @@ module.exports = {
     user: {
       model:'User',
       required: true
+    },
+    handleAppointmentRequest: {
+      type: 'boolean',
+      defaultsTo: false
     }
 
   }
