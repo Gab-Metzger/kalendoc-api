@@ -30,8 +30,6 @@ module.exports.routes = {
   // Authentication routes
   //'/logout': 'AuthController.logout',
   'POST /login': 'AuthController.login',
-  'GET /reset': 'AuthController.sendReset',
-  'POST /reset' : 'AuthController.resetPassword',
   'GET /appointment/doctor' : 'AppointmentController.findDoctor',
   'DELETE /appointment/:id' : 'AppointmentController.destroy',
   'GET /secretary/:id/doctors' : 'SecretaryController.findDoctors',
