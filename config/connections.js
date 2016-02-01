@@ -54,7 +54,7 @@ module.exports.connections = {
   },
 
   aircall: {
-    requestNumber: '+33 9 77 55 02 32',
+    requestNumber: '+33 3 67 88 01 29',
     messageNumber: '+33 3 67 88 00 61'
   }
 
