@@ -55,7 +55,7 @@ module.exports = {
   create: function(req, res) {
     var params = req.params.all();
     if (params.data.voicemail) {
-      if(params.data.raw_digits == sails.config.connections.aircall.requestNumber) {
+      if(params.data.number.digits == sails.config.connections.aircall.requestNumber) {
         var type = 'request';
         DelegatedSecretary.findOne({handleAppointmentRequest: true}).exec(function(err, delegatedSecretary) {
           if (err) {
@@ -109,7 +109,7 @@ module.exports = {
             }));
           });
         });
-      } else if (params.data.raw_digits == sails.config.connections.messageNumber) {
+      } else if (params.data.number.digits == sails.config.connections.messageNumber) {
         var type = 'message';
         Doctor.findOne({aircallNumber: params.data.raw_digits}).exec(function (err, doctor) {
           if (err) {
