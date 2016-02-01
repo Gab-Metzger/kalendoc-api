@@ -19,9 +19,10 @@ module.exports = {
     doctor: {
       model: 'doctor'
     },
-    isRequest: {
-      type: 'boolean',
-      defaultsTo: false
+    type: {
+      type: 'string',
+      enum:['request','message'],
+      required: true
     }
 
   }
