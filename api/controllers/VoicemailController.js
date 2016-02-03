@@ -162,6 +162,20 @@ module.exports = {
     } else {
       return res.json(200, {message: "No voicemail, nothing to do."})
     }
+  },
+
+  destroy: function(req, res) {
+    if (req.param('id')) {
+      Voicemail.destroy(req.param('id'), function(err, voicemail) {
+        if (err) {
+          console.log(err);
+          return res.json(500, {err: err});
+        }
+        return res.json(200, voicemail);
+      })
+    } else {
+      return res.json(404, {err: "No field found"});
+    }
   }
 };
 

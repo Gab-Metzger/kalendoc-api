@@ -94,6 +94,10 @@ module.exports.policies = {
   },
   VoicemailController: {
     'index': ['loggedIn', 'medicalPro'],
-    'create': true
+    'create': true,
+    'destroy': ['loggedIn', 'medicalPro']
   }
+  // ProspectController: {
+  //   'create': true
+  // }
 };
