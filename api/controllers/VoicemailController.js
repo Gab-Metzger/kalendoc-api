@@ -85,6 +85,7 @@ module.exports = {
                 });
               } else if (results[0]) {
                 var text = results[0].result[0].alternative[0].transcript;
+                console.log(text);
                 Voicemail.create({doctor: doctor.id, url: params.data.voicemail, text: text, type: type}).exec(function (err, voicemail) {
                   if (err) {
                     console.log(err);
@@ -131,6 +132,7 @@ module.exports = {
                   }
                 });
               } else if (results[0]) {
+                console.log(text);
                 var text = results[0].result[0].alternative[0].transcript;
                 Voicemail.create({doctor: doctor.id, url: params.data.voicemail, text: text}).exec(function (err, voicemail) {
                   if (err) {
