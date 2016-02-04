@@ -48,7 +48,7 @@ module.exports = {
       enum: ['Mr.','Mme.']
     },
     doctor: {
-      model: 'string'
+      type: 'string'
     },
 
     //A patient can be owend by a user.
