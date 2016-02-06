@@ -8,6 +8,7 @@
 var request = require('superagent');
 var speech = require('google-speech-api');
 var _ = require('lodash');
+var async = require('async');
 var opts = {
   filtetype: 'mp3',
   lang: 'fr',
@@ -55,114 +56,81 @@ module.exports = {
   create: function(req, res) {
     var params = req.params.all();
     if (params.data.voicemail) {
-      if(params.data.number.digits == sails.config.connections.aircall.requestNumber) {
-        var type = 'request';
-        DelegatedSecretary.findOne({handleAppointmentRequest: true}).exec(function(err, delegatedSecretary) {
-          if (err) {
-            console.log(err);
-            return res.json(500, {err: err});
-          }
-          Doctor.findOne({aircallNumber: params.data.raw_digits}).exec(function(err, doctor) {
+      async.waterfall([
+        function(callback) {
+          request
+          .get(params.data.voicemail)
+          .pipe(speech(opts, function (err, results) {
             if (err) {
               console.log(err);
-              return res.json(500, {err: err});
-            } else if (!doctor) {
-              return res.json(404, {err: "No doctor found !"});
+              callback(null, null);
+            } else if (results[0]) {
+              var text = results[0].result[0].alternative[0].transcript;
+              console.log(text);
+              callback(null, text);
+            } else {
+              console.log("No transcription result");
+              callback(null, null);
             }
-            request
-            .get(params.data.voicemail)
-            .pipe(speech(opts, function (err, results) {
+          }));
+        },
+        function(text, callback) {
+          if (params.data.number.digits == sails.config.connections.aircall.requestNumber) {
+            var type = 'request';
+            DelegatedSecretary.findOne({handleAppointmentRequest: true}).exec(function(err, delegatedSecretary) {
               if (err) {
                 console.log(err);
-                Voicemail.create({doctor: doctor.id, url: params.data.voicemail, type: type}).exec(function (err, voicemail) {
-                  if (err) {
-                    console.log(err);
-                    return res.json(500, {err: 'Error on voicemail creation'});
-                  } else {
-                    sails.sockets.broadcast('delegatedSecretary' + delegatedSecretary.id, 'voicemail', {verb: 'created', data: voicemail});
-                    return res.json(200, voicemail);
-                  }
-                });
-              } else if (results[0]) {
-                var text = results[0].result[0].alternative[0].transcript;
-                console.log(text);
-                Voicemail.create({doctor: doctor.id, url: params.data.voicemail, text: text, type: type}).exec(function (err, voicemail) {
-                  if (err) {
-                    console.log(err);
-                    return res.json(500, {err: 'Error on voicemail creation'});
-                  } else {
-                    sails.sockets.broadcast('delegatedSecretary' + delegatedSecretary.id, 'voicemail', {verb: 'created', data: voicemail});
-                    return res.json(200, voicemail);
-                  }
-                });
-              } else {
-                console.log("No transcription result")
-                Voicemail.create({doctor: doctor.id, url: params.data.voicemail, type: type}).exec(function (err, voicemail) {
-                  if (err) {
-                    console.log(err);
-                    return res.json(500, {err: 'Error on voicemail creation'});
-                  } else {
-                    sails.sockets.broadcast('delegatedSecretary' + delegatedSecretary.id, 'voicemail', {verb: 'created', data: voicemail});
-                    return res.json(200, voicemail);
-                  }
-                });
+                callback(err);
               }
-            }));
-          });
-        });
-      } else if (params.data.number.digits == sails.config.connections.messageNumber) {
-        var type = 'message';
-        Doctor.findOne({aircallNumber: params.data.raw_digits}).exec(function (err, doctor) {
-          if (err) {
-            console.log(err);
-            return res.json(404, {err: "No doctor found"});
-          } else {
-            request
-            .get(params.data.voicemail)
-            .pipe(speech(opts, function (err, results) {
+              Doctor.findOne({aircallNumber: params.data.raw_digits}).exec(function(err, doctor) {
+                if (err) {
+                  console.log(err);
+                  callback(err);
+                } else if (!doctor) {
+                  console.log("No doctor found !");
+                  callback({err: "No doctor found !"});
+                } else {
+                  Voicemail.create({doctor: doctor.id, url: params.data.voicemail, text: text, type: type}).exec(function (err, voicemail) {
+                    if (err) {
+                      console.log(err);
+                      callback(err);
+                    } else {
+                      sails.sockets.broadcast('delegatedSecretary' + delegatedSecretary.id, 'voicemail', {verb: 'created', data: voicemail});
+                      callback(null, voicemail);
+                    }
+                  });
+                }
+              });
+            });
+          } else if (params.data.number.digits == sails.config.connections.aircall.messageNumber) {
+            var type = 'message';
+            Doctor.findOne({aircallNumber: params.data.raw_digits}).exec(function (err, doctor) {
               if (err) {
                 console.log(err);
-                Voicemail.create({doctor: doctor.id, url: params.data.voicemail}).exec(function (err, voicemail) {
-                  if (err) {
-                    console.log(err);
-                    return res.json(500, {err: 'Error on voicemail creation'});
-                  } else {
-                    sails.sockets.broadcast('doctor' + doctor.id, 'voicemail', {verb: 'created', data: voicemail});
-                    return res.json(200, voicemail);
-                  }
-                });
-              } else if (results[0]) {
-                console.log(text);
-                var text = results[0].result[0].alternative[0].transcript;
+                callback(err);
+              } else {
                 Voicemail.create({doctor: doctor.id, url: params.data.voicemail, text: text}).exec(function (err, voicemail) {
                   if (err) {
                     console.log(err);
-                    return res.json(500, {err: 'Error on voicemail creation'});
+                    callback(err);
                   } else {
                     sails.sockets.broadcast('doctor' + doctor.id, 'voicemail', {verb: 'created', data: voicemail});
-                    return res.json(200, voicemail);
-                  }
-                });
-              } else {
-                console.log("No transcription result")
-                Voicemail.create({doctor: doctor.id, url: params.data.voicemail}).exec(function (err, voicemail) {
-                  if (err) {
-                    console.log(err);
-                    return res.json(500, {err: 'Error on voicemail creation'});
-                  } else {
-                    sails.sockets.broadcast('doctor' + doctor.id, 'voicemail', {verb: 'created', data: voicemail});
-                    return res.json(200, voicemail);
+                    callback(null, voicemail);
                   }
                 });
               }
-            }));
+            });
+          } else {
+            callback({err: "Source unknown"});
           }
-        });
-      } else {
-        return res.json(401, {err: "Source unknown"});
-      }
-    } else {
-      return res.json(200, {message: "No voicemail, nothing to do."})
+        }
+      ], function (err, result) {
+        if (err) {
+          return res.json(500, err);
+        } else {
+          return res.json(200, result);
+        }
+      });
     }
   },
 
