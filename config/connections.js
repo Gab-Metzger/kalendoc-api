@@ -51,6 +51,11 @@ module.exports.connections = {
     status: 'https://hooks.slack.com/services/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',
     sms: 'https://hooks.slack.com/services/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',
     api: 'https://hooks.slack.com/services/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'
+  },
+
+  aircall: {
+    requestNumber: '+33 3 67 88 01 29',
+    messageNumber: '+33 3 67 88 00 61'
   }
 
   /**

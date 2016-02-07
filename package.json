@@ -20,6 +20,7 @@
     "bluebird": "^2.9.13",
     "callr": "^1.0.0",
     "crypto": "0.0.3",
+    "google-speech-api": "^1.1.3",
     "include-all": "0.1.6",
     "jsonwebtoken": "3.2.2",
     "lodash": "3.2.0",
@@ -38,6 +39,7 @@
     "sails-mysql": "0.10.11",
     "slack-node": "^0.1.3",
     "socket.io-redis": "^0.1.4",
+    "superagent": "^1.7.2",
     "ua-parser": "0.3.5",
     "uuid": "^2.0.1",
     "validator": "3.19.0"

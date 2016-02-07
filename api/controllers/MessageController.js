@@ -145,6 +145,20 @@ module.exports = {
     }
   },
 
+  allMessageForOnePatient: function(req, res) {
+    var params = req.allParams();
+    Message.find({receiverID: params.receiverID, patient: params.patient})
+    .exec(function(err, messages) {
+      if (err) {
+        console.log(err);
+        return res.json(500, {err: err});
+      }
+      else {
+        return res.json(200, messages);
+      }
+    });
+  },
+
   count: function (req, res) {
     if(req.user && req.user.doctor) {
       Message.count({receiverID: req.user.doctor, read: false, trashed: false})
