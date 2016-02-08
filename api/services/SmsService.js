@@ -13,23 +13,22 @@ module.exports.reminders = function(onlySms){
       ">=" : moment().add(1,"days").startOf("day").format(),
       "<=" : moment().add(1,"days").endOf("day").format()
     },
-    patient: {
-      "!":null
-    },
     state: "accepted"
   }).populate("patient").populate("doctor").exec(function(err,apps){
     if (err) {
       Slack.sendAPIMessage("Error while sending reminders (1): "+err)
+    } else if (apps.length == 0) {
+      console.log("[REMINDERS] No appointments");
     } else {
       _.forEach(apps, function(app) {
-        if (app.patient.mobilePhone && app.sendSMS && SmsService.doctorCanSendSMS(app.doctor)) {
+        if (app.patient && app.patient.mobilePhone && app.sendSMS && SmsService.doctorCanSendSMS(app.doctor)) {
           var message = sails.__({phrase: 'SMS.Reminder.Appointment', locale:'fr'});
           message = message.replace(/{DOCTOR}/g, app.doctor.firstName + " " + app.doctor.lastName);
           message = message.replace(/{DATE}/g, DateFormat.convertDateObjectToLocal(app.start).format("D/M/YYYY"));
           message = message.replace(/{TIME}/g, DateFormat.convertDateObjectToLocal(app.start).format("HH:mm"));
           SmsService.sendSMS(message, app.patient.mobilePhone, app.doctor.id);
         }
-        if (!onlySms && app.patient.email){
+        if (!onlySms && app.patient && app.patient.email){
           Secretary.findOne(app.doctor.secretary).exec(function(err,secr){
             if (!secr) {
               Slack.sendAPIMessage("Error while sending reminders (3): "+err);
