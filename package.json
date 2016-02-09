@@ -34,7 +34,7 @@
     "sails-disk": "0.10.4",
     "sails-hook-apianalytics": "git://github.com/mikermcneil/sails-hook-apianalytics",
     "sails-hook-babel": "^5.0.1",
-    "sails-hook-schedule": "^0.1.1",
+    "sails-hook-schedule": "^0.2.2",
     "sails-mongo": "^0.11.2",
     "sails-mysql": "0.10.11",
     "slack-node": "^0.1.3",
