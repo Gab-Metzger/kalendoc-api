@@ -116,6 +116,10 @@ function findWeeklyAppointment(start, doctor, callback) {
             _.each(currentDayReservations, function(reservation) {
               var currentTry = moment(day).startOf('day').add(reservation.start,'minutes');
               var end = moment(day).startOf('day').add(reservation.end,'minutes');
+              if (moment(currentTry).tz('Europe/Paris').utcOffset() == 120) {
+                currentTry = moment(currentTry).subtract(1, 'hour');
+                end = moment(end).subtract(1, 'hour');
+              }
               var increment = doctor.consultingTime;
               var currentTryFormatted = currentTry.format('DD/MM/YYYY');
               while (currentTry.isBefore(end)) {
