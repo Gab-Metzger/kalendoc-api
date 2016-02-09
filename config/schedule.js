@@ -7,7 +7,21 @@ module.exports.schedule = {
    //    SmsService.sendConfirmations()
    // },
 
-   "0 0 8 * * *" : function(){
-      SmsService.reminders(false);
-   }
+   // "0 1 * * * *" : function(){
+   //   console.log("TASK RUNNING");
+   //    // SmsService.reminders(false);
+   // }
+  sailsInContext : true, //If sails is not as global and you want to have it in your task
+  tasks : {
+      //Every monday at 1am
+      firstTask : {
+         cron : "0 8 * * *",
+         task : function (context, sails)
+         {
+              console.log("CRON TASK RUNNING");
+              SmsService.reminders(false);
+         },
+         context : {}
+      }
+  }
 };
