@@ -23,6 +23,7 @@ module.exports = {
     if(req.isSocket) {
       _.forEach(req.param('data'), function(item) {
         sails.sockets.leave(req.socket, 'doctor' + item);
+        sails.sockets.leave(req.socket, 'delegatedSecretary' + item);
       });
     }
     return res.json(200, {message: "Successfully leave room"});
