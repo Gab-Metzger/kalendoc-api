@@ -4,6 +4,7 @@ var _ = require('lodash');
 var async = require('async');
 var passgen = require('pass-gen');
 var crypto = require('crypto');
+var moment = require('moment');
 /**
  * UserController
  *
@@ -74,8 +75,7 @@ module.exports = _.merge(_.cloneDeep(require('../base/Controller')), {
             return res.json(400, {err: req.__('Collection.User')+" "+req.__('Error.NotFound')});
           } else {
             user.resetPasswordToken = token;
-            var resetPasswordExpires = new Date(); // 1 hour
-            resetPasswordExpires.addHour();
+            var resetPasswordExpires = moment().add(1, 'hour').toISOString(); // 1 hour
 
             User.update({id: user.id}, {
               resetPasswordToken: token,
