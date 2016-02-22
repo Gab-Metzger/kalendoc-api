@@ -43,6 +43,10 @@ var uuid = require('uuid');
           console.log("Created Appointment");
           Appointment.findOne(app.id).populateAll().exec(function(err,app){
             var doctor = app.doctor;
+            // sails.sockets.broadcast('doctor'+doctor.id, 'appointment', {
+            //   verb: 'created',
+            //   data: app
+            // });
             sails.sockets.broadcast('doctor'+doctor.id, 'appointment', app);
             res.json(200,{appointment:app});
             if (app.state === "waitingForUserAcceptation") {
@@ -152,61 +156,24 @@ var uuid = require('uuid');
 
   update: function(req,res) {
     var params = req.allParams();
-    // Filtering fields
+    var previous = params;
 
     delete params.patient;
     delete params.doctor;
 
-    if (params.id) {
-      Appointment.findOne(params.id).populate('doctor').exec(function(err,app){
-        if (err) {
-          res.json(500, {err:err});
-        } else if (!app) {
-          res.json(404, {err: req.__('Collection.Appointment')+" "+req.__('Error.NotFoud')});
-        } else {
-          RightsManager.canAdminPatient(req.user, app.patient, function(auth){
-            if (!auth) {
-              res.json(401, req.__('Error.Rights.Insufficient'));
-            } else {
-              if ((req.user.secretary || req.user.doctor) && !RightsManager.canAdminDoctor(req.user, app.doctor)) {
-                res.json(401, req.__('Error.Rights.Insufficient'));
-              } else {
-                // start end patient category
-                if (params.start || params.end) {
-                  params.start = params.start || app.start;
-                  params.end = params.end || app.end;
-                  params.patient = app.patient;
-                  params.category = params.category || app.category;
-                  AppointmentServices.validateAppointmentDate(req,params,app.doctor, function(err,params){
-                    if (err) {
-                      res.json(err.status, {err: err.err});
-                    } else {
-                      Appointment.update(app.id, params, function(err,app2){
-                        if (err) {
-                          return res.json(400, {err:err});
-                        } else {
-                          res.json(app2);
-                        }
-                      });
-                    }
-                  });
-                } else {
-                  Appointment.update(app.id, params, function(err,app2){
-                    if (err) {
-                      res.json(400, {err:err});
-                    } else {
-                      res.json(app2);
-                    }
-                  });
-                }
-              }
-            }
-          })
-        }
-      });
-    } else {
-      res.json(404, {err: req.__('Error.Fields.Missing')});
-    }
+    Appointment.update(params.id, params, function(err, app){
+      if (err) {
+        console.log(err);
+        return res.json(500, {err:err});
+      } else {
+        // sails.sockets.broadcast('doctor'+app[0].doctor, 'appointment', {
+        //   verb: 'updated',
+        //   previous: previous,
+        //   new: app
+        // });
+        return res.json(200, app);
+      }
+    });
   }
 });
 
