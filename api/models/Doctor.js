@@ -112,6 +112,10 @@ module.exports = {
       collection:'Secretary',
       via:'delegatedDoctors'
     },
+    callGrounds: {
+      collection: 'CallGround',
+      via: 'doctor'
+    },
     // Each doctor has a secretary.
     secretary: {
       model:'Secretary',
