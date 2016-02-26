@@ -14,7 +14,7 @@ module.exports = {
     var params = req.allParams();
     var from = params.data.sms.from;
     var text = params.data.sms.text;
-    Slack.sendAPIMessage("New SMS from " + from + ". Content : " + text);
+    Slack.sendSMSMessage("New SMS from " + from + ". Content : " + text);
     return res.json(200, params);
   }
 }

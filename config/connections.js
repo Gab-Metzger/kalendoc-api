@@ -49,7 +49,7 @@ module.exports.connections = {
 
   slack: {
     status: 'https://hooks.slack.com/services/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',
-    sms: 'https://hooks.slack.com/services/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',
+    sms: 'https://hooks.slack.com/services/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',
     api: 'https://hooks.slack.com/services/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'
   },
 

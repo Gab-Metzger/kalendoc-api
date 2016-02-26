@@ -22,11 +22,11 @@ module.exports = {
   },
 
   sendSMSMessage: function(message){
-    console.log("[Invalid SMS] "+message);
+    console.log("[SMS] "+message);
     var slack = new Slack();
     slack.setWebhook(sails.config.connections.slack.sms);
     slack.webhook({
-      channel: "#sms-invalides",
+      channel: "#sms",
       username: "KalendocAPI",
       text: message
     }, function(err, response) {
