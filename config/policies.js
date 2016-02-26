@@ -23,6 +23,10 @@ module.exports.policies = {
   AuthController: {
     '*': true
   },
+  
+  SmsController: {
+    '*': true
+  },
 
   UserController: {
     'create': true,
