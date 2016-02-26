@@ -10,6 +10,10 @@ var _ = require('lodash');
  */
 
 module.exports = {
-  received: function(req,res){
+  receive: function(req,res){
+    var params = req.allParams();
+    console.log(params);
+    Slack.sendAPIMessage("New SMS from ?. Content : ?");
+    return res.json(200, params);
   }
 }
