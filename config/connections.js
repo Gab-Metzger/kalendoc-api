@@ -44,7 +44,7 @@ module.exports.connections = {
     user: 'kalendoc',
     pass: process.env.CALLR_PASS,
     sendSMS: (process.env.SEND_SMS === 'true') || false,
-    callback: 'http://kalendoc-api.scalingo.io/sms/receive'
+    callback: 'http://kalendoc-api-staging.scalingo.io/sms/receive'
   },
 
   slack: {
