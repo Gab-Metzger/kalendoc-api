@@ -23,6 +23,10 @@ module.exports.policies = {
   AuthController: {
     '*': true
   },
+  
+  SmsController: {
+    '*': true
+  },
 
   UserController: {
     'create': true,
@@ -89,7 +93,7 @@ module.exports.policies = {
   CityController: {
     'findByName': true
   },
-  MessageController: {
+  MailController: {
     '*': ['loggedIn', 'medicalPro']
   },
   VoicemailController: {
@@ -97,7 +101,4 @@ module.exports.policies = {
     'create': true,
     'destroy': ['loggedIn', 'medicalPro']
   }
-  // ProspectController: {
-  //   'create': true
-  // }
 };

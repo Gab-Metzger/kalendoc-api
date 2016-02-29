@@ -114,7 +114,10 @@ module.exports = _.merge(_.cloneDeep(require('../base/Controller')), {
         query = {lastName: names[0], firstName: names[1]};
       }
 
-      Doctor.find(query).populate("secretary").exec(function(err,doctors){
+      Doctor.find(query)
+      .populate("secretary")
+      .populate("callGrounds")
+      .exec(function(err,doctors){
         if (err) {
           res.json(400, {err:err});
         } else {

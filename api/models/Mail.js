@@ -1,5 +1,5 @@
 /**
-* Message.js
+* Mail.js
 *
 * @description :: TODO: You might write a short summary of how this model works and what it represents here.
 * @docs        :: http://sailsjs.org/#!documentation/models
@@ -16,6 +16,10 @@ module.exports = {
       type: 'string',
       required: true
     },
+    senderRole: {
+      type: 'string',
+      required: true
+    },
     receiverID: {
       type: 'string',
       required: true
@@ -24,8 +28,17 @@ module.exports = {
       type: 'string',
       required: true
     },
+    receiverRole: {
+      type: 'string',
+      required: true
+    },
     patient: {
-      model: 'patient'
+      model: 'patient',
+      required: true
+    },
+    request: {
+      type: 'string',
+      required: true
     },
     action: {
       type: 'string',
@@ -45,8 +58,13 @@ module.exports = {
       defaultsTo: false,
       required: true
     },
-    previousMessage: {
-      model: 'message'
+    deleted: {
+      type: 'boolean',
+      defaultsTo: false,
+      required: true
+    },
+    previousMail: {
+      model: 'mail'
     }
   }
 };

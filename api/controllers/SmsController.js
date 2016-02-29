@@ -10,6 +10,11 @@ var _ = require('lodash');
  */
 
 module.exports = {
-  received: function(req,res){
+  receive: function(req,res){
+    var params = req.allParams();
+    var from = params.data.sms.from;
+    var text = params.data.sms.text;
+    Slack.sendSMSMessage("New SMS from " + from + ". Content : " + text);
+    return res.json(200, params);
   }
 }
