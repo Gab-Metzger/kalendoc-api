@@ -47,7 +47,7 @@ var uuid = require('uuid');
             //   verb: 'created',
             //   data: app
             // });
-            sails.sockets.broadcast('doctor'+doctor.id, 'appointment', app);
+            sails.sockets.broadcast('doctor'+doctor.id, 'appointment', app, req);
             res.json(200,{appointment:app});
             if (app.state === "waitingForUserAcceptation") {
               // Send mail
