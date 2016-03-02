@@ -102,3 +102,5 @@ module.exports.policies = {
     'destroy': ['loggedIn', 'medicalPro']
   }
 };
+
+

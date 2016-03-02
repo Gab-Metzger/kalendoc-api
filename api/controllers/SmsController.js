@@ -16,5 +16,12 @@ module.exports = {
     var text = params.data.sms.text;
     Slack.sendSMSMessage("New SMS from " + from + ". Content : " + text);
     return res.json(200, params);
+  },
+
+  subscribe: function(req,res){
+    var params = req.allParams();
+    var number = params.number;
+    Slack.sendSMSMessage("New subscription from Hello Lucie LP : " + number);
+    return res.json(200, params);
   }
 }
