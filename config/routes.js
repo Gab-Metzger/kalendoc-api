@@ -31,6 +31,7 @@ module.exports.routes = {
   //'/logout': 'AuthController.logout',
   'POST /login': 'AuthController.login',
   'POST /sms/receive': 'SmsController.receive',
+  'POST /sms/subscribe': 'SmsController.subscribe',
   'GET /appointment/doctor' : 'AppointmentController.findDoctor',
   'DELETE /appointment/:id' : 'AppointmentController.destroy',
   'GET /secretary/:id/doctors' : 'SecretaryController.findDoctors',
