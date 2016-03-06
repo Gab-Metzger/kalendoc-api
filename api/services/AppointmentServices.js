@@ -123,7 +123,7 @@ function findWeeklyAppointment(start, doctor, callback) {
               var increment = doctor.consultingTime;
               var currentTryFormatted = currentTry.format('DD/MM/YYYY');
               while (currentTry.isBefore(end)) {
-                var beginning = currentTry;
+                var beginning = currentTry.clone();
                 var ending = currentTry.add(increment, 'minutes');
                 var appointment = _.find(appointments, function (app) {
                   var mStart = moment(app.start);
