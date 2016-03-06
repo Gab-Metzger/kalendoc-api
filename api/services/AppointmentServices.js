@@ -123,19 +123,21 @@ function findWeeklyAppointment(start, doctor, callback) {
               var increment = doctor.consultingTime;
               var currentTryFormatted = currentTry.format('DD/MM/YYYY');
               while (currentTry.isBefore(end)) {
-                var beginning = currentTry.toISOString();
-                var ending = currentTry.add(increment, 'minutes').toISOString();
+                var beginning = currentTry;
+                var ending = currentTry.add(increment, 'minutes');
                 var appointment = _.find(appointments, function (app) {
+                  var mStart = moment(app.start);
+                  var mEnd = moment(app.end);
                   return (
-                    (moment(app.start).isSameOrBefore(moment(beginning)) && !(moment(app.end).isSameOrBefore(moment(beginning)) || moment(app.end).isAfter(moment(ending))))
-                    || (moment(app.end).isSameOrAfter(moment(ending)) && !(moment(app.start).isBefore(moment(beginning)) || moment(app.start).isSameOrAfter(moment(ending))))
-                    || (moment(app.start).isBetween(moment(beginning), moment(ending)) && moment(app.end).isBetween(moment(beginning), moment(ending)))
-                    || (moment(app.start).isSameOrBefore(moment(beginning)) && moment(app.end).isSameOrAfter(moment(ending)))
+                    (mStart.isSameOrBefore(beginning) && !(mEnd.isSameOrBefore(beginning) || mEnd.isAfter(ending)))
+                    || (mEnd.isSameOrAfter(ending) && !(mStart.isBefore(beginning) || mStart.isSameOrAfter(ending)))
+                    || (mStart.isBetween(beginning, ending) && mEnd.isBetween(beginning, ending))
+                    || (mStart.isSameOrBefore(beginning) && mEnd.isSameOrAfter(ending))
                   );
                 });
                 if (!appointment) {
-                  if (moment(beginning) > moment()) {
-                    res.push(beginning);
+                  if (beginning > moment()) {
+                    res.push(beginning.toISOString());
                   }
                 }
               }
