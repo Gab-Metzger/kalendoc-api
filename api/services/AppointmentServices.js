@@ -126,7 +126,12 @@ function findWeeklyAppointment(start, doctor, callback) {
                 var beginning = currentTry.toISOString();
                 var ending = currentTry.add(increment, 'minutes').toISOString();
                 var appointment = _.find(appointments, function (app) {
-                  return (app.start.toISOString() <= beginning && app.end.toISOString() >= ending);
+                  return (
+                    (moment(app.start).isSameOrBefore(moment(beginning)) && !(moment(app.end).isSameOrBefore(moment(beginning)) || moment(app.end).isAfter(moment(ending))))
+                    || (moment(app.end).isSameOrAfter(moment(ending)) && !(moment(app.start).isBefore(moment(beginning)) || moment(app.start).isSameOrAfter(moment(ending))))
+                    || (moment(app.start).isBetween(moment(beginning), moment(ending)) && moment(app.end).isBetween(moment(beginning), moment(ending)))
+                    || (moment(app.start).isSameOrBefore(moment(beginning)) && moment(app.end).isSameOrAfter(moment(ending)))
+                  );
                 });
                 if (!appointment) {
                   if (moment(beginning) > moment()) {
