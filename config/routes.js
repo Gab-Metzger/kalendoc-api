@@ -26,6 +26,9 @@ module.exports.routes = {
   'OPTIONS /*': function(req, res) {
     res.send(200);
   },
+  'GET /': function(req, res) {
+    res.send(200);
+  },
 
   // Authentication routes
   //'/logout': 'AuthController.logout',
