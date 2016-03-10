@@ -91,6 +91,9 @@ module.exports = {
     aircallNumber: {
       type: 'string'
     },
+    acceptLucie: {
+      type: 'boolean'
+    },
 
     // List of all doctor appointements.
     appointements: {
