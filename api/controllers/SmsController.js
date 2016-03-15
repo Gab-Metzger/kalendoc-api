@@ -21,7 +21,8 @@ module.exports = {
   subscribe: function(req,res){
     var params = req.allParams();
     var number = params.number;
-    Slack.sendSMSMessage("New subscription from Hello Lucie LP : " + number);
+    var doctor = params.doctor;
+    Slack.sendSMSMessage("New subscription from Hello Lucie LP : " + number + " for " + doctor);
     return res.json(200, params);
   }
 }
