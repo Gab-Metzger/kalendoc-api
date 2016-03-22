@@ -154,6 +154,7 @@ module.exports = _.merge(_.cloneDeep(require('../base/Controller')), {
             function(done){
               var endTimer = new Date().getTime();
               res.json(results);
+              console.log(results);
               console.log("It took " + (endTimer - startTimer) + " milliseconds to search for free appointments");
             }
           )
