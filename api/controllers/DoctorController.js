@@ -145,7 +145,7 @@ module.exports = _.merge(_.cloneDeep(require('../base/Controller')), {
           const results = [];
           async.each(doctors,
             function(doctor,cb){
-              AppointmentServices.findWeeklyAppointment(params.start, doctor, function(res){
+              AppointmentServices.findWeeklyAppointment(params.start, doctor, doctor.consultingTime, function(res){
                 doctor.appointments = res;
                 results.push(doctor);
                 cb();
@@ -191,4 +191,3 @@ module.exports = _.merge(_.cloneDeep(require('../base/Controller')), {
     }
   }
 });
-

@@ -12,26 +12,31 @@ var moment = require('moment');
  */
 
 module.exports = _.merge(_.cloneDeep(require('../base/Controller')),{
-  create: function(req,res) {
-    RightsManager.setDoctor(req,function(doctor,err){
+  list: function(req, res) {
+    var params = req.allParams();
+    console.log(params);
+    Reservation.find(params).exec(function (err, reservations) {
       if (err) {
-        return res.json(err.status, {err: err.message});
+        return res.json(500, err);
+      }
+      return res.json(200, reservations);
+    });
+  },
+  create: function(req,res) {
+    var params = req.allParams();
+    if (!params.unlimited) {
+      var data = [];
+      _.each(params, function(item) {
+        data.push(item);
+      });
+    } else {
+      var data = params;
+    }
+    Reservation.create(data, function(err, reserv){
+      if (err) {
+        return res.json(400, {err:err});
       } else {
-        if (RightsManager.canAdminDoctor(req.user, doctor)) {
-          var params = req.allParams();
-          params.start = moment(params.start).hours() * 60 + moment(params.start).minutes();
-          params.end = moment(params.end).hours() * 60 + moment(params.end).minutes();
-          params.doctor = doctor;
-          Reservation.create(params,function(err, reserv){
-            if (err) {
-              return res.json(400, {err:err});
-            } else {
-              return res.json(200, {reservation: reserv});
-            }
-          });
-        } else {
-          return res.json(401, {err: req.__('Error.Rights.Insufficient')});
-        }
+        return res.json(200, {reservation: reserv});
       }
     });
   },
@@ -130,4 +135,3 @@ module.exports = _.merge(_.cloneDeep(require('../base/Controller')),{
     });
   }
 });
-
