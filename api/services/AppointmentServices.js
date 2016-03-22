@@ -83,13 +83,36 @@ module.exports.validateAppointmentDate = function(req, params, doctor, callback)
 
 module.exports.findWeeklyAppointment = findWeeklyAppointment;
 
-function findWeeklyAppointment(start, doctor, callback) {
+function findWeeklyAppointment(start, doctor, consultingTimeIncrement, callback) {
   var counts = 0;
   var currentDate = moment(start).startOf('day');
   var endOfWeek = moment(start).add(7, 'days');
   var res = [];
 
-  Reservation.find({doctor: doctor.id}).exec(function (err, reservations) {
+  var reservationQuery = {
+    where: {
+      or: [
+        {
+          doctor: doctor.id,
+          start: {
+            '>=': currentDate.toISOString(),
+            '<=': endOfWeek.toISOString()
+          },
+          end: {
+            '>=': currentDate.toISOString(),
+            '<=': endOfWeek.toISOString()
+          },
+          unlimited: false
+        },
+        {
+          unlimited: true
+        }
+      ]
+    },
+    sort: 'weekDay ASC'
+  };
+
+  Reservation.find(reservationQuery).exec(function (err, reservations) {
     if (err) {
       console.log(err);
       return callback(err);
@@ -112,32 +135,39 @@ function findWeeklyAppointment(start, doctor, callback) {
             return moment(n).add(key, 'days').toISOString();
           });
           _.each(week, function (day) {
-            var currentDayReservations = _.where(reservations, { weekDay: moment(day).day() });
+            var currentDayReservations = _.where(reservations, { weekDay: moment(day).weekday() });
             _.each(currentDayReservations, function(reservation) {
-              var currentTry = moment(day).startOf('day').add(reservation.start,'minutes');
-              var end = moment(day).startOf('day').add(reservation.end,'minutes');
-              if (moment(currentTry).tz('Europe/Paris').utcOffset() == 120) {
-                currentTry = moment(currentTry).subtract(1, 'hour');
-                end = moment(end).subtract(1, 'hour');
-              }
-              var increment = doctor.consultingTime;
-              var currentTryFormatted = currentTry.format('DD/MM/YYYY');
-              while (currentTry.isBefore(end)) {
-                var beginning = currentTry.clone();
-                var ending = currentTry.add(increment, 'minutes');
-                var appointment = _.find(appointments, function (app) {
-                  var mStart = moment(app.start);
-                  var mEnd = moment(app.end);
-                  return (
-                    (mStart.isSameOrBefore(beginning) && !(mEnd.isSameOrBefore(beginning) || mEnd.isAfter(ending)))
-                    || (mEnd.isSameOrAfter(ending) && !(mStart.isBefore(beginning) || mStart.isSameOrAfter(ending)))
-                    || (mStart.isBetween(beginning, ending) && mEnd.isBetween(beginning, ending))
-                    || (mStart.isSameOrBefore(beginning) && mEnd.isSameOrAfter(ending))
-                  );
-                });
-                if (!appointment) {
-                  if (beginning > moment()) {
-                    res.push(beginning.toISOString());
+              var currentTry = moment(reservation.start);
+              var end = moment(reservation.end);
+              var currentWeek = moment(day).isoWeek();
+              var savedWeek = moment(reservation.start).isoWeek();
+              var isAGoodWeek = ((Math.abs(currentWeek - savedWeek) % reservation.recurrence) === 0);
+              if (isAGoodWeek) {
+                if (reservation.unlimited) {
+                  var today = moment(day);
+                  currentTry.set({year: today.get('year'), month: today.get('month'), date: today.get('date')});
+                  end.set({year: today.get('year'), month: today.get('month'), date: today.get('date')});
+                }
+                var increment = doctor.consultingTime;
+                var currentTryFormatted = currentTry.format('DD/MM/YYYY');
+                while (currentTry.isBefore(end)) {
+                  var beginning = currentTry.clone();
+                  var ending = currentTry.clone().add(consultingTimeIncrement, 'minutes');
+                  currentTry.add(increment, 'minutes');
+                  var appointment = _.find(appointments, function (app) {
+                    var mStart = moment(app.start);
+                    var mEnd = moment(app.end);
+                    return (
+                      (mStart.isSameOrBefore(beginning) && !(mEnd.isSameOrBefore(beginning) || mEnd.isAfter(ending)))
+                      || (mEnd.isSameOrAfter(ending) && !(mStart.isBefore(beginning) || mStart.isSameOrAfter(ending)))
+                      || (mStart.isBetween(beginning, ending) && mEnd.isBetween(beginning, ending))
+                      || (mStart.isSameOrBefore(beginning) && mEnd.isSameOrAfter(ending))
+                    );
+                  });
+                  if (!appointment) {
+                    if (beginning > moment()) {
+                      res.push(beginning.toISOString());
+                    }
                   }
                 }
               }
@@ -153,183 +183,6 @@ function findWeeklyAppointment(start, doctor, callback) {
       })
     }
   })
-}
-
-module.exports.findFiveFirstAppointments = function(start, doctor, callback) {
-  var counts = 0;
-  var currentDate = moment(start).startOf('day');
-  var endOfWeek = moment(start).add(6, 'days');
-  var res = [];
-
-  Reservation.findOne({doctor:doctor.id}).exec(function(err,doctorReservations){
-    if (!doctorReservations) {
-      callback(res);
-    } else {
-      async.whilst(
-        function() {
-          return currentDate < endOfWeek
-        },
-        function(cb) {
-          res[counts] = [];
-          Reservation.find({
-            where: {
-              weekDay: currentDate.day(),
-              doctor: doctor.id
-            },
-            sort: 'start'
-          }).exec(function(err, reservations){
-            if (err) {
-              console.log("Error on getting reservations: "+err);
-            }
-            async.forEachSeries(reservations,
-              function(reservation, cb){
-                var currentTry = moment(currentDate).startOf('day').add(reservation.start,'minutes');
-                var end = moment(currentDate).startOf('day').add(reservation.end,'minutes');
-                var increment = doctor.consultingTime;
-                var currentTryFormatted = currentTry.format('DD/MM/YYYY');
-
-                async.whilst(
-                  function(){
-                    return currentTry.isBefore(end);
-                  },
-                  function(cb){
-                    var startApp = currentTry.toISOString();
-                    var endApp = currentTry.add(increment, 'minutes').toISOString();
-                    if (moment(startApp).tz('Europe/Paris').utcOffset() == 60) {
-                      startApp = moment(startApp).add(1, 'hours').toISOString();
-                      endApp = moment(endApp).add(1, 'hours').toISOString();
-                    }
-                    console.log(startApp);
-                    Appointment.findOne({
-                      doctor: doctor.id,
-                      start: {'<=': startApp},
-                      end: {'>=': endApp}
-                    }).exec(function(err,app){
-                      if (err) {
-                        console.log("Error on getting reservations (1): "+err);
-                      }
-                      if (!app) {
-                        if (moment(startApp) >= moment()) {
-                          res[counts].push(startApp);
-                        }
-                      }
-                      // currentTry = currentTry.add(increment,'minutes');
-                      cb();
-                    });
-                  },
-                  function(err){
-                    cb();
-                  }
-                );
-              },
-              // When it's done !
-              function(err){
-                counts++;
-                currentDate = currentDate.add(1,'day');
-                cb();
-              }
-            );
-          })
-        },
-        function(err){
-          var emptyResponse = _.every(res, function(item) {
-            return item.length === 0
-          });
-          if (emptyResponse) {
-            findFirstFreeAppointment(doctor, function (res) {
-              console.log("First free appointments");
-              console.log(res);
-              callback(res);
-            });
-          } else {
-              console.log("Weekly free appointments");
-              console.log(res);
-            callback(res);
-          }
-        }
-      );
-    }
-  });
-}
-
-function findFirstFreeAppointment(doctor, callback) {
-  var stop = false;
-  var currentDate = moment().startOf('day');
-  var res = null;
-
-  Reservation.findOne({doctor: doctor.id}).exec(function (err, doctorReservations) {
-    if (!doctorReservations) {
-      return res;
-    } else {
-      async.whilst(
-        function() {
-          return !stop
-        },
-        function(cb) {
-          Reservation.find({
-            where: {
-              weekDay: currentDate.day(),
-              doctor: doctor.id
-            },
-            sort: 'start'
-          }).exec(function(err, reservations){
-            if (err) {
-              console.log("Error on getting reservations: "+err);
-            }
-            async.forEachSeries(reservations,
-              function(reservation, cb){
-                var currentTry = moment(currentDate).startOf('day').add(reservation.start,'minutes');
-                var end = moment(currentDate).startOf('day').add(reservation.end,'minutes');
-                var increment =  doctor.consultingTime;
-                var currentTryFormatted = currentTry.format('DD/MM/YYYY');
-
-                async.whilst(
-                  function(){
-                    return currentTry.isBefore(end);
-                  },
-                  function(cb){
-                    var startApp = currentTry.toISOString();
-                    var endApp = currentTry.add(increment, 'minutes').toISOString();
-                    Appointment.findOne({
-                      doctor: doctor.id,
-                      start: {'<=': startApp},
-                      end: {'>=': endApp}
-                    }).exec(function(err,app){
-                      if (err) {
-                        console.log("Error on getting reservations (1): "+err);
-                      }
-                      if (!app) {
-                        if (moment(startApp) >= moment()) {
-                          res = startApp;
-                          stop = true;
-                          callback(res);
-                          return;
-                        }
-                      }
-                      // currentTry = currentTry.add(increment,'minutes');
-                      cb();
-                    });
-                  },
-                  function(err){
-                    cb();
-                  }
-                );
-              },
-              // When it's done !
-              function(err) {
-                currentDate = currentDate.add(1,'day');
-                cb();
-              }
-            );
-          })
-        },
-        function(err){
-          callback(res);
-        }
-      );
-      return res;
-    }
-  });
 }
 
 function organizeAppointmentsByWeek(appointments, start) {

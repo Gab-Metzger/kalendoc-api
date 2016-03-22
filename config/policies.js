@@ -23,7 +23,7 @@ module.exports.policies = {
   AuthController: {
     '*': true
   },
-  
+
   SmsController: {
     '*': true
   },
@@ -65,6 +65,7 @@ module.exports.policies = {
   },
 
   ReservationController: {
+    'list': ['loggedIn','medicalPro'],
     'create': ['loggedIn','medicalPro'],
     'find': ['loggedIn'],
     'findOne' : ['loggedIn'],
@@ -102,5 +103,3 @@ module.exports.policies = {
     'destroy': ['loggedIn', 'medicalPro']
   }
 };
-
-

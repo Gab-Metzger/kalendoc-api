@@ -10,49 +10,71 @@ var moment = require('moment');
 */
 
 module.exports = {
-  schema:true,
+  schema: true,
+
   types: {
     afterStart: function(end){
-      return this.start < end;
+      return moment(end).isSameOrAfter(this.start);
+    },
+    sameDay: function(end) {
+      return moment(end).isSame(this.start, 'day');
     }
   },
+
   attributes: {
-    weekDay:{
-      type:'integer',
-      required:true,
-      min:0,
-      max:6
+    weekDay: {
+      type: 'integer',
+      min: 0,
+      max: 6
     },
     start:{
-      type:'integer',
-      min:0,
-      max:3599,
-      required:true,
+      type: 'datetime',
+      required: true,
     },
     end:{
-      type:'integer',
-      required:true,
-      min:0,
-      max:3599,
-      afterStart:true
+      type: 'datetime',
+      required: true,
+      afterStart: true,
+      sameDay: true
     },
-
     doctor:{
-      model:'Doctor',
-      required:true
+      model: 'Doctor',
+      required: true
     },
-    toJSON: function(){
+    unlimited: {
+      type: 'boolean',
+      defaultsTo: false,
+      required: true
+    },
+    recurrence: {
+      type: 'integer',
+      defaultsTo: 1,
+      required: true
+    },
+    duration: {
+      type: 'integer'
+    },
+    isMaster: {
+      type: 'boolean',
+      defaultsTo: false
+    },
+    toJSON: function() {
       var obj = this.toObject();
-      obj.start = moment().startOf('day').add(obj.start,'minutes').toISOString();
-      obj.end = moment().startOf('day').add(obj.end,'minutes').toISOString();
-      // if (moment(obj.start).tz('Europe/Paris').utcOffset() == 60) {
-      //   obj.start = moment(obj.start).add(1, 'hours').toDate();
-      //   obj.end = moment(obj.end).add(1, 'hours').toDate();
-      // }
+      if (!obj.weekDay) {
+        obj.weekDay = moment(obj.start).weekday();
+      }
       return obj;
     }
   },
 
+  beforeCreate: function(values, next) {
+    if(values.unlimited) {
+      values.weekDay = moment(values.start).weekday();
+      next();
+    } else {
+      next();
+    }
+  },
   beforeUpdate: function(values, next){
     Doctor.findOne(values.doctor).exec(function(err,doctor){
       if (doctor) {
@@ -63,4 +85,3 @@ module.exports = {
     });
   }
 };
-
