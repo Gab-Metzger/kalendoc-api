@@ -22,7 +22,8 @@ module.exports = {
     var params = req.allParams();
     var number = params.number;
     var doctor = params.doctor;
-    Slack.sendSMSMessage("New subscription from Hello Lucie LP : " + number + " for " + doctor);
+    var content = params.content;
+    Slack.sendSMSMessage("New subscription from Hello Lucie LP : " + number + " for " + doctor + " ; Content: " + content);
     return res.json(200, params);
   }
 }
