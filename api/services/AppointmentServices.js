@@ -150,6 +150,8 @@ function findWeeklyAppointment(start, doctor, consultingTimeIncrement, callback)
               var isAGoodWeek = ((Math.abs(currentWeek - savedWeek) % reservation.recurrence) === 0);
               if (isAGoodWeek) {
                 if (reservation.unlimited) {
+                  // TODO: Issue when timezone change (summer / winter).
+                  // Only the date is changed not the time.
                   var today = moment(day);
                   currentTry.set({year: today.get('year'), month: today.get('month'), date: today.get('date')});
                   end.set({year: today.get('year'), month: today.get('month'), date: today.get('date')});
