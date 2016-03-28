@@ -121,8 +121,6 @@ function findWeeklyAppointment(start, doctor, consultingTimeIncrement, callback)
       console.log("No reservations");
        return callback(res);
     } else {
-      console.log("Réservations");
-      console.log(reservations);
       Appointment.find({
         doctor: doctor.id,
         start: {
@@ -137,13 +135,9 @@ function findWeeklyAppointment(start, doctor, consultingTimeIncrement, callback)
           var week = _.map(_.fill(Array(7), start), function(n, key) {
             return moment(n).add(key, 'days').toISOString();
           });
-          console.log("Week to process");
-          console.log(week);
           _.each(week, function (day) {
             var currentDayReservations = _.where(reservations, { weekDay: moment(day).weekday() });
             _.each(currentDayReservations, function(reservation) {
-              console.log("current reservation");
-              console.log(reservation);
               var currentTry = moment(reservation.start);
               var end = moment(reservation.end);
               var currentWeek = moment(day).isoWeek();
@@ -162,10 +156,6 @@ function findWeeklyAppointment(start, doctor, consultingTimeIncrement, callback)
                 while (currentTry.isBefore(end)) {
                   var beginning = currentTry.clone();
                   var ending = currentTry.clone().add(consultingTimeIncrement, 'minutes');
-                  console.log("Début du rdv");
-                  console.log(beginning.toISOString());
-                  console.log("Fin du rdv");
-                  console.log(ending.toISOString());
                   currentTry.add(increment, 'minutes');
                   var appointment = _.find(appointments, function (app) {
                     var mStart = moment(app.start);
@@ -177,8 +167,6 @@ function findWeeklyAppointment(start, doctor, consultingTimeIncrement, callback)
                       || (mStart.isSameOrBefore(beginning) && mEnd.isSameOrAfter(ending))
                     );
                   });
-                  console.log("Rdv trouvé");
-                  console.log(appointment);
                   if (!appointment) {
                     if (beginning > moment()) {
                       res.push(beginning.toISOString());
