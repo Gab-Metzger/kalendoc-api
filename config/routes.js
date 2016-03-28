@@ -46,6 +46,7 @@ module.exports.routes = {
   'GET /doctor':'DoctorController.index',
   'PUT /doctor':'DoctorController.update',
   'GET /reservation':'ReservationController.list',
+  'DELETE /reservation':'ReservationController.destroy',
   'GET /mail':'MailController.index',
   'POST /mail':'MailController.create',
   'GET /mail/count':'MailController.count',
