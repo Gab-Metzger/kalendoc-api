@@ -196,5 +196,14 @@ function organizeAppointmentsByWeek(appointments, start) {
     var index = Math.abs(currentDate.diff(beginning, 'days'));
     result[index].push(appointment);
   });
+  _.each(result, function(item) {
+    item.sort(sortDateAsc);
+  })
   return result;
+}
+
+function sortDateAsc(date1, date2) {
+  if (new Date(date1) > new Date(date2)) return 1;
+  if (new Date(date1) < new Date(date2)) return -1;
+  return 0;
 }
