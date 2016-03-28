@@ -145,7 +145,8 @@ module.exports = _.merge(_.cloneDeep(require('../base/Controller')), {
           const results = [];
           async.each(doctors,
             function(doctor,cb){
-              AppointmentServices.findWeeklyAppointment(params.start, doctor, doctor.consultingTime, function(res){
+              var consultingTimeParams = params.consultingTime || doctor.consultingTime;
+              AppointmentServices.findWeeklyAppointment(params.start, doctor, consultingTimeParams, function(res){
                 doctor.appointments = res;
                 results.push(doctor);
                 cb();
@@ -154,6 +155,7 @@ module.exports = _.merge(_.cloneDeep(require('../base/Controller')), {
             function(done){
               var endTimer = new Date().getTime();
               res.json(results);
+              console.log(results);
               console.log("It took " + (endTimer - startTimer) + " milliseconds to search for free appointments");
             }
           )
