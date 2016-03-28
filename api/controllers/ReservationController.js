@@ -73,28 +73,27 @@ module.exports = _.merge(_.cloneDeep(require('../base/Controller')),{
   },
   destroy: function(req,res) {
     var params = req.allParams();
-    if (params.id) {
-      Reservation.findOne(params.id).populate("doctor").exec(function(err,reserv){
+    if (params.sibling) {
+      console.log(params.sibling);
+      Reservation.destroy({sibling: params.sibling})
+      .exec(function(err, reservation) {
         if (err) {
-          res.json(500, {err:err});
-        } else if (!reserv) {
-          res.json(404, req.__('Collection.Reservation')+" "+req.__('Error.NotFound'));
-        } else {
-          if (RightsManager.canAdminDoctor(req.user, reserv.doctor)){
-            Reservation.destroy(params.id).exec(function(err,resrv){
-              if (err) {
-                res.json(500, {err:err});
-              } else {
-                res.json(reserv);
-              }
-            })
-          } else {
-            res.json(401, {err: req.__('Error.Rights.Insufficient')});
-          }
+          console.log(err);
+          return res.json(500, err);
         }
+        console.log("destroyed reservation")
+        console.log(reservation);
+        return res.json(200, reservation);
       });
     } else {
-      res.json(400, {err: req.__('Error.Fields.Missing')});
+      Reservation.destroy({id: params.id})
+      .exec(function(err, reservation) {
+        if (err) {
+          console.log(err);
+          return res.json(500, err);
+        }
+        return res.json(200, reservation);
+      });
     }
   },
   find: function(req,res) {
