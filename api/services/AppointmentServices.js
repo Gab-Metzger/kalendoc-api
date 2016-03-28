@@ -177,7 +177,7 @@ function findWeeklyAppointment(start, doctor, consultingTimeIncrement, callback)
             });
           });
           if (res.length == 0) {
-            findWeeklyAppointment(currentDate.add(7, 'days').toISOString(), doctor, callback);
+            findWeeklyAppointment(currentDate.add(7, 'days').toISOString(), doctor, consultingTimeIncrement, callback);
           } else {
             res = organizeAppointmentsByWeek(res, start);
             return callback(res);
