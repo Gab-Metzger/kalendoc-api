@@ -105,6 +105,7 @@ function findWeeklyAppointment(start, doctor, consultingTimeIncrement, callback)
           unlimited: false
         },
         {
+          doctor: doctor.id,
           unlimited: true
         }
       ]

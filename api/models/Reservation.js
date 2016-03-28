@@ -71,8 +71,8 @@ module.exports = {
   },
 
   beforeCreate: function(values, next) {
-    values.start = moment(values.start).startOf('minute').toISOString();
-    values.end = moment(values.end).startOf('minute').toISOString();
+    values.start = moment(values.start).startOf('minute').toDate();
+    values.end = moment(values.end).startOf('minute').toDate();
     if(values.unlimited) {
       values.weekDay = moment(values.start).weekday();
       next();
