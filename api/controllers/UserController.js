@@ -91,9 +91,9 @@ module.exports = _.merge(_.cloneDeep(require('../base/Controller')), {
         if (user.doctor) {
           var name = user.doctor.firstName;
         } else if (user.secretary) {
-          var name = user.secretary.firstName;
+          var name = user.secretary.name;
         } else if (user.delegatedSecretary) {
-          var name = user.delegatedSecretary.name;
+          var name = user.delegatedSecretary.firstName;
         } else {
           var name = user.patient.firstName
         }
