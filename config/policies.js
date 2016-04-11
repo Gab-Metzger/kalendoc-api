@@ -82,7 +82,7 @@ module.exports.policies = {
   },
   PatientController: {
     'create': true,
-    'find' : ['loggedIn', 'medicalPro'],
+    'find' : true,
     'findOne': ['loggedIn', 'medicalPro'],
     'findName' : ['loggedIn','medicalPro'],
     'findAppointments': ['loggedIn'],
