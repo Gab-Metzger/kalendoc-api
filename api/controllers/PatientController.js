@@ -47,6 +47,18 @@ module.exports = _.merge(_.cloneDeep(require('../base/Controller')), {
     }
   },
 
+  find: function(req, res) {
+    console.log(req.param('id'));
+    Patient.findOne(req.param('id')).exec(function(err, patient) {
+      if (err) {
+        console.log(err);
+        return res.json(500, err);
+      }
+      console.log(patient);
+      return res.json(200, patient);
+    });
+  },
+
   findName: function(req,res) {
     var params = req.allParams();
     if (params.name) {
