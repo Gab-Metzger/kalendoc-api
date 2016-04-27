@@ -71,7 +71,7 @@ function emailConf(mergedVars,emailDest,cb){
     }
 
     var mail = mailcomposer({
-      from: "Kalendoc <contact@mg.kalendoc.com>",
+      from: "Kalendoc <contact@kalendoc.com>",
       to: emailDest,
       subject: 'Confirmation du rendez-vous avec le Docteur '+mergedVars["docName"],
       body: mergedVars["firstName"]+', nous confirmons votre rendez-vous avec le Docteur '+mergedVars["docName"]+' le '+mergedVars["dateRDV"]+" "+mergedVars["heureRDV"],
