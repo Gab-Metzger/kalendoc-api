@@ -28,11 +28,11 @@ module.exports = _.merge(_.cloneDeep(require('../base/Controller')), {
       }
       if (user) {
         res.json(200, {user: user, token: JsonWebToken.create({id:user.id})});
-        Mailer.sendMail('email-creation-compte-kalendoc', user.email,[
-            {name:"2_EMAIL",content:user.email},
-            {name:"3_PASSWORD",content:params.password},
-            {name:"4_LOGIN_URL",content:sails.config.appURL+"auth/login"}
-        ],function(){});
+        var mergedVars={
+          "email":user.email,
+          "password":params.password
+        };
+        Mailer.sendMail( 'email-creation-compte', user.email ,mergedVars);
       }
     });
   },
@@ -97,12 +97,14 @@ module.exports = _.merge(_.cloneDeep(require('../base/Controller')), {
         } else {
           var name = user.patient.firstName
         }
-        Mailer.sendMail('email-forgot-password-kalendoc', user.email, [
-            {name:"0_FNAME", content: name},
-            {name:"1_TOKEN", content: token}
-        ], function(){
-          return res.json(200, {message: 'Mail envoyé !'})
-        });
+
+        var mergedVars = {
+          "firstName":name,
+          "token":token
+        };
+
+        Mailer.sendMail('email-password', user.email,mergedVars);
+        return res.json(200, {message: 'Mail envoyé !'})
       }
     ], function (err) {
       if (err) return res.json(500, err);
