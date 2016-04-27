@@ -10,6 +10,23 @@ var blockOperatrice='Vous avez été accueilli par *|5_FNAMEOPERATOR|*. <a href=
 module.exports.sendMail = function(templateName,emailDest,mergedVars){
 
   chooseTemplate(templateName, mergedVars, emailDest, function (mail) {
+    mail.build(function(mailBuildError, message) {
+
+        var dataToSend = {
+            bcc: emailDest,
+            message: message.toString('ascii')
+        };
+
+        mailgun.messages().sendMime(dataToSend, function (sendError, body) {
+            if (sendError) {
+                console.log(sendError);
+                return;
+            } else {
+              console.log("Mail sent");
+            }
+            return;
+        });
+    });
   });  
 }
 
