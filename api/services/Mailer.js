@@ -13,7 +13,7 @@ module.exports.sendMail = function(templateName,emailDest,mergedVars){
     mail.build(function(mailBuildError, message) {
 
         var dataToSend = {
-            bcc: emailDest,
+            to: emailDest,
             message: message.toString('ascii')
         };
 
