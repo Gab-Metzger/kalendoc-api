@@ -40,7 +40,7 @@ module.exports.routes = {
   'GET /secretary/:id/doctors' : 'SecretaryController.findDoctors',
   'GET /secretary/doctors' : 'SecretaryController.findDoctors',
   'GET /category/label/' : 'CategoryController.findLabel',
-  'GET /patient/name/' : 'PatientController.findName',
+  'GET /patient/search' : 'PatientController.findName',
   'GET /patient/:id/mails' : 'MailController.mailsByPatient',
   'GET /patient/:id' : 'PatientController.find',
   'GET /doctor/search':'DoctorController.search',

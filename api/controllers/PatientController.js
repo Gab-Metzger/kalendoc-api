@@ -54,36 +54,30 @@ module.exports = _.merge(_.cloneDeep(require('../base/Controller')), {
         console.log(err);
         return res.json(500, err);
       }
-      console.log(patient);
       return res.json(200, patient);
     });
   },
 
   findName: function(req,res) {
     var params = req.allParams();
-    if (params.name) {
-      const names = params.name.split(' ');
-      const req = [
-        {firstName: {contains: names[0]}},
-        {lastName: {contains: names[0]}}
-      ];
-      if ( names[1] ){
-        names.shift();
-        const name = names.join(" ");
-        req.push({firstName: {contains: name}});
-        req.push({lastName: {contains: name}});
-      }
-
-      Patient.find({or: req}).exec(function(err,patients){
-        if (err) {
-          res.json(500, {err:err});
-        } else {
-          res.json(patients);
-        }
-      })
-    } else {
-      res.json(400, {err: req.__('Error.Fields.Missing')});
+    if (!params.name || !params.doctor) {
+      return res.NotFound("No params name or doctor!")
     }
+
+    var reqParams = {
+      "lastName":{"$regex": new RegExp(params.name, "i")},
+      "doctor":params.doctor
+    };
+
+    Patient.native(function(err, collection) {
+      if (err) return res.serverError(err);
+      collection.find(reqParams)
+      .toArray(function (err, results) {
+        if (err) return res.serverError(err);
+
+        return res.json(200,results);
+      });
+    });
   },
 
   findAppointments: function(req,res){
