@@ -22,7 +22,7 @@ module.exports.sendMail = function(templateName,emailDest,mergedVars){
                 console.log(sendError);
                 return;
             } else {
-              console.log("Mail sent");
+              sails.log.info("Mail sent to "+emailDest);
             }
             return;
         });

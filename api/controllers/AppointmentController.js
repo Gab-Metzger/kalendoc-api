@@ -19,7 +19,6 @@ var uuid = require('uuid');
       _.forEach(req.param('data'), function(item) {
         sails.sockets.join(req.socket, 'doctor' + item);
       })
-      console.log("Doctor or Secretary subscribe to " + req.socket.id);
     }
   },
 
@@ -40,7 +39,6 @@ var uuid = require('uuid');
         if (err) {
           res.json(err.status, {err:err});
         } else {
-          console.log("Created Appointment");
           Appointment.findOne(app.id).populateAll().exec(function(err,app){
             var doctor = app.doctor;
             // sails.sockets.broadcast('doctor'+doctor.id, 'appointment', {
