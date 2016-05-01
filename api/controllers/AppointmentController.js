@@ -19,7 +19,6 @@ var uuid = require('uuid');
       _.forEach(req.param('data'), function(item) {
         sails.sockets.join(req.socket, 'doctor' + item);
       })
-      console.log("Doctor or Secretary subscribe to " + req.socket.id);
     }
   },
 
@@ -40,7 +39,6 @@ var uuid = require('uuid');
         if (err) {
           res.json(err.status, {err:err});
         } else {
-          console.log("Created Appointment");
           Appointment.findOne(app.id).populateAll().exec(function(err,app){
             var doctor = app.doctor;
             // sails.sockets.broadcast('doctor'+doctor.id, 'appointment', {
@@ -61,18 +59,19 @@ var uuid = require('uuid');
                     if (!secretary) {
                       Slack.sendAPIMessage("[MAILER] Create appointment : secretary not found : "+err);
                     } else if (patient.email) {
-                      var emailContent = [
-                        {name:"0_FNAME",content:patient.fullName()},
-                        {name:"1_DNAME",content:doctor.getFullName()},
-                        {name:"2_DATERDV", content: DateFormat.convertDateObjectToLocal(app.start).format("DD/MM/YYYY")},
-                        {name:"3_HOURRDV", content: DateFormat.convertDateObjectToLocal(app.start).format("HH:mm")},
-                        {name:"4_ADDRESS", content: secretary.address},
-                        //TODO: Display url doctor profile
-                      ];
+
+                      var emailContent = {
+                        "firstName":patient.fullName(),
+                        "docName":doctor.getFullName(),
+                        "heureRDV": DateFormat.convertDateObjectToLocal(app.start).format("HH:mm"),
+                        "dateRDV":DateFormat.convertDateObjectToLocal(app.start).format("DD/MM/YYYY"),
+                        "adrsRDV":secretary.address
+                      };
                       if (app.source === 'phone') {
-                        emailContent.push({name:"5_FNAMEOPERATOR", content: params.delegatedSecretary.firstName});
+                        emailContent["opName"]=params.delegatedSecretary.firstName;
                       }
-                      Mailer.sendMail('email-confirmation-rdv-kalendoc',patient.email,emailContent, function() {});
+
+                      Mailer.sendMail('email-confirmation',patient.email,emailContent);
                     }
                   })
                 }

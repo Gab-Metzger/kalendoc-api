@@ -33,14 +33,18 @@ module.exports.reminders = function(onlySms){
             if (!secr) {
               Slack.sendAPIMessage("Error while sending reminders (3): "+err);
             } else {
-              Mailer.sendMail('email-rappel-rdv-kalendoc', app.patient.email, [
-                {name: "0_FNAME", content: app.patient.firstName+" "+app.patient.lastName},
-                {name: "1_DNAME", content: app.doctor.firstName+" "+app.doctor.lastName},
-                {name: "2_DATERDV", content: DateFormat.convertDateObjectToLocal(app.start).format("D/M/YYYY")},
-                {name: "3_HOURRDV", content: DateFormat.convertDateObjectToLocal(app.start).format("HH:mm")},
-                {name: "4_ADDRESS", content: secr.address},
-                {name: "5_CANCELRDV_URL", content: sails.config.appURL+"auth/login"}
-              ], function(){});
+
+              var mergedVars = {
+                "firstName":app.patient.firstName+" "+app.patient.lastName,
+                "docName":app.doctor.firstName+" "+app.doctor.lastName,
+                "heureRDV":DateFormat.convertDateObjectToLocal(app.start).format("HH:mm"),
+                "dateRDV":DateFormat.convertDateObjectToLocal(app.start).format("D/M/YYYY"),
+                "adrsRDV":secr.address
+              };
+
+              Mailer.sendMail('email-rappel', app.patient.email, mergedVars, function(){});
+
+              
             }
           })
         }
