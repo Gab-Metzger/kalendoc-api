@@ -43,6 +43,9 @@ function chooseTemplate(templateName, mergedVars, emailDest, cb) {
   else if(templateName=='email-creation-compte') {
     emailCreateUser(mergedVars,emailDest,cb);
   }
+  else if(templateName=='email-message-kalendoc'){
+    emailMessKalendoc(mergedVars,emailDest,cb);
+  }
 
 }
 
@@ -131,6 +134,46 @@ function emailPass(mergedVars,emailDest,cb){
       to: emailDest,
       subject: 'Réinitialisation de votre mot de passe Kalendoc',
       body: 'Veuillez aller sur ce lien : http://www.kalendoc.com/reset/'+mergedVars["token"],
+      html: template
+    });
+
+    cb(mail);
+
+  });
+}
+
+function emailMessKalendoc(mergedVars,emailDest,cb){
+  fs.readFile('api/templates/email-message-kalendoc.html', function(err,res){
+    var blockPatPhone='Numéro de téléphone du patient : ';
+    var blockPatName='</span><span style="font-family:verdana,geneva,sans-serif">Nom du patient : </span><span style="font-family:verdana,geneva,sans-serif; line-height:20.8px">*|2_PNAME|*'
+
+
+
+    if(err){
+      console.log(err);
+    }
+
+    var template = res.toString();
+
+    template=template.replace('*|0_DNAME|*',mergedVars["receiverName"]);
+    template=template.replace('*|1_ONAME|*',mergedVars["senderName"]);
+    template=template.replace('*|4_CONTENT|*',mergedVars["content"]);
+    template=template.replace('*|5_ACTION|*',mergedVars["action"]);
+
+    if(mergedVars["patient"]){
+      template=template.replace('*|2_BLOCKPATIENT|*',blockPatName.replace('*|2_PNAME|*',mergedVars["patName"]));
+
+      if(mergedVars["patPhone"]){
+        blockPatPhone=blockPatPhone+mergedVars["patPhone"];
+        template=template.replace('*|3_BLOCKPATIENTPHONE|*',blockPatPhone);
+      }
+    }
+
+    var mail = mailcomposer({
+      from: "Kalendoc <contact@kalendoc.com>",
+      to: emailDest,
+      subject: 'Vous avez reçu un message sur Kalendoc',
+      body: 'Vous avez reçu un message sur Kalendoc de la part de '+mergedVars["senderName"],
       html: template
     });
 
