@@ -91,37 +91,6 @@ module.exports.analyzeSMS = function(message, sender){
   });
 }
 
-/*
-module.exports.sendSMS = function(user, accepted){
-  if (!user.smsAppointment) {
-    Slack.sendAPIMessage(user.id + " a envoyé un sms de confirmation alors qu'il n'avait pas de RDV ...")
-  } else {
-    Appointment.findOne(user.smsAppointment).exec(function(err,app){
-      if (err) {
-        Slack.sendAPIMessage("[SMS CONFIRMATION] Error while getting user appointment"+err)
-      } else if (!app) {
-        Slack.sendAPIMessage("[SMS CONFIRMATION] Error: cannot find sms appointment of "+ user.id);
-      } else {
-        if (app.state === "waitingForUserAcceptation"){
-          var state;
-          if (accepted) {
-            state = "accepted"
-          } else {
-            state = "cancelledByUser";
-          }
-          Appointment.update(user.smsAppointment,{
-            state: state
-          }).exec(function(err,app){
-            if (err) {
-              Slack.sendAPIMessage("[SMS CONFIRMATION] Error: cannot update appointment: "+err);
-            }
-          })
-        }
-      }
-    });
-  }
-}*/
-
 module.exports.sendSMS = function(message, receiver, doctor){
   if(doctor) {
     Doctor.findOne(doctor).exec(function(err, doc){
