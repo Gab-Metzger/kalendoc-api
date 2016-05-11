@@ -64,43 +64,20 @@ function sendCopyEmail(mail) {
   .exec(function (err, mail) {
     Doctor.findOne(mail.receiverID).populate('user').exec(function(err, doctor) {
       if (doctor && doctor.allowCopyEmail) {
-        var emailContent = [
+        var emailContent =
           {
-            name:"0_DNAME",
-            content: mail.receiverName
-          },
-          {
-            name:"1_ONAME",
-            content: mail.senderName
-          },
-          {
-            name:"4_CONTENT", content: mail.content
-          },
-          {
-            name:"5_ACTION", content: mail.action
-          }
-        ];
+            'receiverName': mail.receiverName,
+            "action": mail.action,
+            "senderName": mail.senderName,
+            "content": mail.content
+          };
         if (mail.patient) {
+          emailContent["patient"]=true;
+
+          emailContent["patName"]=String(mail.patient.lastName + " " + mail.patient.firstName);
+
           if (mail.patient.mobilePhone || mail.patient.phoneNumber) {
-            emailContent.push(
-              {
-                name:"2_PNAME",
-                content: String(mail.patient.lastName + " " + mail.patient.firstName)
-              }
-            );
-            emailContent.push(
-              {
-                name:"3_PPHONE",
-                content: mail.patient.mobilePhone || mail.patient.phoneNumber
-              }
-            );
-          } else {
-            emailContent.push(
-              {
-                name:"2_PNAME",
-                content: String(mail.patient.lastName + " " + mail.patient.firstName)
-              }
-            );
+            emailContent["patPhone"]=mail.patient.mobilePhone || mail.patient.phoneNumber;
           }
         }
         Mailer.sendMail('email-message-kalendoc', doctor.user.email, emailContent, function() {
