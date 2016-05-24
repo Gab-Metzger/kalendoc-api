@@ -1,7 +1,7 @@
 /**
  * Mailer.js
  **/
-var mailgun = require('mailgun-js')({ apiKey: "key-973b32af2e158ef91a9259435a65d597", domain: 'mg.kalendoc.com' });
+var mailgun = require('mailgun-js')({ apiKey: "key-973b32af2e158ef91a9259435a65d597", domain: 'kalendoc.com' });
 var mailcomposer = require('mailcomposer');
 var fs = require('fs');
 
