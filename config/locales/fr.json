@@ -1,6 +1,6 @@
 {
   "Error.Password.Wrong": "Attention, votre mot de passe est incorrect !",
-  "Error.Email.NotFound": "Cet email ne semble pas correct",
+  "Error.Email.NotFound": "Aucun compte avec cette adresse email, veuillez en créer un.",
   "Error.Email.Missing": "Merci de spécifier un email.",
   "Error.Password.Missing": "Merci de spécifier un mot de passe.",
   "Error.Token.Missing": "Vous devez vous connecter pour accéder a ces données.",
