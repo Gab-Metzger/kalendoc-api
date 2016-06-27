@@ -98,22 +98,31 @@ var phone = require('phone');
     }
   },
   beforeCreate : function(values, callback) {
-    if (values.secretary || values.doctor){
-      values.receiveSMS = false;
-      values.receiveBroadcast = false;
-    }
-    bcrypt.genSalt(14, function(err,salt){
+    User.findOne({email: values.email})
+    .exec(function (err, user) {
       if (err) {
         return callback(err);
-      }
-      bcrypt.hash(values.password, salt, function(err,hash){
-        if (err) {
-          return callback(err);
+      } else if (user) {
+        return callback({message: "Adresse email déjà utilisée."})
+      } else {
+        if (values.secretary || values.doctor){
+          values.receiveSMS = false;
+          values.receiveBroadcast = false;
         }
-        values.password = hash;
-        callback();
-      })
-    });
+        bcrypt.genSalt(14, function(err,salt){
+          if (err) {
+            return callback(err);
+          }
+          bcrypt.hash(values.password, salt, function(err,hash){
+            if (err) {
+              return callback(err);
+            }
+            values.password = hash;
+            callback();
+          })
+        });
+      }
+    })
   },
   beforeUpdate: function(values, callback) {
     if (values.secretary || values.doctor){
