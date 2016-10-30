@@ -140,13 +140,6 @@ function findWeeklyAppointment(start, doctor, consultingTimeIncrement, callback)
             _.each(currentDayReservations, function(reservation) {
               var currentTry = moment(reservation.start);
               var end = moment(reservation.end);
-              if (moment(currentTry).tz('Europe/Paris').utcOffset() == 60) {
-                currentTry = moment(currentTry).add(1, 'hours');
-                end = moment(end).add(1, 'hours');
-                console.log("ADD ONE HOUR");
-                console.log(currentTry.toISOString());
-                console.log(end.toISOString());
-              }
               var currentWeek = moment(day).isoWeek();
               var savedWeek = moment(reservation.start).isoWeek();
               var isAGoodWeek = ((Math.abs(currentWeek - savedWeek) % reservation.recurrence) === 0);
@@ -157,6 +150,13 @@ function findWeeklyAppointment(start, doctor, consultingTimeIncrement, callback)
                   var today = moment(day);
                   currentTry.set({year: today.get('year'), month: today.get('month'), date: today.get('date')});
                   end.set({year: today.get('year'), month: today.get('month'), date: today.get('date')});
+                }
+                if (moment(currentTry).tz('Europe/Paris').utcOffset() == 60) {
+                  currentTry = moment(currentTry).add(1, 'hours');
+                  end = moment(end).add(1, 'hours');
+                  console.log("ADD ONE HOUR");
+                  console.log(currentTry.toISOString());
+                  console.log(end.toISOString());
                 }
                 var increment = doctor.consultingTime;
                 var currentTryFormatted = currentTry.format('DD/MM/YYYY');
