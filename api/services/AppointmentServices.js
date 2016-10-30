@@ -9,14 +9,14 @@ var _ = require('lodash');
 
 module.exports.validateAppointmentDate = function(req, params, doctor, callback){
   if (params.start && params.end){
-    const start = new Date(params.start);
-    const end = new Date(params.end);
+    var start = new Date(params.start);
+    var end = new Date(params.end);
     // Si la date est invalide.
     if (isNaN(start.getTime()) || isNaN(end.getTime())) {
       callback({status:400, err:req.__('Error.Fields.Date.Invalid')});
     } else {
-      const deltaT = end.getTime() - start.getTime();
-      const consultingTime = doctor.consultingTime*60*1000;
+      var deltaT = end.getTime() - start.getTime();
+      var consultingTime = doctor.consultingTime*60*1000;
       if (deltaT >= 86400000 || start.getDay() != end.getDay()){ // Si le debut et la fin ne sont pas sur la même journée.
                   // ^=24*60*60*1000 : Une journée en millisecondes
         callback({status:400,err:req.__('Error.Validate.NotSameDay')});
@@ -24,8 +24,8 @@ module.exports.validateAppointmentDate = function(req, params, doctor, callback)
         if (params.state == 'blockedByDoctor' && (req.user.doctor || req.user.secretary)){
           callback(null,params);
         } else {
-          const start_time = start.getUTCHours()*60 + start.getMinutes();
-          const end_time   = end.getUTCHours()*60 + end.getMinutes();
+          var start_time = start.getUTCHours()*60 + start.getMinutes();
+          var end_time   = end.getUTCHours()*60 + end.getMinutes();
           Reservation.findOne({
             weekDay: start.getDay(),
             start:   {'<=': start_time},
@@ -47,9 +47,9 @@ module.exports.validateAppointmentDate = function(req, params, doctor, callback)
                   } else if (!cat){
                     callback({status: 400, err:req.__('Collection.Category')+" "+req.__('Error.NotFound')});
                   } else {
-                    const consultingTime = cat.consultingTime * 60 * 1000;
-                    const doctorOk = (req.user.secretary || req.user.doctor) && consultingTime %deltaT == 0;
-                    const userOk = (! (req.user.secretary || req.user.doctor)) && consultingTime == deltaT;
+                    var consultingTime = cat.consultingTime * 60 * 1000;
+                    var doctorOk = (req.user.secretary || req.user.doctor) && consultingTime %deltaT == 0;
+                    var userOk = (! (req.user.secretary || req.user.doctor)) && consultingTime == deltaT;
                     if (doctorOk || userOk) {
                       Appointment.findOne({
                         start: {'<=': start},
@@ -140,6 +140,10 @@ function findWeeklyAppointment(start, doctor, consultingTimeIncrement, callback)
             _.each(currentDayReservations, function(reservation) {
               var currentTry = moment(reservation.start);
               var end = moment(reservation.end);
+              if (moment(currentTry).tz('Europe/Paris').utcOffset() == 60) {
+                currentTry = moment(currentTry).add(1, 'hours');
+                end = moment(end).add(1, 'hours');
+              }
               var currentWeek = moment(day).isoWeek();
               var savedWeek = moment(reservation.start).isoWeek();
               var isAGoodWeek = ((Math.abs(currentWeek - savedWeek) % reservation.recurrence) === 0);
