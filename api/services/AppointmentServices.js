@@ -154,9 +154,6 @@ function findWeeklyAppointment(start, doctor, consultingTimeIncrement, callback)
                 if (moment(currentTry).tz('Europe/Paris').utcOffset() == 60) {
                   currentTry = moment(currentTry).add(1, 'hours');
                   end = moment(end).add(1, 'hours');
-                  console.log("ADD ONE HOUR");
-                  console.log(currentTry.toISOString());
-                  console.log(end.toISOString());
                 }
                 var increment = doctor.consultingTime;
                 var currentTryFormatted = currentTry.format('DD/MM/YYYY');
