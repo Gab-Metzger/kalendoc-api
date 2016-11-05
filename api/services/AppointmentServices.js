@@ -151,7 +151,7 @@ function findWeeklyAppointment(start, doctor, consultingTimeIncrement, callback)
                   currentTry.set({year: today.get('year'), month: today.get('month'), date: today.get('date')});
                   end.set({year: today.get('year'), month: today.get('month'), date: today.get('date')});
                 }
-                if (moment(currentTry).tz('Europe/Paris').utcOffset() == 60) {
+                if (moment(reservation.start).tz('Europe/Paris').utcOffset() == 60) {
                   currentTry = moment(currentTry).add(1, 'hours');
                   end = moment(end).add(1, 'hours');
                 }
